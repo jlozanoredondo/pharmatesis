@@ -1,0 +1,32 @@
+<div class="container" ng-controller="ProjectController as projCtrl">
+    <form name="manageProjects" novalidate>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Initial Date</th>
+                    <th>End Date</th>
+                    <th>Tested Drug</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Project 1</td>
+                    <td>03/04/1997</td>
+                    <td>-</td>
+                    <td>ASDA003</td>
+                    <td><button ng-click="projCtrl.manageProject(1)" class='btn btn-primary btn-sm'>Manage</button></td>
+                    <td><button ng-click="projCtrl.deleteProject(2);" class='btn btn-danger btn-sm'>Delete</button></td>
+                </tr>
+                <tr>
+                    <td>Project 2</td>
+                    <td>16/01/1985</td>
+                    <td>-</td>
+                    <td>EXE004</td>
+                    <td><button ng-click="projCtrl.manageProject(2)" class='btn btn-primary btn-sm'>Manage</button></td>
+                    <td><button ng-click="projCtrl.deleteProject(2);" class='btn btn-danger btn-sm'>Delete</button></td>
+                </tr> 
+            </tbody>
+        </table>
+    </form>
+</div>

@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html ng-app="pharmatesisApp" xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>PharmatesisApp</title>
+
+        <!-- css-->
+        <link rel="stylesheet" type="text/css" href="vendors/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">        
+        <link rel="stylesheet" type="text/css" href="files/css/reset.css" />
+        <link rel="stylesheet" type="text/css" href="files/css/index.css" />
+        <!-- jQuery-->
+        <script src="vendors/jquery/js/jQuery.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!-- jQuery Cookies management-->
+        <script src="vendors/jquery/jquery-cookie/jquery.cookie.js" type="text/javascript" xml:space="preserve"></script>
+
+        <!-- Angular-->
+        <script src="vendors/angular/js/angular.min.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="vendors/angular/js/angular-file-upload.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="vendors/angular/js/angular-i18n/angular-locale_es-es.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="vendors/angular/js/ng-currency.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="vendors/angular/js/angular-cookies.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="vendors/angular/js/dirPagination.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="vendors/bootstrap/js/ui-bootstrap-tpls-2.3.1.js" type="text/javascript" xml:space="preserve"></script>
+        <!-- Controllers-->
+        <script src="js/app.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="js/controller/InterfaceController.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="js/controller/ProjectController.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="js/controller/UserController.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="js/controller/SessionController.js" type="text/javascript" xml:space="preserve"></script>
+    </head>
+    <body ng-controller="InterfaceController as IntCtrl" ng-init="loadInterface()">
+        <div>
+            <top-menu></top-menu>
+        </div>
+        <div ng-if="action==1">
+            <create-project-form></create-project-form>
+        </div>
+        <div ng-if="action==2">
+            <manage-projects></manage-projects>
+        </div>
+        <div ng-if="action==3"> 
+            <login-form></login-form>
+        </div>
+        <div ng-if="action==4"> 
+            <registration-form></registration-form>
+        </div>
+        <div ng-if="action==5"> 
+            <show-users></show-users>
+        </div>
+    </body>
+</html>

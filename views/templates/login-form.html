@@ -1,0 +1,20 @@
+<div class="container" ng-controller="UserController as userCtrl">
+    <div class="row">
+        <div class="col-sm-4">
+            <form name="loginForm" ng-submit="userCtrl.logIn()" novalidate>
+                <div class="form-group">
+                    <label for="email">Email: </label>
+                    <input class="form-control" type="text" name="email" id="email" />
+                </div>                
+                <div class="form-group">
+                    <label for="password">Password: </label>
+                    <input class="form-control" type="password" name="password" id="password"/>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-primary" type="submit" name="login" id="login">Login</button>
+                </div>              
+            </form>            
+        </div>
+    </div>
+</div>
