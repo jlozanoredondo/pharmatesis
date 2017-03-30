@@ -1,0 +1,47 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16-mar-2017, 20:07:04
+    Author     : dev
+*/
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+html{
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9em;
+}
+
+.navbar-brand , .navbar-default .navbar-nav>li>a{
+    color: white!important;
+}
+.container-fluid{
+    background-color: #337ab7;
+}
+
+
+.dropdown-toggle.glyphicon.glyphicon-user{
+    border-radius: 50%;
+    font-size: 47px;
+    color: white;
+    border: 1px solid #337ab7;
+    overflow: hidden;
+    cursor: pointer;
+
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
+    background-color: #275b88;
+}
+.btn-default:hover{
+    background-color: #f5f5f5;
+}
+#searchList{
+    height: 34px;
+}
+
+.btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open>.dropdown-toggle.btn-default.focus, .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:hover{
+    background-color: #f5f5f5;
+}
