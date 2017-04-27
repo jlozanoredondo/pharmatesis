@@ -28,9 +28,10 @@ class User {
     private $bornDate;
     private $specialism;
     private $professionId;
+    private $image;
     
     //Constructor
-    function __construct($id, $name, $password, $surnames, $email, $phone, $bornDate, $specialism, $professionId) {
+    function __construct($id = null, $name = null, $password = null, $surnames = null, $email = null, $phone = null, $bornDate = null, $specialism = null, $professionId = null, $image = null) {
         $this->id = $id;
         $this->name = $name;
         $this->password = $password;
@@ -40,6 +41,7 @@ class User {
         $this->bornDate = $bornDate;
         $this->specialism = $specialism;
         $this->professionId = $professionId;
+        $this->image = $image;
     }
         
     //Getters & Setters
@@ -78,7 +80,12 @@ class User {
     function getProfessionId() {
         return $this->professionId;
     }
+    
+    function getImage() {
+        return $this->image;
+    }
 
+    
     function setId($id) {
         $this->id = $id;
     }
@@ -115,6 +122,10 @@ class User {
         $this->professionId = $professionId;
     }
     
+    function setImage($image) {
+        $this->image = $image;
+    }
+
     //Own methods
     public function __toString() {
         return sprintf("ID=%s, Name=%s, Surname=%s, Email=%s, Phone=%s, BornDate=%s, Specialism=%s, ProfessionalID=%s",

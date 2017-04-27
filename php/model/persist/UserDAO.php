@@ -1,5 +1,6 @@
 <?php
-    require_once 'model/User.php';
+    require_once '../User.php';
+    require_once 'DBConnect.php';
 /** 
  * Class that will connect the object with the DB
  * @name UserDAO.php
@@ -13,11 +14,7 @@ class UserDAO {
     
     //Constructor
     public function __construct() {
-        $this->data = array();
-        array_push($this->data,new User(1, "joan", "joan", "fernandez", "joanfernandez1331@gmail.com", "660428926", "1997-04-03", "Backend", 1));
-        array_push($this->data,new User(2, "jonathan", "jonathan", "lozano", "jlozano@gmail.com", "442589741", "1910-01-13", "Frontend", 1));
-        array_push($this->data,new User(3, "alba", "alba", "gomez", "agomez@gmail.com", "112354865", "2010-04-15", "Enviromental Ciencies", 2));
-        array_push($this->data,new User(4, "jon", "jon", "aldazabal", "jaldazabal@gmail.com", "998524145", "1992-07-04", "None", 1));
+        
     }
     
    /** 
@@ -30,7 +27,39 @@ class UserDAO {
     * @return $rowsAffected Number of rows affected
     */
     public static function insertUser($user) {
-        return 0;
+        $success = 0;
+        $conn = DBConnect::getConection();
+        try 
+        {
+            $sql = "insert into user(name,surname,email,password,phone,bornDate,specialism,professionId,image) values (:name,:surname,:email,:password,:phone,:bornDate,:specialism,:professionId,:image)";
+            $stmt = $conn->prepare($sql);
+
+            $name = $user->getName();
+            $surname = $user->getSurname();
+            $email = $user->getEmail();
+            $password = $user->getPassword();
+            $phone = $user->getPhone();
+            $bornDate = $user->getBornDate();
+            $specialism = $user->getSpecialism();
+            $professionId = $user->getProfessionId();
+            $image = $user->getImage();
+                        
+            $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+            $stmt->bindParam(":surname", $surname, PDO::PARAM_STR);
+            $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+            $stmt->bindParam(":password", $password, PDO::PARAM_STR);
+            $stmt->bindParam(":phone", $phone, PDO::PARAM_STR);
+            $stmt->bindParam(":bornDate", $bornDate, PDO::PARAM_STR);
+            $stmt->bindParam(":specialism", $specialism, PDO::PARAM_STR);
+            $stmt->bindParam(":professionId", $professionId, PDO::PARAM_STR);
+            $stmt->bindParam(":image", $image, PDO::PARAM_STR);
+            
+            $success = $stmt->execute();
+            
+        } catch (Exception $e) {
+            $success = 0;
+        }
+        return $success;
     }
     
     /** 
@@ -69,8 +98,17 @@ class UserDAO {
     * @return $foundUser Founded object
     */
     public static function findUser($user) {        
-        $foundUser = null;
-        return $foundUser;
+        $conn = DBConnect::getConection();
+
+        $sql = "select * from user where email = :email AND password = :passwd";
+        $result = $conn->prepare($sql);
+        $result->bindParam("email", $user->getEmail(), PDO::PARAM_STR);
+        $result->bindParam("passwd", $user->getPassword(), PDO::PARAM_STR);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "User");
+        $data = $result->fetchAll();
+
+        return $data; 
     }
     
     /** 
@@ -83,6 +121,16 @@ class UserDAO {
     * @return array Founded objects
     */
     public function findWhere($whereClause) {
-        return array();
+        /*
+        $conn = DBConnect::getConection();
+
+        $sql = "select * from product where id_lab = :id";
+        $result = $conn->prepare($sql);
+        $result->bindParam("id", $labId, PDO::PARAM_STR);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Product");
+        $data = $result->fetchAll();
+
+        return $data;*/
     }
 }

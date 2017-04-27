@@ -1,145 +1,73 @@
 <?php
-    require_once 'model/persist/ProjectDAO.php';
-/**
- * Main controller
- * @name MainController.php
- * @author Jonathan Lozano
- * @date 2017-02-23
- * @version 1.0
- */
-class MainController {
-
     /**
-     * The model that gives data services
-     * @var ArticleModel
-     */
-    private $model;
+    * Main controller to connect the client data with the server
+    * @name MainController.php
+    * @author Joan Fernández
+    * @date 2017-04-27
+    * @version 1.0
+    */
 
-    function __construct() {
-        //$this->processRequest();
+    require_once "UserControllerClass.php";
+    require_once "FileControllerClass.php";
+
+    /** Controlls that the session is started
+    * @name is_session_started()
+    * @author Joan Fernández
+    * @date 2017-02-23
+    * @version 1.0
+    * @param none
+    * @return true or false
+    */
+    function is_session_started() {
+        if (php_sapi_name() !== 'cli') {
+            if (version_compare(phpversion(), '5.4.0', '>=')) {
+                return session_status() === PHP_SESSION_ACTIVE ? TRUE : FALSE;
+            } else {
+                return session_id() === '' ? FALSE : TRUE;
+            }
+        }
+        return FALSE;
     }
 
-    //put your code here
-    public function processRequest() {
-        $action = "";
-        //retrieve action from client.
-        if (filter_has_var(INPUT_GET, 'action')) {
-            $action = filter_input(INPUT_GET, 'action');
-        }
+    if (is_session_started() === FALSE)
+        session_start();
 
+    //Return data declaration
+    $outPutData = array();
+
+    //Switch case to controll the client petitions
+    if (isset($_REQUEST['controllerType'])) 
+    {
+        $action = (int) $_REQUEST['controllerType'];
         switch ($action) {
-            case 'login':
-                $this->login();
+            case 0:
+                //User controller
+                $userController = new UserControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
+                $outPutData = $userController->doAction();
                 break;
-            case 'loginUser':
-                $this->loginUser();
+            case 1:
+                //File controller
+                $fileController = new FileControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
+                $outPutData = $fileController->doAction();
                 break;
-            case 'register':
-                $this->register(); //list all articles
-                break;
-            case 'search':
-                $this->search(); //show a form for an article
-                break;
-            case 'searchList':
-                $this->searchList();
-                break;
-            case 'manageProjects':
-                $this->manageProjects();
-                break;
-            case 'newProject':
-                $this->newProject();
-                break;
-            case 'addProject':
-                $this->addProject();
-                break;
-            default :
+            default:
+                $errors = array();
+                $outPutData[0] = false;
+                $errors[] = "There has been an error in the server. Contact with system admin.";
+                $outPutData[] = $errors;
+                //Apache error.log instance
+                error_log("MainControllerClass: action not correct, value: " . $_REQUEST['controllerType']);
                 break;
         }
+    } 
+    else 
+    {
+        $errors = array();
+        $outPutData[0] = false;
+        $errors[] = "There has been an error in the server. Contact with system admin.";
+        error_log("MainControllerClass: action does not exist");
+        $outPutData[] = $errors;
     }
 
-    /**
-     * Method to show login view
-     * @name login
-     * @author Jonathan Lozano
-     * @date 2017-02-23
-     * @version 1.0
-     */
-    public function login() {
-        //TODO
-        include 'views/login.php';
-    }
-    
-    /**
-     * Method to show login view
-     * @name login
-     * @author Jonathan Lozano
-     * @date 2017-02-23
-     * @version 1.0
-     */
-    public function loginUser() {
-        //TODO
-        session.start();
-    }
-
-    /**
-     * Method to show register view
-     * @name login
-     * @author Jonathan Lozano
-     * @date 2017-02-23
-     * @version 1.0
-     */
-    public function register() {
-
-        include 'views/register.php';
-    }
-
-    /**
-     * Method to show form to search professionals in our DDBB
-     * @name login
-     * @author Jonathan Lozano
-     * @date 2017-02-23
-     * @version 1.0
-     */
-    public function search() {
-        include 'views/search-form.php';
-    }
-
-    /**
-     * Method to show professionals found in our DDBB
-     * @name searchList
-     * @author Jonathan Lozano
-     * @date 2017-02-23
-     * @version 1.0
-     */
-    public function searchList() {
-        include 'views/search-list.php';
-    }
-
-    /**
-     * Method to show manage projects view
-     * @name manageProjects
-     * @author Jonathan Lozano
-     * @date 2017-03-16
-     * @version 1.0
-     */
-    public function manageProjects() {
-        $projectDAO = new ProjectDAO();
-        $projects = $projectDAO->findAll();
-        include 'views/manage-projects.php';
-    }
-
-    /**
-     * adds the article sent by article form to data source
-     */
-    public function newProject() {
-        include 'views/new-project.php';        
-    }
-    
-    /**
-     * adds the article sent by article form to data source
-     */
-    public function addProject() {        
-        $this->manageProjects();
-        echo "<div class='alert alert-success'><strong>Success!</strong> Project added correctly.</div>";
-    }
-}
+    echo json_encode($outPutData);
+?>
