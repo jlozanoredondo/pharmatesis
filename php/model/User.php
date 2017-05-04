@@ -125,10 +125,20 @@ class User {
     function setImage($image) {
         $this->image = $image;
     }
+    
+    public function getAll() {
+        $data = array();
+        $data["id"] = $this->id;
+        $data["name"] = $this->name;
+        $data["surname"] = $this->surname;
+        $data["email"] = $this->email;
+        $data["password"] = $this->password;        
+        $data["phone"] = $this->phone;      
+        $data["bornDate"] = $this->bornDate;
+        $data["specialism"] = $this->specialism;
+        $data["professionId"] = $this->professionId;
+        $data["image"] = $this->image;
 
-    //Own methods
-    public function __toString() {
-        return sprintf("ID=%s, Name=%s, Surname=%s, Email=%s, Phone=%s, BornDate=%s, Specialism=%s, ProfessionalID=%s",
-                $this->id,$this->name,$this->surnames, $this->email, $this->phone,$this->bornDate,$this->specialism, $this->professionId);
+        return $data;
     }
 }

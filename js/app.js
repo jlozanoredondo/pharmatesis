@@ -8,8 +8,8 @@ $(document).ready(function () {
     
     pharmatesisApp.factory('userConnected', function () {
         // I know this doesn't work, but what will?
-        //var user = new User();
-        return 0;
+        var user = new User();
+        return user;
     });
 
     pharmatesisApp.directive('validFile', function () {
