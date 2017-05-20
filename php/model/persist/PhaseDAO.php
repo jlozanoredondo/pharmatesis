@@ -1,89 +1,110 @@
 <?php
-    require_once 'model/Phase.php';
-/** 
- * Class that will connect the object with the DB
- * @name PhaseDAO.php
- * @author Joan Fernández
- * @date 2017-02-23
- * @version 1.0
-*/
-class PhaseDAO {
-    
-    private $data;
-    
-    //Constructor
-    public function __construct() {
-        $this->data = array();
-        array_push($this->data,new Phase(1, "Phase 1"));
-        array_push($this->data,new Phase(2, "Phase 2"));
-        array_push($this->data,new Phase(3, "Phase 3"));
-        array_push($this->data,new Phase(4, "Phase 4"));
+
+    require_once "DBConnect.php";
+    require_once "../model/Phase.php";
+
+    /**
+     * Class that will connect the object with the DB
+     * @name PhaseDAO.php
+     * @author Joan Fernández
+     * @date 2017-02-23
+     * @version 1.0
+     */
+    class PhaseDAO {
+
+        //----------Data base Values---------------------------------------
+        private static $tableName = "phase";
+        private static $colNameId = "id";
+        private static $colNameName = "name";
+
+        //---Databese management section-----------------------
+        /**
+         * fromResultSetList()
+         * this function runs a query and returns an array with all the result transformed into an object
+         * @param res query to execute
+         * @return objects collection
+         */
+        public static function fromResultSetList($res) {
+            $entityList = array();
+            $i = 0;
+            //while ( ($row = $res->fetch_array(MYSQLI_BOTH)) != NULL ) {
+            foreach ($res as $row) {
+                //We get all the values an add into the array
+                $entity = PhaseDAO::fromResultSet($row);
+
+                $entityList[$i] = $entity;
+                $i++;
+            }
+            return $entityList;
+        }
+
+        /**
+         * fromResultSet()
+         * the query result is transformed into an object
+         * @param res ResultSet del qual obtenir dades
+         * @return object
+         */
+        public static function fromResultSet($res) {
+            //We get all the values form the query
+            $id = $res[PhaseDAO::$colNameId];
+            $name = $res[PhaseDAO::$colNameName];
+
+            //Object construction
+            $entity = new Phase();
+            $entity->setId($id);
+            $entity->setName($name);
+
+            return $entity;
+        }
+
+        /**
+         * findByQuery()
+         * It runs a particular query and returns the result
+         * @param cons query to run
+         * @return objects collection
+         */
+        public static function findByQuery($cons, $vector) {
+            //Connection with the database
+            try {
+                $conn = DBConnect::getInstance();
+            } catch (PDOException $e) {
+                echo "Error executing query.";
+                error_log("Error executing query in PhaseDAO: " . $e->getMessage() . " ");
+                die();
+            }
+
+            $res = $conn->execution($cons, $vector);
+
+            return PhaseDAO::fromResultSetList($res);
+        }
+
+        /**
+         * findById()
+         * It runs a query and returns an object array
+         * @param id
+         * @return object with the query results
+         */
+        /*public static function findById($phase) {
+            $cons = "select * from `" . PhaseDAO::$tableName . "` where " . PhaseDAO::$colNameId . " = ?";
+            $arrayValues = [$phase->getId()];
+
+            return PhaseDAO::findByQuery($cons, $arrayValues);
+        }*/
+
+        /**
+         * findAll()
+         * It runs a query and returns an object array
+         * @param none
+         * @return object with the query results
+         */
+        public static function findAll() {
+            $cons = "select * from `" . PhaseDAO::$tableName . "`";
+            $arrayValues = [];
+
+            return PhaseDAO::findByQuery($cons, $arrayValues);
+        }
+       
+
     }
-    
-    /** 
-    * Inserts the object into the DB
-    * @name insertPhase()
-    * @author Joan Fernández
-    * @date 2017-02-23
-    * @version 1.0
-    * @param $phase Object to insert
-    * @return $rowsAffected Number of rows affected
-    */
-    public static function insertPhase($phase) {
-        return 0;
-    }
-    
-    /** 
-    * Erases the object from the DB
-    * @name deletePhase()
-    * @author Joan Fernández
-    * @date 2017-02-23
-    * @version 1.0
-    * @param $phase Object to delete
-    * @return $rowsAffected Number of rows affected
-    */
-    public static function deletePhase($phase) {
-        return 0;
-    }
-    
-    /** 
-    * Modifies the object into the DB
-    * @name modifyPhase()
-    * @author Joan Fernández
-    * @date 2017-02-23
-    * @version 1.0
-    * @param $phase Object to modify
-    * @return $rowsAffected Number of rows affected
-    */
-    public static function modifyPhase($phase) {
-        return 0;
-    }
-    
-    /** 
-    * Finds an object into the DB
-    * @name findPhase()
-    * @author Joan Fernández
-    * @date 2017-02-23
-    * @version 1.0
-    * @param $phase Object to find
-    * @return $foundPhase Founded object
-    */
-    public static function findPhase($phase) {
-        $foundPhase = null;
-        
-        return $foundPhase;
-    }
-    
-    /** 
-    * Find an object using a clause
-    * @name findWhere()
-    * @author Joan Fernández
-    * @date 2017-02-23
-    * @version 1.0
-    * @param $whereClause Clause to find
-    * @return array Founded objects
-    */
-    public function findWhere($whereClause) {
-        return array();
-    }
-}
+
+?>

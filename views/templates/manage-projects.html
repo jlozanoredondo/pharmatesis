@@ -1,5 +1,18 @@
-<div class="container" ng-controller="ProjectController as projCtrl">
+<div class="container">
     <form name="manageProjects" novalidate>
+        <div>
+        <table class="table table-bordered" ng-disabled="manageProjects.$invalid">
+            <tr><th>Name</th><th>Projects per page</th></tr>
+            <tr>
+                <td>
+                    <input class="form-control" type="text" ng-model="name" ng-disabled="manageProjects.$invalid"/>
+                </td>
+                <td>
+                    <input type="number" min="1" max="100" class="form-control" ng-model="pageSize"/>
+                </td>
+            </tr>
+        </table>
+    </div>
         <table class="table">
             <thead>
                 <tr>
@@ -10,23 +23,23 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Project 1</td>
-                    <td>03/04/1997</td>
-                    <td>-</td>
-                    <td>ASDA003</td>
-                    <td><button ng-click="projCtrl.manageProject(1)" class='btn btn-primary btn-sm'>Manage</button></td>
-                    <td><button ng-click="projCtrl.deleteProject(2);" class='btn btn-danger btn-sm'>Delete</button></td>
-                </tr>
-                <tr>
-                    <td>Project 2</td>
-                    <td>16/01/1985</td>
-                    <td>-</td>
-                    <td>EXE004</td>
-                    <td><button ng-click="projCtrl.manageProject(2)" class='btn btn-primary btn-sm'>Manage</button></td>
-                    <td><button ng-click="projCtrl.deleteProject(2);" class='btn btn-danger btn-sm'>Delete</button></td>
-                </tr> 
+                <tr dir-paginate="project in filteredData | itemsPerPage: pageSize" current-page="currentPage">
+                    <td>{{project.name}}</td>
+                    <td>{{project.initialDate}}</td>
+                    <td>{{project.endDate}}</td>
+                    <td>{{project.testedDrug}}</td>
+                    <td><button ng-click="projectCtrl.loadProject(project)" class='btn btn-primary btn-sm'>Manage</button></td>
+                    <td><button class="btn btn-danger btn-sm" ng-confirm-click="Are you sure to delete this project?" confirmed-click="projectCtrl.deleteProject(project)">X</button></td>
+                </tr>                
             </tbody>
         </table>
+        <div ng-show="manageProjects.$valid">
+            <div class="text-left" boundary-links="true">
+                <dir-pagination-controls boundary-links="true" template-url="views/templates/dir-pagination-controls.html"></dir-pagination-controls>
+            </div>
+        </div>
     </form>
+    <div class="alert alert-success" ng-show="msg==1">
+        <strong>Success!</strong> Project added correctly.
+    </div>
 </div>

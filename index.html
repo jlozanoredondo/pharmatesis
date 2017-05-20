@@ -37,24 +37,33 @@
         <script src="js/controller/SessionController.js" type="text/javascript" xml:space="preserve"></script>
         <!--Model-->
         <script src="js/model/User.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="js/model/Project.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="js/model/Disease.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="js/model/Dispense.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="js/model/Subject.js" type="text/javascript" xml:space="preserve"></script>
     </head>
     <body ng-controller="InterfaceController as IntCtrl" ng-init="loadInterface()">
         <div>
             <top-menu></top-menu>
         </div>
-        <div ng-if="action==1">
-            <create-project-form></create-project-form>
+        <div class="container" ng-controller="ProjectController as projectCtrl" ng-init="projectCtrl.loadDisease();loadProjects()">
+            <div ng-show="action==1">
+                <create-project-form></create-project-form>
+            </div>
+            <div ng-show="action==2">
+                <manage-projects></manage-projects>
+            </div>
+            <div ng-show="action==6">
+                <manage-project></manage-project>
+            </div>
         </div>
-        <div ng-if="action==2">
-            <manage-projects></manage-projects>
-        </div>
-        <div ng-if="action==3"> 
+        <div ng-show="action==3"> 
             <login-form></login-form>
         </div>
-        <div ng-if="action==4"> 
+        <div ng-show="action==4"> 
             <registration-form></registration-form>
         </div>
-        <div ng-if="action==5"> 
+        <div ng-show="action==5"> 
             <show-users></show-users>
         </div>
     </body>

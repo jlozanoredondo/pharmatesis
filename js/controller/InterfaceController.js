@@ -33,6 +33,17 @@
             controllerAs: 'manageProjects'
         };
     });
+
+    angular.module('pharmatesisApp').directive("manageProject", function (){
+        return {
+                restrict: 'E',
+                templateUrl:"views/templates/manage-project.html",
+                controller:function(){
+
+                },
+            controllerAs: 'manageProjects'
+        };
+    });
     
     angular.module('pharmatesisApp').directive("loginForm", function (){
         return {

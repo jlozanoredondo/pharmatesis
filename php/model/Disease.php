@@ -1,9 +1,9 @@
 <?php
 
 /** 
- * Class to manage the Medicament objects
- * @name Medicament.php
- * @author Joan Fernández
+ * Class to manage the Disease objects
+ * @name Disease.php
+ * @author Jonathan Lozano
  * @date 2017-02-23
  * @version 1.0
  * @param id: Disease's ID
@@ -16,7 +16,7 @@ class Disease {
     private $name;
     
     //Constructor
-    function __construct($id, $name) {
+    function __construct($id=null, $name=null) {
         $this->id = $id;
         $this->name = $name;
     }
@@ -38,9 +38,11 @@ class Disease {
         $this->name = $name;
     }
     
-    //Own methods
-    public function __toString() {
-        return sprintf("ID=%s, Name=%s",
-                $this->id,$this->name);
+    public function getAll() {
+        $data = array();
+        $data["id"] = $this->id;
+        $data["name"] = $this->name;
+
+        return $data;
     }
 }

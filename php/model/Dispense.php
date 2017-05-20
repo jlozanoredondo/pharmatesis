@@ -29,7 +29,7 @@ class Dispense {
     private $reaction;
     
     //Constructor
-    function __construct($id,$projectId, $subjectId, $phaseId, $sessionId, $viability, $sideEffects, $dose, $reaction) {
+    function __construct($id=null,$projectId=null, $subjectId=null, $phaseId=null, $sessionId=null, $viability=null, $sideEffects=null, $dose=null, $reaction=null) {
         $this->id = $id;
         $this->projectId = $projectId;
         $this->subjectId = $subjectId;
@@ -115,8 +115,18 @@ class Dispense {
     }
     
     //Own methods
-    public function __toString() {
-        return sprintf("ProjectID=%s, SubjectID=%s, PhaseID=%s, SessionID=%s, Viability=%s, SideEffects=%s, Dose=%s, Reaction=%s",
-                $this->projectId,$this->subjectId,$this->phaseId, $this->sessionId, $this->viability, $this->sideEffects, $this->dose, $this->reaction);
+    public function getAll() {
+        $data = array();
+        $data["id"] = $this->id;
+        $data["projectId"] = $this->projectId;
+        $data["subjectId"] = $this->subjectId;
+        $data["phaseId"] = $this->phaseId;
+        $data["sessionId"] = $this->sessionId;        
+        $data["viability"] = $this->viability;      
+        $data["sideEffects"] = $this->sideEffects;
+        $data["dose"] = $this->dose;
+        $data["reaction"] = $this->reaction;
+
+        return $data;
     }
 }

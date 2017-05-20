@@ -1,40 +1,24 @@
-<script type="text/javascript">
-    function submitForm(buttonId) {
-        var myForm = document.getElementById('addProject-form');
-        myForm.action.value = buttonId;
-        myForm.submit();
-        return false;
-    }
-</script>
 <div class="container">
-    <form action="index.php" id="addProject-form" method="get">
+    <form id="addProjectForm" name="addProjectForm" ng-submit="projectCtrl.addProject()" novalidate>
         <div class="row">
             <div class="col-sm-2"></div>
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label for="name">Name: </label><input class="form-control" type="text" name="nameProject" id="nameProject" />
+                    <label for="name">Name: </label><input class="form-control" type="text" name="nameProject" id="nameProject" ng-model="project.name" required="required" />
                 </div>                
                 <div class="form-group">
-                    <label for="drug">Tested drug: </label><input class="form-control" type="text" name="drug" id="drug"/>
+                    <label for="drug">Tested drug: </label><input class="form-control" type="text" name="drug" id="drug" ng-model="project.testedDrug" required="required"/>
                 </div>              
                 <div class="form-group">
                     <label for="name">Disease Studied: </label>
-                    <select class="form-control" id="sel1">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+                    <select ng-model="project.disease" ng-options="disease.getName() for disease in diseaseArray" class="form-control" required="required">                        
                     </select>
-                </div>        
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-4">
+                </div>
                 <div class="form-group">
-                    <button onclick="submitForm(this.id); return false;" type="button" class="btn btn-default" id="addProject" name="addProject">Add project</button>  
-                    <input name="action" id="action" hidden="hidden" value=""/> 
-                </div> 
+                    <button class="btn btn-primary" ng-disabled="addProjectForm.$invalid">
+                        Add project
+                    </button>
+                </div>        
             </div>
         </div>
     </form>

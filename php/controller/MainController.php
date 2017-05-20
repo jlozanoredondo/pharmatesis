@@ -1,5 +1,9 @@
 <?php
 	require_once "UserControllerClass.php";
+	require_once "ProjectControllerClass.php";
+	require_once "DiseaseControllerClass.php";
+	require_once "DispenseControllerClass.php";
+	require_once "SubjectControllerClass.php";
 	
 	function is_session_started() {
 	    if (php_sapi_name() !== 'cli') {
@@ -24,6 +28,22 @@
 	        case 0:
 	            $userController = new UserControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
 	            $outPutData = $userController->doAction();
+	            break;
+	        case 1:
+	            $projectController = new ProjectControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
+	            $outPutData = $projectController->doAction();
+	            break;
+	        case 2:
+	            $diseaseController = new DiseaseControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
+	            $outPutData = $diseaseController->doAction();
+	            break;
+	        case 3:
+	            $dispenseController = new DispenseControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
+	            $outPutData = $dispenseController->doAction();
+	            break;
+	        case 4:
+	            $subjectController = new SubjectControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
+	            $outPutData = $subjectController->doAction();
 	            break;
 	        default:
 	            $errors = array();

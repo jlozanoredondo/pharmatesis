@@ -1,0 +1,47 @@
+<div class="container">
+    <h2>{{project.name}}</h2>
+    <a href="#" ng-click="$parent.action=7">Add subject into the project</a>     
+    <form name="manageProject" novalidate>
+        <div>
+        <table class="table table-bordered" ng-disabled="manageProject.$invalid">
+            <tr><th>Name</th><th>Projects per page</th></tr>
+            <tr>
+                <td>
+                    <input class="form-control" type="text" ng-model="phaseId" ng-disabled="manageProject.$invalid"/>
+                </td>
+                <td>
+                    <input type="number" min="1" max="100" class="form-control" ng-model="pageSize"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>subjectId</th>
+                    <th>viability</th>
+                    <th>sideEffects</th>
+                    <th>dose (mg)</th>
+                    <th>reaction</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="dispense in filteredData | itemsPerPage: pageSize" current-page="currentPage">
+                    <td>{{dispense.subjectId}}</td>
+                    <td>{{dispense.viability}}</td>
+                    <td>{{dispense.sideEffects}}</td>
+                    <td>{{dispense.dose}}</td>
+                    <td>{{dispense.reaction}}</td>                    
+                </tr>                
+            </tbody>
+        </table>
+        <div ng-show="manageProject.$valid">
+            <div class="text-left" boundary-links="true">
+                <dir-pagination-controls boundary-links="true" template-url="views/templates/dir-pagination-controls.html"></dir-pagination-controls>
+            </div>
+        </div>
+    </form>
+    <div class="alert alert-success" ng-show="msg==1">
+        <strong>Success!</strong> Project added correctly.
+    </div>
+</div>

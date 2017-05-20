@@ -1,6 +1,6 @@
 /** 
  * Class to manage the User objects
- * @name User.php
+ * @name User.js
  * @author Joan Fernández
  * @date 2017-02-23
  * @version 1.0
@@ -10,9 +10,10 @@
         * surnames: User's surnames
         * email: User's email
         * phone: User's phone number
-        * $bornDate: User's born date
-        * $specialism: User's specialism
-        * $professionId: User's profession ID (relation with Profession)
+        * bornDate: User's born date
+        * specialism: User's specialism
+        * professionId: User's profession ID (relation with Profession)
+        * image: User's image
 */
 function User()
 {

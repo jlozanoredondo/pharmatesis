@@ -6,7 +6,7 @@
  * @author Joan Fernández
  * @date 2017-02-23
  * @version 1.0
- * @param projectId: Project's ID
+ * @param id: Project's ID
         * userId: Users's ID
         * name: Project's name
         * $initialDate: Project's initial date
@@ -17,7 +17,7 @@
 class Project {
     
     //Attributes
-    private $projectId;
+    private $id;
     private $userId;
     private $name;
     private $initialDate;
@@ -26,19 +26,18 @@ class Project {
     private $diseaseId;
     
     //Constructor
-    function __construct($projectId, $userId, $name, $initialDate, $endDate, $testedDrug, $diseaseId) {
-        $this->projectId = $projectId;
+    function __construct($id=null, $userId=null, $name=null, $initialDate=null, $testedDrug=null, $diseaseId=null) {
+        $this->id = $id;
         $this->userId = $userId;
         $this->name = $name;
         $this->initialDate = $initialDate;
-        $this->endDate = $endDate;
         $this->testedDrug = $testedDrug;
         $this->diseaseId = $diseaseId;
     }
     
     //Getters & Setters
-    function getProjectId() {
-        return $this->projectId;
+    function getId() {
+        return $this->id;
     }
 
     function getUserId() {
@@ -65,8 +64,8 @@ class Project {
         return $this->diseaseId;
     }
 
-    function setProjectId($projectId) {
-        $this->projectId = $projectId;
+    function setId($id) {
+        $this->id = $id;
     }
 
     function setUserId($userId) {
@@ -93,9 +92,25 @@ class Project {
         $this->diseaseId = $diseaseId;
     }
     
-    //Own methods
-    public function __toString() {
-        return sprintf("ID=%s, User ID=%s, Name=%s, Initial date=%s, End date=%s, Tested drug=%s, Disease ID=%s",
-                $this->projectId,$this->userId,$this->name, $this->initialDate, $this->endDate,$this->testedDrug,$this->diseaseId);
+    public function getAll() {
+        $data = array();
+        $data["id"] = $this->id;
+        $data["userId"] = $this->userId;
+        $data["name"] = $this->name;
+        $data["initialDate"] = $this->initialDate;
+        $data["endDate"] = $this->endDate;        
+        $data["testedDrug"] = $this->testedDrug;      
+        $data["diseaseId"] = $this->diseaseId;
+
+        return $data;
+    }
+
+    public function setAll($id, $userId, $name, $initialDate, $testedDrug, $diseaseId) {
+        $this->setId($id);
+        $this->setUserId($userId);
+        $this->setName($name);
+        $this->setInitialDate($initialDate);
+        $this->setTestedDrug($testedDrug);
+        $this->setDiseaseId($diseaseId);
     }
 }
