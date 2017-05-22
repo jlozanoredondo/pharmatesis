@@ -1,13 +1,13 @@
 /** 
- * Class to manage the Phase objects
- * @name Phase.js
+ * Class to manage the Country objects
+ * @name Country.js
  * @author Jonathan Lozano
  * @date 2017-05-15
  * @version 1.0
  * @param id: ID of the phase
-        * name: Phase's name object
+        * name: Country's name object
 */
-function Phase()
+function Country()
 {
     //Atributes
     this.id;

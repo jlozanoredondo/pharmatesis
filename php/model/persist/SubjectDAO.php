@@ -17,10 +17,11 @@
         private static $colNameId = "id";
         private static $colNameBornDate = "bornDate";
         private static $colNameGender = "gender";
+        private static $colNameBreed = "breed";
         private static $colNameNick = "nick";
         private static $colNameBloodType = "bloodType";
-        private static $colNameCountryId = "countryId";
         private static $colNameStatus= "status";
+        private static $colNameCountryId = "countryId";
 
         //---Databese management section-----------------------
         /**
@@ -55,20 +56,22 @@
             $id = $res[SubjectDAO::$colNameId];
             $bornDate = $res[SubjectDAO::$colNameBornDate];
             $gender = $res[SubjectDAO::$colNameGender];
+            $breed = $res[SubjectDAO::$colNameBreed];
             $nick = $res[SubjectDAO::$colNameNick];
             $bloodType = $res[SubjectDAO::$colNameBloodType];
-            $countryId = $res[SubjectDAO::$colNameCountryId];            
             $status = $res[SubjectDAO::$colNameStatus];            
+            $countryId = $res[SubjectDAO::$colNameCountryId];            
 
             //Object construction
             $entity = new Subject();
             $entity->setId($id);
             $entity->setBornDate($bornDate);
             $entity->setGender($gender);
+            $entity->setBreed($breed);
             $entity->setNick($nick);
             $entity->setBloodType($bloodType);
-            $entity->setCountryId($countryId);
             $entity->setStatus($status);
+            $entity->setCountryId($countryId);
 
             return $entity;
         }
@@ -100,9 +103,9 @@
          * @param id
          * @return object with the query results
          */
-        public static function findById($user) {
+        public static function findById($subject) {
             $cons = "select * from `" . SubjectDAO::$tableName . "` where " . SubjectDAO::$colNameId . " = ?";
-            $arrayValues = [$user->getId()];
+            $arrayValues = [$subject->getId()];
 
             return SubjectDAO::findByQuery($cons, $arrayValues);
         }
@@ -113,9 +116,9 @@
          * @param name
          * @return object with the query results
          */
-        public static function findlikeName($user) {
+        public static function findlikeName($subject) {
             $cons = "select * from `" . SubjectDAO::$tableName . "` where " . SubjectDAO::$colNameName . " like ?";
-            $arrayValues = ["%" . $user->getName() . "%"];
+            $arrayValues = ["%" . $subject->getName() . "%"];
 
             return SubjectDAO::findByQuery($cons, $arrayValues);
         }
@@ -126,9 +129,9 @@
          * @param name
          * @return object with the query results
          */
-        public static function findByName($user) {
+        public static function findByName($subject) {
             $cons = "select * from `" . SubjectDAO::$tableName . "` where " . SubjectDAO::$colNameName . " = ?";
-            $arrayValues = [$user->getName()];
+            $arrayValues = [$subject->getName()];
 
             return SubjectDAO::findByQuery($cons, $arrayValues);
         }
@@ -139,9 +142,9 @@
          * @param name
          * @return object with the query results
          */
-        public static function findByNick($user) {
+        public static function findByNick($subject) {
             $cons = "select * from `" . SubjectDAO::$tableName . "` where " . SubjectDAO::$colNameNick . " = ?";
-            $arrayValues = [$user->getNick()];
+            $arrayValues = [$subject->getNick()];
 
             return SubjectDAO::findByQuery($cons, $arrayValues);
         }
@@ -163,8 +166,8 @@
          * create()
          * insert a new row into the database
          */
-        public function create($user) {
-            /* Connection with the database
+        public function create($subject) {
+            // Connection with the database
               try {
               $conn = DBConnect::getInstance();
               } catch (PDOException $e) {
@@ -172,21 +175,21 @@
               die();
               }
 
-              $cons = "insert into " . SubjectDAO::$tableName . " (`name`,`bornDate1`,`nick`,`password`,`address`,`telephone`,`mail`,`birthDate`,`entryDate`,`dropOutDate`,`active`,`image`) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-              $arrayValues = [$user->getName(), $user->getBornDate1(), $user->getNick(), $user->getPassword(), $user->getAddress(), $user->getTelephone(), $user->getMail(), $user->getBirthDate(), $user->getEntryDate(), $user->getDropOutDate(), $user->getActive(), $user->getImage()];
+              $cons = "insert into " . SubjectDAO::$tableName . " (`bornDate`, `gender`, `breed`, `nick`, `bloodType`, `status`, `countryId`) values (?, ?, ?, ?, ?, ?, ?)";
+              $arrayValues = [$subject->getBornDate(), $subject->getGender(), $subject->getBreed(), $subject->getNick(), $subject->getBloodType(), $subject->getStatus(), $subject->getCountryId()];
 
               $id = $conn->executionInsert($cons, $arrayValues);
 
-              $user->setId($id);
+              $subject->setId($id);
 
-              return $user->getId(); */
+              return $subject->getId(); 
         }
 
         /**
          * delete()
          * it deletes a row from the database
          */
-        public function delete($user) {
+        public function delete($subject) {
             /* Connection with the database
               try {
               $conn = DBConnect::getInstance();
@@ -197,7 +200,7 @@
 
 
               $cons = "delete from `" . SubjectDAO::$tableName . "` where " . SubjectDAO::$colNameId . " = ?";
-              $arrayValues = [$user->getId()];
+              $arrayValues = [$subject->getId()];
 
               $conn->execution($cons, $arrayValues);
              */
@@ -207,7 +210,7 @@
          * update()
          * it updates a row of the database
          */
-        public function update($user) {
+        public function update($subject) {
             /* Connection with the database
               try {
               $conn = DBConnect::getInstance();
@@ -217,7 +220,7 @@
               }
 
               $cons = "update `" . SubjectDAO::$tableName . "` set " . SubjectDAO::$colNameName . " = ?, " . SubjectDAO::$colNameBornDate1 . " = ?, " . SubjectDAO::$colNameNick . " = ?, " . SubjectDAO::$colNamePassword . " = ?, " . SubjectDAO::$colNameAddress . " = ?, " . SubjectDAO::$colNameTelephone . " = ?, " . SubjectDAO::$colNameMail . " = ?, " . SubjectDAO::$colNameBirthDate . " = ?, " . SubjectDAO::$colNameEntryDate . " = ?, " . SubjectDAO::$colNameDropOutDate . " = ?, " . SubjectDAO::$colNameActive . " = ?, " . SubjectDAO::$colNameImage . " = ? where " . SubjectDAO::$colNameId . " = ?";
-              $arrayValues = [$user->getName(), $user->getBornDate1(), $user->getNick(), $user->getPassword(), $user->getAddress(), $user->getTelephone(), $user->getMail(), $user->getBirthDate(), $user->getEntryDate(), $user->getDropOutDate(), $user->getActive(), $user->getImage(), $user->getId()];
+              $arrayValues = [$subject->getName(), $subject->getBornDate1(), $subject->getNick(), $subject->getPassword(), $subject->getAddress(), $subject->getTelephone(), $subject->getMail(), $subject->getBirthDate(), $subject->getEntryDate(), $subject->getDropOutDate(), $subject->getActive(), $subject->getImage(), $subject->getId()];
 
               $conn->execution($cons, $arrayValues); */
         }

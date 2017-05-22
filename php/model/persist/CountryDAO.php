@@ -1,91 +1,110 @@
 <?php
 
-require_once 'model/Country.php';
-
-/**
- * Class that will connect the object with the DB
- * @name CountryDAO.php
- * @author Joan Fernández
- * @date 2017-02-23
- * @version 1.0
- */
-class CountryDAO {
-
-    private $data;
-
-    //Constructor
-    public function __construct() {
-        $this->data = array();
-        array_push($this->data, new Country(1, "EEUU"));
-        array_push($this->data, new Country(2, "Spain"));
-        array_push($this->data, new Country(3, "Mexico"));
-        array_push($this->data, new Country(4, "Porrera"));
-    }
+    require_once "DBConnect.php";
+    require_once "../model/Country.php";
 
     /**
-     * Inserts the object into the DB
-     * @name insertCountry()
+     * Class that will connect the object with the DB
+     * @name CountryDAO.php
      * @author Joan Fernández
      * @date 2017-02-23
      * @version 1.0
-     * @param $country Object to insert
-     * @return $rowsAffected Number of rows affected
      */
-    public static function insertCountry($country) {
-        return 0;
+    class CountryDAO {
+
+        //----------Data base Values---------------------------------------
+        private static $tableName = "country";
+        private static $colNameId = "id";
+        private static $colNameName = "name";
+
+        //---Databese management section-----------------------
+        /**
+         * fromResultSetList()
+         * this function runs a query and returns an array with all the result transformed into an object
+         * @param res query to execute
+         * @return objects collection
+         */
+        public static function fromResultSetList($res) {
+            $entityList = array();
+            $i = 0;
+            //while ( ($row = $res->fetch_array(MYSQLI_BOTH)) != NULL ) {
+            foreach ($res as $row) {
+                //We get all the values an add into the array
+                $entity = CountryDAO::fromResultSet($row);
+
+                $entityList[$i] = $entity;
+                $i++;
+            }
+            return $entityList;
+        }
+
+        /**
+         * fromResultSet()
+         * the query result is transformed into an object
+         * @param res ResultSet del qual obtenir dades
+         * @return object
+         */
+        public static function fromResultSet($res) {
+            //We get all the values form the query
+            $id = $res[CountryDAO::$colNameId];
+            $name = $res[CountryDAO::$colNameName];
+
+            //Object construction
+            $entity = new Phase();
+            $entity->setId($id);
+            $entity->setName($name);
+
+            return $entity;
+        }
+
+        /**
+         * findByQuery()
+         * It runs a particular query and returns the result
+         * @param cons query to run
+         * @return objects collection
+         */
+        public static function findByQuery($cons, $vector) {
+            //Connection with the database
+            try {
+                $conn = DBConnect::getInstance();
+            } catch (PDOException $e) {
+                echo "Error executing query.";
+                error_log("Error executing query in CountryDAO: " . $e->getMessage() . " ");
+                die();
+            }
+
+            $res = $conn->execution($cons, $vector);
+
+            return CountryDAO::fromResultSetList($res);
+        }
+
+        /**
+         * findById()
+         * It runs a query and returns an object array
+         * @param id
+         * @return object with the query results
+         */
+        /*public static function findById($phase) {
+            $cons = "select * from `" . CountryDAO::$tableName . "` where " . CountryDAO::$colNameId . " = ?";
+            $arrayValues = [$phase->getId()];
+
+            return CountryDAO::findByQuery($cons, $arrayValues);
+        }*/
+
+        /**
+         * findAll()
+         * It runs a query and returns an object array
+         * @param none
+         * @return object with the query results
+         */
+        public static function findAll() {
+            $cons = "select * from `" . CountryDAO::$tableName . "`";
+            $arrayValues = [];
+
+            return CountryDAO::findByQuery($cons, $arrayValues);
+        }
+       
+
     }
 
-    /**
-     * Erases the object from the DB
-     * @name deleteCountry()
-     * @author Joan Fernández
-     * @date 2017-02-23
-     * @version 1.0
-     * @param $country Object to delete
-     * @return $rowsAffected Number of rows affected
-     */
-    public static function deleteCountry($country) {
-        return 0;
-    }
-
-    /**
-     * Modifies the object into the DB
-     * @name modifyCountry()
-     * @author Joan Fernández
-     * @date 2017-02-23
-     * @version 1.0
-     * @param $country Object to modify
-     * @return $rowsAffected Number of rows affected
-     */
-    public static function modifyCountry($country) {
-        return 0;
-    }
-
-    /**
-     * Finds an object into the DB
-     * @name findCountry()
-     * @author Joan Fernández
-     * @date 2017-02-23
-     * @version 1.0
-     * @param $country Object to find
-     * @return $foundCountry Founded object
-     */
-    public static function findCountry($country) {
-        $foundCountry = null;
-        return $foundCountry;
-    }
-
-    /**
-     * Find an object using a clause
-     * @name findWhere()
-     * @author Joan Fernández
-     * @date 2017-02-23
-     * @version 1.0
-     * @param $whereClause Clause to find
-     * @return array Founded objects
-     */
-    public function findWhere($whereClause) {
-        return array();
-    }
-
-}
+?>

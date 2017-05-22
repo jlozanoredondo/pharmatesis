@@ -45,3 +45,20 @@ html{
 .btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open>.dropdown-toggle.btn-default.focus, .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:hover{
     background-color: #f5f5f5;
 }
+
+.glyphicon-md{
+    padding: 5px;
+}
+
+.btn-subject{
+    float: right;
+    margin-left: 5px;
+    position: absolute;
+    margin-top: -3px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.th-width{
+    width: 100px;
+}

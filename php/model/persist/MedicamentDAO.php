@@ -1,88 +1,110 @@
 <?php
-    require_once 'model/Medicament.php';
-/** 
- * Class that will connect the object with the DB
- * @name MedicamentDAO.php
- * @author Joan Fernández
- * @date 2017-02-23
- * @version 1.0
-*/
-class MedicamentDAO {
-    
-    private $data;
-    
-    //Constructor
-    public function __construct() {
-        $this->data = array();
-        array_push($this->data,new Medicament(1, "XXD"));
-        array_push($this->data,new Medicament(2, "SSD"));
-        array_push($this->data,new Medicament(3, "YYD"));
-        array_push($this->data,new Medicament(4, "443"));
+
+    require_once "DBConnect.php";
+    require_once "../model/Medicament.php";
+
+    /**
+     * Class that will connect the object with the DB
+     * @name MedicamentDAO.php
+     * @author Joan Fernández
+     * @date 2017-02-23
+     * @version 1.0
+     */
+    class MedicamentDAO {
+
+        //----------Data base Values---------------------------------------
+        private static $tableName = "medicament";
+        private static $colNameId = "id";
+        private static $colNameName = "name";
+
+        //---Databese management section-----------------------
+        /**
+         * fromResultSetList()
+         * this function runs a query and returns an array with all the result transformed into an object
+         * @param res query to execute
+         * @return objects collection
+         */
+        public static function fromResultSetList($res) {
+            $entityList = array();
+            $i = 0;
+            //while ( ($row = $res->fetch_array(MYSQLI_BOTH)) != NULL ) {
+            foreach ($res as $row) {
+                //We get all the values an add into the array
+                $entity = MedicamentDAO::fromResultSet($row);
+
+                $entityList[$i] = $entity;
+                $i++;
+            }
+            return $entityList;
+        }
+
+        /**
+         * fromResultSet()
+         * the query result is transformed into an object
+         * @param res ResultSet del qual obtenir dades
+         * @return object
+         */
+        public static function fromResultSet($res) {
+            //We get all the values form the query
+            $id = $res[MedicamentDAO::$colNameId];
+            $name = $res[MedicamentDAO::$colNameName];
+
+            //Object construction
+            $entity = new Medicament();
+            $entity->setId($id);
+            $entity->setName($name);
+
+            return $entity;
+        }
+
+        /**
+         * findByQuery()
+         * It runs a particular query and returns the result
+         * @param cons query to run
+         * @return objects collection
+         */
+        public static function findByQuery($cons, $vector) {
+            //Connection with the database
+            try {
+                $conn = DBConnect::getInstance();
+            } catch (PDOException $e) {
+                echo "Error executing query.";
+                error_log("Error executing query in MedicamentDAO: " . $e->getMessage() . " ");
+                die();
+            }
+
+            $res = $conn->execution($cons, $vector);
+
+            return MedicamentDAO::fromResultSetList($res);
+        }
+
+        /**
+         * findById()
+         * It runs a query and returns an object array
+         * @param id
+         * @return object with the query results
+         */
+        /*public static function findById($phase) {
+            $cons = "select * from `" . MedicamentDAO::$tableName . "` where " . MedicamentDAO::$colNameId . " = ?";
+            $arrayValues = [$phase->getId()];
+
+            return MedicamentDAO::findByQuery($cons, $arrayValues);
+        }*/
+
+        /**
+         * findAll()
+         * It runs a query and returns an object array
+         * @param none
+         * @return object with the query results
+         */
+        public static function findAll() {
+            $cons = "select * from `" . MedicamentDAO::$tableName . "`";
+            $arrayValues = [];
+
+            return MedicamentDAO::findByQuery($cons, $arrayValues);
+        }
+       
+
     }
-    
-    /** 
-    * Inserts the object into the DB
-    * @name insertMedicament()
-    * @author Joan Fernández
-    * @date 2017-02-23
-    * @version 1.0
-    * @param $medicament Object to insert
-    * @return $rowsAffected Number of rows affected
-    */
-    public static function insertMedicament($medicament) {
-        return 0;
-    }
-    
-    /** 
-    * Erases the object from the DB
-    * @name deleteMedicament()
-    * @author Joan Fernández
-    * @date 2017-02-23
-    * @version 1.0
-    * @param $medicament Object to delete
-    * @return $rowsAffected Number of rows affected
-    */
-    public static function deleteMedicament($medicament) {
-        return 0;
-    }
-    
-    /** 
-    * Modifies the object into the DB
-    * @name modifyMedicament()
-    * @author Joan Fernández
-    * @date 2017-02-23
-    * @version 1.0
-    * @param $medicament Object to modify
-    * @return $rowsAffected Number of rows affected
-    */
-    public static function modifyMedicament($medicament) {
-        return 0;
-    }
-    
-    /** 
-    * Finds an object into the DB
-    * @name findMedicament()
-    * @author Joan Fernández
-    * @date 2017-02-23
-    * @version 1.0
-    * @param $medicament Object to find
-    * @return $foundMedicament Founded object
-    */
-    public static function findMedicament($medicament) {
-        $foundMedicament = null;        
-        return $foundMedicament;
-    }
-    
-    /** 
-    * Find an object using a clause
-    * @name findWhere()
-    * @author Joan Fernández
-    * @date 2017-02-23
-    * @version 1.0
-    * @param $whereClause Clause to find
-    * @return array Founded objects
-    */
-    public function findWhere($whereClause) {
-        return array();
-    }
-}
+
+?>

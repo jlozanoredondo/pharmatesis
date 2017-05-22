@@ -4,6 +4,11 @@
 	require_once "DiseaseControllerClass.php";
 	require_once "DispenseControllerClass.php";
 	require_once "SubjectControllerClass.php";
+	require_once "SessionControllerClass.php";
+	require_once "PhaseControllerClass.php";
+	require_once "CountryControllerClass.php";
+	require_once "MedicamentControllerClass.php";
+	require_once "PreinscriptionControllerClass.php";
 	
 	function is_session_started() {
 	    if (php_sapi_name() !== 'cli') {
@@ -44,6 +49,25 @@
 	        case 4:
 	            $subjectController = new SubjectControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
 	            $outPutData = $subjectController->doAction();
+	            break;
+	        case 5:
+	            $sessionController = new SessionControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
+	            $outPutData = $sessionController->doAction();
+	            break;
+	        case 6:
+	            $phaseController = new PhaseControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
+	            $outPutData = $phaseController->doAction();
+	        case 7:
+	            $countryController = new CountryControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
+	            $outPutData = $countryController->doAction();
+	            break;
+	        case 8:
+	            $medicamentController = new MedicamentControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
+	            $outPutData = $medicamentController->doAction();
+	            break;
+	        case 9:
+	            $preinscriptionController = new PreinscriptionControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
+	            $outPutData = $preinscriptionController->doAction();
 	            break;
 	        default:
 	            $errors = array();

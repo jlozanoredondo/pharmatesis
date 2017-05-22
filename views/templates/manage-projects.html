@@ -28,8 +28,8 @@
                     <td>{{project.initialDate}}</td>
                     <td>{{project.endDate}}</td>
                     <td>{{project.testedDrug}}</td>
-                    <td><button ng-click="projectCtrl.loadProject(project)" class='btn btn-primary btn-sm'>Manage</button></td>
-                    <td><button class="btn btn-danger btn-sm" ng-confirm-click="Are you sure to delete this project?" confirmed-click="projectCtrl.deleteProject(project)">X</button></td>
+                    <td class="btn-group"><button ng-click="loadProject(project)" class='btn btn-primary btn-sm glyphicon glyphicon-cog'></button>
+                    <button class="btn btn-danger btn-sm glyphicon glyphicon-trash" ng-confirm-click="Are you sure to delete this project?" confirmed-click="projectCtrl.deleteProject(project)"></button></td>
                 </tr>                
             </tbody>
         </table>

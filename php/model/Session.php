@@ -18,10 +18,11 @@ class Session {
     private $date;
     
     //Constructor
-    function __construct($id, $name, $date) {
+    function __construct($id=null, $name=null, $date=null, $endDate=null) {
         $this->id = $id;
         $this->name = $name;
         $this->date = $date;
+        $this->endDate = $endDate;
     }
     
     //Getters & Setters
@@ -36,6 +37,9 @@ class Session {
     function getDate() {
         return $this->date;
     }
+    function getEndDate() {
+        return $this->endDate;
+    }
 
     function setId($id) {
         $this->id = $id;
@@ -48,10 +52,17 @@ class Session {
     function setDate($date) {
         $this->date = $date;
     }
+    function setEndDate($endDate) {
+        $this->endDate = $endDate;
+    }
     
-    //Own methods
-    public function __toString() {
-        return sprintf("ID=%s, Name=%s, Date=%s",
-                $this->id,$this->name, $this->date);
+    public function getAll() {
+        $data = array();
+        $data["id"] = $this->id;
+        $data["name"] = $this->name;
+        $data["date"] = $this->date;
+        $data["endDate"] = $this->endDate;
+
+        return $data;
     }
 }

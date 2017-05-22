@@ -129,4 +129,16 @@ class Dispense {
 
         return $data;
     }
+
+    public function setAll($id, $projectId, $subjectId, $phaseId, $sessionId, $viability, $sideEffects, $dose, $reaction) {
+        $this->setId($id);
+        $this->setProjectId($projectId);
+        $this->setSubjectId($subjectId);
+        $this->setPhaseId($phaseId);
+        $this->setSessionId($sessionId);
+        $this->setViability($viability);
+        $this->setSideEffects($sideEffects);
+        $this->setDose($dose);
+        $this->setReaction($reaction);
+    }
 }

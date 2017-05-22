@@ -42,6 +42,9 @@
             switch ($this->getAction()) {
                 case 10000:
                     $outPutData = $this->subjectConnection();
+                    break;     
+                case 10010:
+                    $outPutData = $this->addSubject();
                     break;                               
                 default:
                     $errors = array();
@@ -77,6 +80,26 @@
             }
             
             return $outPutData;
+        }
+
+        private function addSubject(){
+            $subjectObj = json_decode(stripslashes($this->getJsonData()));
+
+            $subject = new Subject();
+            $country = $subjectObj->country;
+            $countryId = $country->id;
+
+            $date = date( 'Y-m-d H:i:s', strtotime($subjectObj->bornDate) );
+
+            $subject->setAll(0, $date, $subjectObj->gender, $subjectObj->breed, $subjectObj->nick, $subjectObj->bloodType, $subjectObj->status, $countryId);
+
+            $subject->setId(SubjectDAO::create($subject));
+            
+            $outPutData = array();
+            $outPutData[]= true;
+            $outPutData[1]=$subject->getAll();
+
+            return $outPutData;           
         }
 
     }

@@ -1,13 +1,13 @@
 /** 
- * Class to manage the Phase objects
- * @name Phase.js
+ * Class to manage the Medicament objects
+ * @name Medicament.js
  * @author Jonathan Lozano
  * @date 2017-05-15
  * @version 1.0
  * @param id: ID of the phase
-        * name: Phase's name object
+        * name: Medicament's name object
 */
-function Phase()
+function Medicament()
 {
     //Atributes
     this.id;

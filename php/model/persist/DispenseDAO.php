@@ -100,17 +100,29 @@
         }
 
         /**
-         * findById()
+         * findByProjectId()
          * It runs a query and returns an object array
-         * @param id
+         * @param dispense
          * @return object with the query results
          */
-        /*public static function findById($user) {
-            $cons = "select * from `" . DispenseDAO::$tableName . "` where " . DispenseDAO::$colNameId . " = ?";
-            $arrayValues = [$user->getId()];
+        public static function findByProjectId($dispense) {
+            $cons = "select * from `" . DispenseDAO::$tableName . "` where " . DispenseDAO::$colNameProjectId . " = ?";
+            $arrayValues = [$dispense->getProjectId()];
 
             return DispenseDAO::findByQuery($cons, $arrayValues);
-        }*/
+        }
+        /**
+         * findUpdate()
+         * It runs a query and returns an object array
+         * @param dispense
+         * @return object with the query results
+         */
+        public static function findUpdate($dispense) {
+            $cons = "select * from `" . DispenseDAO::$tableName . "` where " . DispenseDAO::$colNameProjectId . " = ? and ". DispenseDAO::$colNameSubjectId . " = ? and ". DispenseDAO::$colNamePhaseId . " = ? and ". DispenseDAO::$colNameSessionId . " = ?";
+            $arrayValues = [$dispense->getProjectId(), $dispense->getSubjectId(), $dispense->getPhaseId(), $dispense->getSessionId()];
+
+            return DispenseDAO::findByQuery($cons, $arrayValues);
+        }
 
       
         /**
@@ -130,8 +142,8 @@
          * create()
          * insert a new row into the database
          */
-        public function create($user) {
-            /* Connection with the database
+        public function create($dispense) {
+             //Connection with the database
               try {
               $conn = DBConnect::getInstance();
               } catch (PDOException $e) {
@@ -139,21 +151,21 @@
               die();
               }
 
-              $cons = "insert into " . DispenseDAO::$tableName . " (`name`,`subjectId1`,`nick`,`sessionId`,`address`,`televiability`,`mail`,`birthDate`,`entryDate`,`dropOutDate`,`active`,`image`) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-              $arrayValues = [$user->getName(), $user->getSubjectId1(), $user->getNick(), $user->getSessionId(), $user->getAddress(), $user->getTeleviability(), $user->getMail(), $user->getBirthDate(), $user->getEntryDate(), $user->getDropOutDate(), $user->getActive(), $user->getImage()];
+              $cons = "insert into " . DispenseDAO::$tableName . " (`projectId`, `subjectId`, `phaseId`, `sessionId`, `viability`, `dose`, `sideEffects`, `reaction`) values (?, ?, ?, ?, ?, ?, ?, ?)";
+              $arrayValues = [$dispense->getProjectId(), $dispense->getSubjectId(), $dispense->getPhaseId(), $dispense->getSessionId(), $dispense->getViability(), $dispense->getDose(), $dispense->getSideEffects(), $dispense->getReaction()];
 
               $id = $conn->executionInsert($cons, $arrayValues);
 
-              $user->setId($id);
+              $dispense->setId($id);
 
-              return $user->getId(); */
+              return $dispense->getId(); 
         }
 
         /**
          * delete()
          * it deletes a row from the database
          */
-        public function delete($user) {
+        public function delete($dispense) {
             /* Connection with the database
               try {
               $conn = DBConnect::getInstance();
@@ -164,7 +176,7 @@
 
 
               $cons = "delete from `" . DispenseDAO::$tableName . "` where " . DispenseDAO::$colNameId . " = ?";
-              $arrayValues = [$user->getId()];
+              $arrayValues = [$dispense->getId()];
 
               $conn->execution($cons, $arrayValues);
              */
@@ -174,8 +186,8 @@
          * update()
          * it updates a row of the database
          */
-        public function update($user) {
-            /* Connection with the database
+        public function update($dispense) {
+            // Connection with the database
               try {
               $conn = DBConnect::getInstance();
               } catch (PDOException $e) {
@@ -183,10 +195,10 @@
               die();
               }
 
-              $cons = "update `" . DispenseDAO::$tableName . "` set " . DispenseDAO::$colNameProjectId . " = ?, " . DispenseDAO::$colNameSubjectId1 . " = ?, " . DispenseDAO::$colNameNick . " = ?, " . DispenseDAO::$colNameSessionId . " = ?, " . DispenseDAO::$colNameAddress . " = ?, " . DispenseDAO::$colNameTeleviability . " = ?, " . DispenseDAO::$colNameMail . " = ?, " . DispenseDAO::$colNameBirthDate . " = ?, " . DispenseDAO::$colNameEntryDate . " = ?, " . DispenseDAO::$colNameDropOutDate . " = ?, " . DispenseDAO::$colNameActive . " = ?, " . DispenseDAO::$colNameImage . " = ? where " . DispenseDAO::$colNameId . " = ?";
-              $arrayValues = [$user->getName(), $user->getSubjectId1(), $user->getNick(), $user->getSessionId(), $user->getAddress(), $user->getTeleviability(), $user->getMail(), $user->getBirthDate(), $user->getEntryDate(), $user->getDropOutDate(), $user->getActive(), $user->getImage(), $user->getId()];
+              $cons = "update `" . DispenseDAO::$tableName . "` set " . DispenseDAO::$colNameViability . " = ?, " . DispenseDAO::$colNameSideEffects . " = ?, " . DispenseDAO::$colNameDose . " = ?, " . DispenseDAO::$colNameReaction . " = ? where " . DispenseDAO::$colNameId . " = ?";
+              $arrayValues = [$dispense->getViability(), $dispense->getSideEffects(), $dispense->getDose(), $dispense->getReaction(), $dispense->getId()];
 
-              $conn->execution($cons, $arrayValues); */
+              $conn->execution($cons, $arrayValues);
         }
 
     }

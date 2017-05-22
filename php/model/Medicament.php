@@ -16,7 +16,7 @@ class Medicament {
     private $name;
     
     //Constructor
-    function __construct($id, $name) {
+    function __construct($id=null, $name=null) {
         $this->id = $id;
         $this->name = $name;
     }
@@ -38,9 +38,11 @@ class Medicament {
         $this->name = $name;
     }
     
-    //Own methods
-    public function __toString() {
-        return sprintf("ID=%s, Name=%s",
-                $this->id,$this->name);
+    public function getAll() {
+        $data = array();
+        $data["id"] = $this->id;
+        $data["name"] = $this->name;
+
+        return $data;
     }
 }
