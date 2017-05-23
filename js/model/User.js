@@ -27,10 +27,9 @@ function User()
     this.bornDate;
     this.specialism;
     this.professionId;
-    this.image;
     
     //Constructor
-    this.construct = function (id, name, password, surnames, email, phone, bornDate, specialism, professionId, image)
+    this.construct = function (id, name, password, surnames, email, phone, bornDate, specialism, professionId)
     {
         this.setId(id);
         this.setName(name);
@@ -41,7 +40,6 @@ function User()
         this.setBornDate(bornDate);
         this.setSpecialism(specialism);
         this.setProfessionId(professionId);
-        this.image(image);
     }
     
     //Getters & Setters
@@ -54,7 +52,6 @@ function User()
     this.setBornDate = function (bornDate) {this.bornDate=bornDate;}
     this.setSpecialism = function (specialism) {this.specialism=specialism;}
     this.setProfessionId = function (professionId) {this.professionId=professionId;}
-    this.setImage = function (image) {this.image=image;}
     //
     this.getId = function () {return this.id;}
     this.getName = function () {return this.name;}    
@@ -65,5 +62,4 @@ function User()
     this.getBornDate = function () {return this.bornDate;}
     this.getSpecialism = function () {return this.specialism;}   
     this.getProfessionId = function () {return this.professionId;}
-    this.getImage = function () {return this.image;}
 }

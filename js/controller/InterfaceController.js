@@ -77,4 +77,15 @@
             controllerAs: 'showUsers'
         };
     });
+    
+    angular.module('pharmatesisApp').directive("modifyForm", function (){
+        return {
+                restrict: 'E',
+                templateUrl:"views/templates/modify-form.html",
+                controller:function(){
+
+                },
+            controllerAs: 'modifyForm'
+        };
+    });
 })();

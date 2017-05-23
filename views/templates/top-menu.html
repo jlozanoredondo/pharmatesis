@@ -9,16 +9,15 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.html">Pharmatesis</a>
+            <a class="navbar-brand" href="home.html">Pharmatesis</a>
         </div>
-
         <ul class="nav navbar-nav">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="">Projects
                     <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="" ng-click="action=1">New project</a></li>
-                    <li><a href="" ng-click="action=2">Manage projects</a></li>                    
+                    <li><a href="" ng-click="action=2">Manage projects</a></li>
                 </ul>
             </li>          
         </ul> 
@@ -28,22 +27,10 @@
                 <i class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown">
                 </i>
                 <ul class="dropdown-menu">
-                    <li><a href="" ng-click="action=3">Login</a></li>
-                    <li><a href="" ng-click="action=4">Register</a></li>
-                    <li><a href="" ng-click="action=6">Logout</a></li>
+                    <li><a href="" ng-click="action=8">Profile</a></li>                    
+                    <li><a href="" ng-click="SessionCtrl.logOut()">Logout</a></li>
                 </ul>
             </li>
         </ul>
-        <form id="search-form" action="index.php" class="navbar-form navbar-right">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search user...">
-                <div class="input-group-btn">
-                    <button ng-click="action=5" type="button" class="btn btn-default" id="searchList" name="searchList">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                    <input name="action" id="action" hidden="hidden" value=""/> 
-                </div>
-            </div>
-        </form>
     </div>
 </nav>

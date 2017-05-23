@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html ng-app="pharmatesisApp" xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
@@ -11,7 +12,7 @@
         <link rel="stylesheet" type="text/css" href="vendors/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">        
         <link rel="stylesheet" type="text/css" href="files/css/reset.css" />
-        <link rel="stylesheet" type="text/css" href="files/css/login.css" />
+        <link rel="stylesheet" type="text/css" href="files/css/index.css" />
         <!-- jQuery-->
         <script src="vendors/jquery/js/jQuery.js" type="text/javascript" xml:space="preserve"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
@@ -28,12 +29,14 @@
         <script src="vendors/angular/js/angular-cookies.js" type="text/javascript" xml:space="preserve"></script>
         <script src="vendors/angular/js/dirPagination.js" type="text/javascript" xml:space="preserve"></script>
         <script src="vendors/bootstrap/js/ui-bootstrap-tpls-2.3.1.js" type="text/javascript" xml:space="preserve"></script>
+        
         <!-- Controllers-->
         <script src="js/app.js" type="text/javascript" xml:space="preserve"></script>
         <script src="js/controller/InterfaceController.js" type="text/javascript" xml:space="preserve"></script>
         <script src="js/controller/ProjectController.js" type="text/javascript" xml:space="preserve"></script>
         <script src="js/controller/UserController.js" type="text/javascript" xml:space="preserve"></script>
         <script src="js/controller/SessionController.js" type="text/javascript" xml:space="preserve"></script>
+        
         <!--Model-->
         <script src="js/model/User.js" type="text/javascript" xml:space="preserve"></script>
         <script src="js/model/Project.js" type="text/javascript" xml:space="preserve"></script>
@@ -47,15 +50,24 @@
         <script src="js/model/Preinscription.js" type="text/javascript" xml:space="preserve"></script>
         <script src="js/model/Endure.js" type="text/javascript" xml:space="preserve"></script>
     </head>
-    <body ng-controller="SessionController as SessionCtrl" ng-init="SessionCtrl.sessionControl()">
-        <div class="login-page">
-            <div class="form" ng-controller="UserController as userCtrl">
-                <form class="login-form" name="loginForm" ng-submit="userCtrl.connection()" novalidate>
-                    <input type="email" id="email" placeholder="Email" ng-model="user.email" required/>
-                    <input type="password" id="password" placeholder="Password" ng-model="user.password" required/>
-                    <button type="submit" name="login" id="login">Log in</button>
-                    <p class="message">Not registered? <a href="register.html">Create an account</a></p>
-                </form>
+    <body ng-controller="SessionController as SessionCtrl" ng-init="userAction=1;SessionCtrl.sessionControl()">
+        <div id="mainPage" ng-controller="InterfaceController as IntCtrl" ng-init="loadInterface()">
+            <div>
+                <top-menu></top-menu>
+            </div>
+            <div class="container" ng-controller="ProjectController as projectCtrl" ng-init="projectCtrl.loadDisease();loadProjects()">
+                <div ng-show="action==1">
+                    <create-project-form></create-project-form>
+                </div>
+                <div ng-show="action==2">
+                    <manage-projects></manage-projects>
+                </div>
+                <div ng-show="action==6">
+                    <manage-project></manage-project>
+                </div>
+            </div>
+            <div ng-show="action==8"> 
+                <modify-form></modify-form>
             </div>
         </div>
     </body>

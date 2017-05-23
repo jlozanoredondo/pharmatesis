@@ -50,11 +50,18 @@
     <body ng-controller="SessionController as SessionCtrl" ng-init="SessionCtrl.sessionControl()">
         <div class="login-page">
             <div class="form" ng-controller="UserController as userCtrl">
-                <form class="login-form" name="loginForm" ng-submit="userCtrl.connection()" novalidate>
-                    <input type="email" id="email" placeholder="Email" ng-model="user.email" required/>
-                    <input type="password" id="password" placeholder="Password" ng-model="user.password" required/>
-                    <button type="submit" name="login" id="login">Log in</button>
-                    <p class="message">Not registered? <a href="register.html">Create an account</a></p>
+                <form class="login-form" name="registerForm" ng-submit="userCtrl.register()" novalidate>                    
+                    <input type="text" id="name" name="name" placeholder="Name" ng-model="user.name" required/>
+                    <input type="text" id="surnames" name="surnames" placeholder="Surnames" ng-model="user.surnames" required/>
+                    <!--Born Date-->
+                    <input type="email" id="email" name="email" placeholder="Email" ng-model="user.email" required/>
+                    <input type="password" id="password" name="password" placeholder="Password" ng-model="user.password" required/>
+                    <input type="password" id="repPassword" name="repPassword" placeholder="Repeat password" required/>
+                    <input type="number" id="phone" name="phone" placeholder="Phone" ng-model="user.phone"/>
+                    <!--Profession-->
+                    <input type="text" id="specialism" name="specialism" placeholder="Specialism" ng-model="user.specialism" required/>                    
+                    <button type="submit" name="register" id="register">Register</button>
+                    <p class="message">Already registered? <a href="index.html">Log in</a></p>
                 </form>
             </div>
         </div>

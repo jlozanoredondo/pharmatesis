@@ -17,35 +17,14 @@
 
                     if (!isNaN(objAux.id))
                     {
-                        $scope.user.construct(objAux.id, objAux.name, objAux.surname1, objAux.nick, objAux.password, objAux.address, objAux.telephone, objAux.mail, new Date(objAux.birthDate), objAux.entryDate, objAux.dropOutDate, objAux.active, objAux.image);
+                        $scope.user.construct(objAux.id, objAux.name, objAux.password, objAux.surnames, objAux.email, objAux.phone, objAux.bornDate, objAux.specialism, objAux.professionId);
                     }
                 }
-            }
-
-            $scope.passwordValid = true;
-            $scope.nickValid = true;
-
-            $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-            $scope.format = $scope.formats[0];
-            $scope.dateOptions = {
-                dateDisabled: "",
-                formatYear: 'yyyy',
-                maxDate: new Date(),
-                minDate: "",
-                startingDay: 1
-            };
-
-            $scope.birthDate = {
-                opened: false
-            };
-
-            $scope.openBirthDate = function () {
-                $scope.birthDate.opened = true;
-            };           
+            }           
 
             this.connection = function ()
             {
-                //copy
+                //Angular copy
                 $scope.user = angular.copy($scope.user);
 
                 //Server conenction to verify user's data
@@ -55,13 +34,10 @@
                     if (outPutData[0] === true)
                     {
                         if (typeof (Storage) !== "undefined") {
-
                             sessionStorage.userConnected = JSON.stringify(outPutData[1][0]);
-                            //window.open("mainWindow.html", "_self");
-                            console.log("Logged correctly");
-                            alert("SUUUUU!");
+                            window.open("home.html", "_self");
                         } else {
-                            alert("Your browser is not compatible with this application, upgrade it plase!");
+                            alert("Your browser is not compatible with this application, upgrade it!");
                         }
                     } else
                     {

@@ -23,7 +23,6 @@
         private static $colNameBornDate= "bornDate";
         private static $colNameSpecialism = "specialism";
         private static $colNameProfessionId = "professionId";
-        private static $colNameImage = "image";
 
         //---Databese management section-----------------------
         /**
@@ -63,7 +62,6 @@
             $bornDate = $res[UserDAO::$colNameBornDate];
             $specialism = $res[UserDAO::$colNameSpecialism];
             $professionId = $res[UserDAO::$colNameProfessionId];
-            $image = $res[UserDAO::$colNameImage];            
 
             //Object construction
             $entity = new User();
@@ -75,8 +73,7 @@
             $entity->setPhone($phone);
             $entity->setBornDate($bornDate);
             $entity->setSpecialism($specialism);
-            $entity->setProfessionId($professionId);
-            $entity->setImage($image);            
+            $entity->setProfessionId($professionId);      
 
             return $entity;
         }

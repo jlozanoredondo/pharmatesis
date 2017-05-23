@@ -141,7 +141,7 @@
             * @params       project: object project to show.
             * @return       none
             */
-            $scope.loadProject = function(project){
+            $scope.loadProject = function(project) {
                 $scope.project = project;
                 $scope.filteredData = [];
                 $scope.subjectArray = [];
