@@ -60,20 +60,20 @@
             $errors = array();
             $outPutData[0] = true;
 
-            $phaseList = MedicamentDAO::findAll();
+            $medicamentList = MedicamentDAO::findAll();
 
-            if (count($phaseList) == 0) {
+            if (count($medicamentList) == 0) {
                 $outPutData[0] = false;
                 $errors[] = "No medicaments was found with these data.";
                 $outPutData[1] = $errors;
             } else {
-                $phasesArray = array();
+                $medicamentsArray = array();
 
-                foreach ($phaseList as $phase) {
-                    $phasesArray[] = $phase->getAll();
+                foreach ($medicamentList as $medicament) {
+                    $medicamentsArray[] = $medicament->getAll();
                 }
 
-                $outPutData[1] = $phasesArray;
+                $outPutData[1] = $medicamentsArray;
             }
             
             return $outPutData;

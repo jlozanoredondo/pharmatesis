@@ -2,31 +2,31 @@
 
 /** 
  * Class to manage the Endure objects
- * @name Dispense.php
+ * @name Endure.php
  * @author Joan Fernández
  * @date 2017-02-23
  * @version 1.0
- * @param endureId: ID of the endure
+ * @param id: ID of the endure
         * subjectId: Endures's subject id
         * diseaseId: Endures's disease id
 */
 class Endure {
     
     //Attributes
-    private $endureId;
+    private $id;
     private $subjectId;
     private $diseaseId;
     
     //Constructor
-    function __construct($projectId, $subjectId, $diseaseId) {
-        $this->projectId = $projectId;
+    function __construct($id=null, $subjectId=null, $diseaseId=null) {
+        $this->id = $id;
         $this->subjectId = $subjectId;
         $this->diseaseId = $diseaseId;
     }
     
     //Getters & Setters
-    function getEndureId() {
-        return $this->endureId;
+    function getId() {
+        return $this->id;
     }
 
     function getSubjectId() {
@@ -37,8 +37,8 @@ class Endure {
         return $this->diseaseId;
     }
 
-    function setEndureId($endureId) {
-        $this->endureId = $endureId;
+    function setId($id) {
+        $this->id = $id;
     }
 
     function setSubjectId($subjectId) {
@@ -49,9 +49,18 @@ class Endure {
         $this->diseaseId = $diseaseId;
     }
    
-    //Own methods
-    public function __toString() {
-        return sprintf("ID=%s, SubjectID=%s, DiseaseID=%s",
-                $this->endureId,$this->subjectId,$this->diseaseId);
+    public function getAll() {
+        $data = array();
+        $data["id"] = $this->id;
+        $data["subjectId"] = $this->subjectId;
+        $data["diseaseId"] = $this->diseaseId;
+
+        return $data;
+    }
+
+    public function setAll($id, $subjectId, $diseaseId) {
+        $this->setId($id);
+        $this->setSubjectId($subjectId);
+        $this->setDiseaseId($diseaseId);
     }
 }

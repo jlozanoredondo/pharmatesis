@@ -20,10 +20,12 @@ class Subject {
     private $nick;
     private $bloodType;
     private $status;
+    private $height;
+    private $weight;
     private $countryId;
     
     //Constructor
-    function __construct($id=null, $bornDate=null, $gender=null, $breed=null, $nick=null, $bloodType=null, $status=null, $countryId=null)  {
+    function __construct($id=null, $bornDate=null, $gender=null, $breed=null, $nick=null, $bloodType=null, $status=null, $height=null, $weight=null, $countryId=null)  {
         $this->id = $id;
         $this->bornDate = $bornDate;
         $this->gender = $gender;
@@ -31,6 +33,8 @@ class Subject {
         $this->nick = $nick;
         $this->bloodType = $bloodType;
         $this->status = $status;
+        $this->height = $height;
+        $this->weight = $weight;
         $this->countryId = $countryId;
     }
     
@@ -61,6 +65,14 @@ class Subject {
 
     function getStatus() {
         return $this->status;
+    }
+
+    function getHeight() {
+        return $this->height;
+    }
+
+    function getWeight() {
+        return $this->weight;
     }
 
     function getCountryId() {
@@ -95,6 +107,14 @@ class Subject {
         $this->status = $status;
     }
 
+    function setHeight($height) {
+        $this->height = $height;
+    }
+
+    function setWeight($weight) {
+        $this->weight = $weight;
+    }
+
     function setCountryId($countryId) {
         $this->countryId = $countryId;
     }
@@ -108,12 +128,14 @@ class Subject {
         $data["nick"] = $this->nick;        
         $data["bloodType"] = $this->bloodType;      
         $data["status"] = $this->status;
+        $data["height"] = $this->height;
+        $data["weight"] = $this->weight;
         $data["countryId"] = $this->countryId;
 
         return $data;
     }
 
-    public function setAll($id, $bornDate, $gender, $breed, $nick, $bloodType, $status, $countryId) {
+    public function setAll($id, $bornDate, $gender, $breed, $nick, $bloodType, $status, $height, $weight, $countryId) {
         $this->setId($id);
         $this->setBornDate($bornDate);
         $this->setGender($gender);
@@ -121,6 +143,8 @@ class Subject {
         $this->setNick($nick);
         $this->setBloodType($bloodType);
         $this->setStatus($status);
+        $this->setHeight($height);
+        $this->setWeight($weight);
         $this->setCountryId($countryId);
     }
 }

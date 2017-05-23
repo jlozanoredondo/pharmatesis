@@ -8,20 +8,20 @@
  * @version 1.0
  * @param id: Preinscription's id
         * subjectId: Preinscription's subject id
-        * medicamenId: Preinscription's medicamenId id
+        * medicamentId: Preinscription's medicamentId id
 */
 class Preinscription {
             
     //Attributes
     private $id;
     private $subjectId;
-    private $medicamenId;
+    private $medicamentId;
     
     //Constructor
-    function __construct($id, $subjectId, $medicamenId) {
+    function __construct($id=null, $subjectId=null, $medicamentId=null) {
         $this->id = $id;
         $this->subjectId = $subjectId;
-        $this->medicamenId = $medicamenId;
+        $this->medicamentId = $medicamentId;
     }
     
     //Getters && Setters
@@ -33,8 +33,8 @@ class Preinscription {
         return $this->subjectId;
     }
 
-    function getMedicamenId() {
-        return $this->medicamenId;
+    function getMedicamentId() {
+        return $this->medicamentId;
     }
 
     function setId($id) {
@@ -45,13 +45,22 @@ class Preinscription {
         $this->subjectId = $subjectId;
     }
 
-    function setMedicamenId($medicamenId) {
-        $this->medicamenId = $medicamenId;
+    function setMedicamentId($medicamentId) {
+        $this->medicamentId = $medicamentId;
     }
 
-    //Own methods
-    public function __toString() {
-        return sprintf("ID=%s, SubjectID=%s, Medicament=%s",
-                $this->endureId,$this->subjectId,$this->medicamenId);
+    public function getAll() {
+        $data = array();
+        $data["id"] = $this->id;
+        $data["subjectId"] = $this->subjectId;
+        $data["medicamentId"] = $this->medicamentId;
+
+        return $data;
+    }
+
+    public function setAll($id, $subjectId, $medicamentId) {
+        $this->setId($id);
+        $this->setSubjectId($subjectId);
+        $this->setMedicamentId($medicamentId);
     }
 }

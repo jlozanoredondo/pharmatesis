@@ -42,6 +42,12 @@
             switch ($this->getAction()) {
                 case 10000:
                     $outPutData = $this->sessionConnection();
+                    break;   
+                case 10010:
+                    $outPutData = $this->closeSession();
+                    break;   
+                case 10020:
+                    $outPutData = $this->addSession();
                     break;                              
                 default:
                     $errors = array();
@@ -75,6 +81,42 @@
 
                 $outPutData[1] = $sessionsArray;
             }
+            
+            return $outPutData;
+        }
+
+        private function closeSession(){
+            $dispenseObject = json_decode(stripslashes($this->getJsonData()));
+            
+            $outPutData = array();
+            $errors = array();
+            $outPutData[0] = true;
+
+            $session = new Session();
+            $session = $dispenseObject->session;
+            $sessionId = $session->id;
+
+            $sessionClose = new Session();
+            $sessionClose->setAll($sessionId,0,0,0);
+
+            SessionDAO::closeSession($sessionClose);
+            
+            return $outPutData;
+        } 
+
+        private function addSession(){
+            $sessionObject = json_decode(stripslashes($this->getJsonData()));
+            
+            $outPutData = array();
+            $errors = array();
+            $outPutData[0] = true;
+
+            $sessionAdd = new Session();
+            $name = $sessionObject->name;
+            $sessionAdd->setAll(0,$name,date("Y-m-d H:i:s"),null);
+
+            $sessionAdd->setId(SessionDAO::create($sessionAdd));            
+            $outPutData[1]=$sessionAdd->getAll();
             
             return $outPutData;
         }           

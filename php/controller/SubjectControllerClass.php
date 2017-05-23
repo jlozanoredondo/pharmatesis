@@ -91,7 +91,7 @@
 
             $date = date( 'Y-m-d H:i:s', strtotime($subjectObj->bornDate) );
 
-            $subject->setAll(0, $date, $subjectObj->gender, $subjectObj->breed, $subjectObj->nick, $subjectObj->bloodType, $subjectObj->status, $countryId);
+            $subject->setAll(0, $date, $subjectObj->gender, $subjectObj->breed, $subjectObj->nick, $subjectObj->bloodType, $subjectObj->status, $subjectObj->height, $subjectObj->weight, $countryId);
 
             $subject->setId(SubjectDAO::create($subject));
             

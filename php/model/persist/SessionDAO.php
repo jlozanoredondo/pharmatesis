@@ -54,7 +54,7 @@
             $endDate = $res[SessionDAO::$colNameSessionEndDate];
 
             //Object construction
-            $entity = new Session();
+            $entity = new session();
             $entity->setId($id);
             $entity->setName($name);
             $entity->setDate($date);
@@ -90,9 +90,9 @@
          * @param id
          * @return object with the query results
          */
-        /*public static function findById($Session) {
+        /*public static function findById($session) {
             $cons = "select * from `" . SessionDAO::$tableName . "` where " . SessionDAO::$colNameId . " = ?";
-            $arrayValues = [$Session->getId()];
+            $arrayValues = [$session->getId()];
 
             return SessionDAO::findByQuery($cons, $arrayValues);
         }*/
@@ -103,9 +103,9 @@
          * @param name
          * @return object with the query results
          */
-        /*public static function findlikeName($Session) {
+        /*public static function findlikeName($session) {
             $cons = "select * from `" . SessionDAO::$tableName . "` where " . SessionDAO::$colNameName . " like ?";
-            $arrayValues = ["%" . $Session->getName() . "%"];
+            $arrayValues = ["%" . $session->getName() . "%"];
 
             return SessionDAO::findByQuery($cons, $arrayValues);
         }*/
@@ -116,9 +116,9 @@
          * @param name
          * @return object with the query results
          */
-        /*public static function findByName($Session) {
+        /*public static function findByName($session) {
             $cons = "select * from `" . SessionDAO::$tableName . "` where " . SessionDAO::$colNameName . " = ?";
-            $arrayValues = [$Session->getName()];
+            $arrayValues = [$session->getName()];
 
             return SessionDAO::findByQuery($cons, $arrayValues);
         }*/
@@ -140,7 +140,7 @@
          * create()
          * insert a new row into the database
          */
-        public function create($Session) {
+        public function create($session) {
             // Connection with the database
               try {
               $conn = DBConnect::getInstance();
@@ -149,21 +149,36 @@
               die();
               }
 
-              $cons = "insert into " . SessionDAO::$tableName . " (`userId`, `name`, `initialDate`, `testedDrug`, `diseaseId`) values (?, ?, ?, ?, ?)";
-              $arrayValues = [$Session->getUserId(), $Session->getName(), $Session->getInitialDate(), $Session->getTestedDrug(), $Session->getDiseaseId()];
+              $cons = "insert into " . SessionDAO::$tableName . " (`name`, `sessionDate`) values (?, ?)";
+              $arrayValues = [$session->getName(), $session->getDate()];
 
               $id = $conn->executionInsert($cons, $arrayValues);
 
-              $Session->setId($id);
+              $session->setId($id);
 
-              return $Session->getId(); 
+              return $session->getId(); 
+        }
+
+        public function closeSession($session){
+            // Connection with the database
+              try {
+              $conn = DBConnect::getInstance();
+              } catch (PDOException $e) {
+              print "Error connecting database: " . $e->getMessage() . " ";
+              die();
+              }
+
+              $cons = "update `" . SessionDAO::$tableName . "` set " . SessionDAO::$colNameSessionEndDate . " = ? where " . SessionDAO::$colNameId . " = ?";
+              $arrayValues = [date("Y-m-d H:i:s"), $session->getId()];
+
+              $conn->execution($cons, $arrayValues);
         }
 
         /**
          * delete()
          * it deletes a row from the database
          */
-        public function delete($Session) {
+        public function delete($session) {
              //Connection with the database
               try {
               $conn = DBConnect::getInstance();
@@ -174,7 +189,7 @@
 
 
               $cons = "delete from `" . SessionDAO::$tableName . "` where " . SessionDAO::$colNameId . " = ?";
-              $arrayValues = [$Session->getId()];
+              $arrayValues = [$session->getId()];
 
               $conn->execution($cons, $arrayValues);
              
@@ -184,7 +199,7 @@
          * update()
          * it updates a row of the database
          */
-        public function update($Session) {
+        public function update($session) {
             /* Connection with the database
               try {
               $conn = DBConnect::getInstance();
@@ -194,7 +209,7 @@
               }
 
               $cons = "update `" . SessionDAO::$tableName . "` set " . SessionDAO::$colNameName . " = ?, " . SessionDAO::$colNameSurname1 . " = ?, " . SessionDAO::$colNameNick . " = ?, " . SessionDAO::$colNamePassword . " = ?, " . SessionDAO::$colNameAddress . " = ?, " . SessionDAO::$colNameTelephone . " = ?, " . SessionDAO::$colNameMail . " = ?, " . SessionDAO::$colNameBirthDate . " = ?, " . SessionDAO::$colNameEntryDate . " = ?, " . SessionDAO::$colNameDropOutDate . " = ?, " . SessionDAO::$colNameActive . " = ?, " . SessionDAO::$colNameImage . " = ? where " . SessionDAO::$colNameId . " = ?";
-              $arrayValues = [$Session->getName(), $Session->getSurname1(), $Session->getNick(), $Session->getPassword(), $Session->getAddress(), $Session->getTelephone(), $Session->getMail(), $Session->getBirthDate(), $Session->getEntryDate(), $Session->getDropOutDate(), $Session->getActive(), $Session->getImage(), $Session->getId()];
+              $arrayValues = [$session->getName(), $session->getSurname1(), $session->getNick(), $session->getPassword(), $session->getAddress(), $session->getTelephone(), $session->getMail(), $session->getBirthDate(), $session->getEntryDate(), $session->getDropOutDate(), $session->getActive(), $session->getImage(), $session->getId()];
 
               $conn->execution($cons, $arrayValues); */
         }

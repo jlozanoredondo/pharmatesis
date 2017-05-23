@@ -65,4 +65,11 @@ class Session {
 
         return $data;
     }
+
+    public function setAll($id, $name, $date, $endDate) {
+        $this->setId($id);
+        $this->setName($name);
+        $this->setDate($date);
+        $this->setEndDate($endDate);
+    }
 }

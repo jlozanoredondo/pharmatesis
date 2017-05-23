@@ -21,6 +21,8 @@
         private static $colNameNick = "nick";
         private static $colNameBloodType = "bloodType";
         private static $colNameStatus= "status";
+        private static $colNameHeight= "height";
+        private static $colNameWeight= "weight";
         private static $colNameCountryId = "countryId";
 
         //---Databese management section-----------------------
@@ -60,6 +62,8 @@
             $nick = $res[SubjectDAO::$colNameNick];
             $bloodType = $res[SubjectDAO::$colNameBloodType];
             $status = $res[SubjectDAO::$colNameStatus];            
+            $height = $res[SubjectDAO::$colNameHeight];            
+            $weight = $res[SubjectDAO::$colNameWeight];            
             $countryId = $res[SubjectDAO::$colNameCountryId];            
 
             //Object construction
@@ -71,6 +75,8 @@
             $entity->setNick($nick);
             $entity->setBloodType($bloodType);
             $entity->setStatus($status);
+            $entity->setHeight($height);
+            $entity->setWeight($weight);
             $entity->setCountryId($countryId);
 
             return $entity;
@@ -175,8 +181,8 @@
               die();
               }
 
-              $cons = "insert into " . SubjectDAO::$tableName . " (`bornDate`, `gender`, `breed`, `nick`, `bloodType`, `status`, `countryId`) values (?, ?, ?, ?, ?, ?, ?)";
-              $arrayValues = [$subject->getBornDate(), $subject->getGender(), $subject->getBreed(), $subject->getNick(), $subject->getBloodType(), $subject->getStatus(), $subject->getCountryId()];
+              $cons = "insert into " . SubjectDAO::$tableName . " (`bornDate`, `gender`, `breed`, `nick`, `bloodType`, `status`, `height`, `weight`, `countryId`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+              $arrayValues = [$subject->getBornDate(), $subject->getGender(), $subject->getBreed(), $subject->getNick(), $subject->getBloodType(), $subject->getStatus(), $subject->getHeight(), $subject->getWeight(), $subject->getCountryId()];
 
               $id = $conn->executionInsert($cons, $arrayValues);
 

@@ -1,16 +1,16 @@
 <?php    
     /**
     * Controller to connect the project client data with the server
-    * @name PreinscriptionControllerClass.php
+    * @name EndureControllerClass.php
     * @author Jonathan Lozano
     * @date 2017-05-15
     * @version 1.0
     */
     require_once "ControllerInterface.php";
-    require_once "../model/Preinscription.php";
-    require_once "../model/persist/PreinscriptionDAO.php";
+    require_once "../model/Endure.php";
+    require_once "../model/persist/EndureDAO.php";
 
-    class PreinscriptionControllerClass implements ControllerInterface {
+    class EndureControllerClass implements ControllerInterface {
 
         private $action;
         private $jsonData;
@@ -41,42 +41,42 @@
 
             switch ($this->getAction()) {
                 case 10000:
-                    $outPutData = $this->addPreinscription();
+                    $outPutData = $this->addEndure();
                     break;               
                 default:
                     $errors = array();
                     $outPutData[0] = false;
                     $errors[] = "Sorry, there has been an error. Try again later.";
                     $outPutData[] = $errors;
-                    error_log("Action not correct in PreinscriptionControllerClass, value: " . $this->getAction());
+                    error_log("Action not correct in EndureControllerClass, value: " . $this->getAction());
                     break;
             }
 
             return $outPutData;
         }
 
-        private function addPreinscription() {
-            $preinscriptionObj = json_decode(stripslashes($this->getJsonData()));
+        private function addEndure() {
+            $endureObj = json_decode(stripslashes($this->getJsonData()));
             $outPutData = array();
             $errors = array();
             $outPutData[0] = true;
-            $preinscriptionArray = array();
+            $endureArray = array();
 
-            foreach ($preinscriptionObj as $preinscription) {
-                $s = $preinscription->subject;
+            foreach ($endureObj as $endure) {
+                $s = $endure->subject;
                 $s = $s->id;
-                $m = $preinscription->medicament;
-                $m = $m->id;
-                $p = new Preinscription();
-                $p->setAll(0,$s,$m);
-                $p->setId(PreinscriptionDAO::create($p));
-                $preinscriptionArray[]=$p->getAll();
+                $d = $endure->disease;
+                $d = $d->id;
+                $e = new Endure();
+                $e->setAll(0,$s,$d);
+                $e->setId(EndureDAO::create($e));
+                $endureArray[]=$e->getAll();
             }           
 
-            $outPutData[]=$preinscriptionArray;
+            $outPutData[]=$endureArray;
             
             return $outPutData;
         } 
-   
+
     }
 ?>

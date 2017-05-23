@@ -11,6 +11,8 @@
         * nick: Subject's nick
         * bloodType: Subject's bloodType number
         * status: Subject's status
+        * height: Subject's height
+        * weight: Subject's weight
         * countryId: Subject's profession ID (relation with Profession)
 */
 function Subject()
@@ -23,10 +25,12 @@ function Subject()
     this.nick;
     this.bloodType;
     this.status;
+    this.height;
+    this.weight;
     this.countryId;
     
     //Constructor
-    this.construct = function (id, bornDate, gender, breed, nick, bloodType, status, countryId)
+    this.construct = function (id, bornDate, gender, breed, nick, bloodType, status, height, weight, countryId)
     {
         this.setId(id);
         this.setBornDate(bornDate);
@@ -35,6 +39,8 @@ function Subject()
         this.setNick(nick);
         this.setBloodType(bloodType);
         this.setStatus(status);
+        this.setHeight(height);
+        this.setWeight(weight);
         this.setCountryId(countryId);
     }
     
@@ -46,6 +52,8 @@ function Subject()
     this.setNick = function (nick) {this.nick=nick;}
     this.setBloodType = function (bloodType) {this.bloodType=bloodType;}
     this.setStatus = function (status) {this.status=status;}
+    this.setHeight = function (height) {this.height=height;}
+    this.setWeight = function (weight) {this.weight=weight;}
     this.setCountryId = function (countryId) {this.countryId=countryId;}
     //
     this.getId = function () {return this.id;}
@@ -55,5 +63,7 @@ function Subject()
     this.getNick = function () {return this.nick;}
     this.getBloodType = function () {return this.bloodType;}
     this.getStatus = function () {return this.status;}   
+    this.getHeight = function () {return this.height;}   
+    this.getWeight = function () {return this.weight;}   
     this.getCountryId = function () {return this.countryId;}
 }

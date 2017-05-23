@@ -9,6 +9,7 @@
 	require_once "CountryControllerClass.php";
 	require_once "MedicamentControllerClass.php";
 	require_once "PreinscriptionControllerClass.php";
+	require_once "EndureControllerClass.php";
 	
 	function is_session_started() {
 	    if (php_sapi_name() !== 'cli') {
@@ -57,6 +58,7 @@
 	        case 6:
 	            $phaseController = new PhaseControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
 	            $outPutData = $phaseController->doAction();
+	            break;
 	        case 7:
 	            $countryController = new CountryControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
 	            $outPutData = $countryController->doAction();
@@ -68,6 +70,10 @@
 	        case 9:
 	            $preinscriptionController = new PreinscriptionControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
 	            $outPutData = $preinscriptionController->doAction();
+	            break;
+	        case 10:
+	            $endureController = new EndureControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
+	            $outPutData = $endureController->doAction();
 	            break;
 	        default:
 	            $errors = array();
