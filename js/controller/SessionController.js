@@ -1,7 +1,7 @@
 //Angular code
 (function () {
 
-    angular.module('pharmatesisApp').controller("SessionController", ['$http', '$scope', '$window', '$cookies', 'accessService', 'userConnected', function ($http, $scope, $window, $cookies, accessService, userConnected) {
+    angular.module('pharmatesisApp').controller("SessionController", ['$http', '$scope', '$window', '$cookies', 'accessService', function ($http, $scope, $window, $cookies, accessService) {
             //scope variables
             $scope.user = new User();
             $scope.userAction = 0;
@@ -38,8 +38,7 @@
                                 $scope.user.construct(outPutData[1].id, outPutData[1].name, outPutData[1].password, outPutData[1].surnames, outPutData[1].email, outPutData[1].phone, outPutData[1].bornDate, outPutData[1].specialism, outPutData[1].professionId);
                                 $scope.sessionOpened = true;
 
-                                userConnected.user = $scope.user;
-
+                                sessionStorage.userConnected = JSON.stringify($scope.user);
                                 var a = 1;
                             } else
                             {

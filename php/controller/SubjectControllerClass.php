@@ -59,11 +59,20 @@
         }
 
         private function subjectConnection() {
+            $subjectObj = json_decode(stripslashes($this->getJsonData()));
+
+            $subject = new Subject();
+            
+            $userId = $subjectObj->id;
+
+
+            $subject->setAll(0, 0, 0, 0, 0, 0, 0, 0, 0, 0,$userId);
+
             $outPutData = array();
             $errors = array();
             $outPutData[0] = true;
 
-            $subjectList = SubjectDAO::findAll();
+            $subjectList = SubjectDAO::findAllUser($subject);
 
             if (count($subjectList) == 0) {
                 $outPutData[0] = false;
@@ -88,10 +97,12 @@
             $subject = new Subject();
             $country = $subjectObj->country;
             $countryId = $country->id;
+            $user = $subjectObj->user;
+            $userId = $user->id;
 
             $date = date( 'Y-m-d H:i:s', strtotime($subjectObj->bornDate) );
 
-            $subject->setAll(0, $date, $subjectObj->gender, $subjectObj->breed, $subjectObj->nick, $subjectObj->bloodType, $subjectObj->status, $subjectObj->height, $subjectObj->weight, $countryId);
+            $subject->setAll(0, $date, $subjectObj->gender, $subjectObj->breed, $subjectObj->nick, $subjectObj->bloodType, $subjectObj->status, $subjectObj->height, $subjectObj->weight, $countryId,1);
 
             $subject->setId(SubjectDAO::create($subject));
             

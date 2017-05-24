@@ -133,14 +133,14 @@
         }*/
 
         /**
-         * findAll()
+         * findAllUser()
          * It runs a query and returns an object array
          * @param none
          * @return object with the query results
          */
-        public static function findAll() {
-            $cons = "select * from `" . ProjectDAO::$tableName . "`";
-            $arrayValues = [];
+        public static function findAllUser($project) {
+            $cons = "select * from `" . ProjectDAO::$tableName . "` where " . ProjectDAO::$colNameUserId . " = ?";
+            $arrayValues = [$project->getUserId()];
 
             return ProjectDAO::findByQuery($cons, $arrayValues);
         }

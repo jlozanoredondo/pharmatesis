@@ -16,7 +16,7 @@ class Country {
     private $name;
     
     //Constructor
-    function __construct($id, $name) {
+    function __construct($id=null, $name=null) {
         $this->id = $id;
         $this->name = $name;
     }

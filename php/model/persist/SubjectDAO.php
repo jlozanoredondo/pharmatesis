@@ -24,6 +24,7 @@
         private static $colNameHeight= "height";
         private static $colNameWeight= "weight";
         private static $colNameCountryId = "countryId";
+        private static $colNameUserId = "userId";
 
         //---Databese management section-----------------------
         /**
@@ -65,6 +66,7 @@
             $height = $res[SubjectDAO::$colNameHeight];            
             $weight = $res[SubjectDAO::$colNameWeight];            
             $countryId = $res[SubjectDAO::$colNameCountryId];            
+            $userId = $res[SubjectDAO::$colNameUserId];            
 
             //Object construction
             $entity = new Subject();
@@ -77,7 +79,8 @@
             $entity->setStatus($status);
             $entity->setHeight($height);
             $entity->setWeight($weight);
-            $entity->setCountryId($countryId);
+            $entity->setCountryId($userId);
+            $entity->setUserId($userId);
 
             return $entity;
         }
@@ -161,9 +164,9 @@
          * @param none
          * @return object with the query results
          */
-        public static function findAll() {
-            $cons = "select * from `" . SubjectDAO::$tableName . "`";
-            $arrayValues = [];
+        public static function findAllUser($subject) {
+            $cons = "select * from `" . SubjectDAO::$tableName . "` where " . SubjectDAO::$colNameUserId . " = ?";
+            $arrayValues = [$subject->getUserId()];
 
             return SubjectDAO::findByQuery($cons, $arrayValues);
         }
@@ -181,8 +184,8 @@
               die();
               }
 
-              $cons = "insert into " . SubjectDAO::$tableName . " (`bornDate`, `gender`, `breed`, `nick`, `bloodType`, `status`, `height`, `weight`, `countryId`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-              $arrayValues = [$subject->getBornDate(), $subject->getGender(), $subject->getBreed(), $subject->getNick(), $subject->getBloodType(), $subject->getStatus(), $subject->getHeight(), $subject->getWeight(), $subject->getCountryId()];
+              $cons = "insert into " . SubjectDAO::$tableName . " (`bornDate`, `gender`, `breed`, `nick`, `bloodType`, `status`, `height`, `weight`, `countryId`, `userId`) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+              $arrayValues = [$subject->getBornDate(), $subject->getGender(), $subject->getBreed(), $subject->getNick(), $subject->getBloodType(), $subject->getStatus(), $subject->getHeight(), $subject->getWeight(), $subject->getCountryId(),$subject->getUserId()];
 
               $id = $conn->executionInsert($cons, $arrayValues);
 

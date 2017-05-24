@@ -1,12 +1,14 @@
 (function () {
-    angular.module('pharmatesisApp').controller("ProjectController", ['$http', '$scope', '$window', '$cookies', 'accessService',
-        'userConnected', '$filter', function ($http, $scope, $window, $cookies, accessService, userConnected, $filter) {
+    angular.module('pharmatesisApp').controller("ProjectController", ['$http', '$scope', '$window', '$cookies', 'accessService', '$filter', function ($http, $scope, $window, $cookies, accessService, $filter) {
             
+            var userConnected = JSON.parse(sessionStorage.getItem("userConnected"));
+
             $scope.projectsArray = new Array();
             $scope.diseaseArray = new Array();
             $scope.dispenseArray = new Array();
             $scope.subjectArray = new Array();
             $scope.subjectsProjectArray = new Array();
+            $scope.subjectsAddProject = new Array();
             $scope.sessionArray = new Array();
             $scope.sessionProjectArray = new Array();
             $scope.phaseArray = new Array();
@@ -16,15 +18,19 @@
             $scope.preinscriptionArray = new Array();
             $scope.endureArray = new Array();
             $scope.statusArray = ["Single","Married","Divorced","Widowed"];
-            $scope.viabilityArray = ["Oral pills","Topical","Intravenous","Oral liquid"];
+            $scope.viabilityArray = ["Oral","Topical","Intravenously"];
             $scope.bloodTypeArray = ["A","B","AB","0"];
             $scope.newSubject = new Subject();
+            $scope.selectSubject = new Subject();
             $scope.newSession = new Session();
             $scope.project = new Project();
             $scope.dispense = new Dispense();
-            $scope.project.setUserId(1);
-            $scope.msg=0;
 
+            $scope.project.setUserId(userConnected.id);
+            $scope.msg=0;
+            $scope.info=0;
+            $scope.newSubjectDDBB=0;
+            $scope.showSubject=0;
 
             //DATEPICKER ANGULARJS
             //Scope variables for datepicker
@@ -53,7 +59,7 @@
             };
 
             //Pagination variables
-            $scope.pageSize = 4;
+            $scope.pageSize = 10;
             $scope.currentPage = 1;
 
             $scope.$watch("name",function () {
@@ -61,9 +67,10 @@
             });
 
             $scope.loadProjects = function(){
+                $scope.project = angular.copy($scope.project);
                 $scope.filteredData = [];
                 $scope.projectsArray = [];
-                var promise = accessService.getData("php/controller/MainController.php", true, "POST", {controllerType: 1, action: 10000, jsonData: JSON.stringify("")});
+                var promise = accessService.getData("php/controller/MainController.php", true, "POST", {controllerType: 1, action: 10000, jsonData: JSON.stringify($scope.project)});
 
                 promise.then(function (outPutData) {
                     if (outPutData[0] === true)
@@ -141,7 +148,8 @@
             * @params       project: object project to show.
             * @return       none
             */
-            $scope.loadProject = function(project) {
+            $scope.loadProject = function(project){
+                $scope.user = angular.copy($scope.user);
                 $scope.project = project;
                 $scope.filteredData = [];
                 $scope.subjectArray = [];
@@ -153,21 +161,33 @@
                 $scope.phaseProjectArray = [];
                 $scope.dispenseArray = [];
                 $scope.subjectsProjectArray = [];
+                $scope.subjectsAddProject = [];
 
+                var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:5,action:10000,jsonData:JSON.stringify("")});
 
-                var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:4,action:10000,jsonData:JSON.stringify("")});
+                promise.then(function (outPutData) {
+                    if(outPutData[0]=== true) {
+                        for (var i = 0; i < outPutData[1].length; i++) {
+                        var session = new Session();
+                            session.construct(outPutData[1][i].id, outPutData[1][i].name, outPutData[1][i].date, outPutData[1][i].endDate);
+                            $scope.sessionArray.push(session);
+                        }
+                    }
+                });
+
+                var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:4,action:10000,jsonData:JSON.stringify($scope.user)});
 
                     promise.then(function (outPutData) {
                         if(outPutData[0]=== true) {
                             for (var i = 0; i < outPutData[1].length; i++) {
                             var subject = new Subject();
-                                subject.construct(outPutData[1][i].id, outPutData[1][i].bornDate, outPutData[1][i].gender, outPutData[1][i].breed, outPutData[1][i].nick, outPutData[1][i].bloodType, outPutData[1][i].status, outPutData[1][i].height, outPutData[1][i].weight, outPutData[1][i].countryId);
+                                subject.construct(outPutData[1][i].id, outPutData[1][i].bornDate, outPutData[1][i].gender, outPutData[1][i].breed, outPutData[1][i].nick, outPutData[1][i].bloodType, outPutData[1][i].status, outPutData[1][i].height, outPutData[1][i].weight, outPutData[1][i].countryId,1);
                                 $scope.subjectArray.push(subject);
                             }
                         }
                     });
 
-                var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:7,action:10000,jsonData:JSON.stringify("")});
+                    var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:7,action:10000,jsonData:JSON.stringify("")});
 
                     promise.then(function (outPutData) {
                         if(outPutData[0]=== true) {
@@ -179,7 +199,7 @@
                         }
                     });
 
-                var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:8,action:10000,jsonData:JSON.stringify("")});
+                    var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:8,action:10000,jsonData:JSON.stringify("")});
 
                     promise.then(function (outPutData) {
                         if(outPutData[0]=== true) {
@@ -191,10 +211,9 @@
                         }
                     });
 
-                var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:6,action:10000,jsonData:JSON.stringify("")});
+                    var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:6,action:10000,jsonData:JSON.stringify("")});
 
                     promise.then(function (outPutData) {
-                        console.log(outPutData);
                         if(outPutData[0]=== true) {
                             for (var i = 0; i < outPutData[1].length; i++) {
                             var phase = new Phase();
@@ -204,41 +223,27 @@
                         }
                     });
 
-                $scope.dispense.setProject(project);
-                $scope.dispense = angular.copy($scope.dispense);
-                var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:3,action:10000,jsonData:JSON.stringify($scope.dispense)});
+                    $scope.dispense.setProject(project);
+                    $scope.dispense = angular.copy($scope.dispense);
+                    var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:3,action:10000,jsonData:JSON.stringify($scope.dispense)});
                 
                     promise.then(function (outPutData) {
-                        if(outPutData[0]=== true) {
-
-                            var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:5,action:10000,jsonData:JSON.stringify("")});
-
-                                promise.then(function (outPutData) {
-                                        console.log(outPutData);
-                                    if(outPutData[0]=== true) {
-                                        for (var i = 0; i < outPutData[1].length; i++) {
-                                        var session = new Session();
-                                            session.construct(outPutData[1][i].id, outPutData[1][i].name, outPutData[1][i].date, outPutData[1][i].endDate);
-                                            $scope.sessionArray.push(session);
-                                        }
-                                    }
-                                });
+                        if(outPutData[0]=== true) {                            
 
                             for (var i = 0; i < outPutData[1].length; i++) {
                             var dispense = new Dispense();
                                 dispense.construct(outPutData[1][i].id, outPutData[1][i].projectId, outPutData[1][i].viability, outPutData[1][i].sideEffects, outPutData[1][i].dose, outPutData[1][i].reaction);
 
 
-                                for(var j=0;j<$scope.phaseArray.length;j++){
+                                for(j=0;j<$scope.phaseArray.length;j++){
                                     if($scope.phaseArray[j].getId()==outPutData[1][i].phaseId){
+                                        console.log(1);
                                         dispense.setPhase($scope.phaseArray[j]);
-                                        if($scope.phaseProjectArray.indexOf($scope.phaseArray[j])==-1){
-                                        $scope.phaseProjectArray.push($scope.phaseArray[j]);
-                                        }
-                                    }   
+                                        $scope.dispense.setPhase($scope.phaseArray[j]);
+                                        
+                                    }                                       
                                 }
 
-                                $scope.dispense.setPhase($scope.phaseProjectArray[0]);
 
                                 for(var j=0;j<$scope.subjectArray.length;j++){
                                     if($scope.subjectArray[j].getId()==outPutData[1][i].subjectId){
@@ -247,54 +252,88 @@
                                         $scope.subjectsProjectArray.push($scope.subjectArray[j]);
                                         }
                                     }   
+                                    $scope.dispense.setSubject($scope.subjectArray[j]);
                                 }
-                                $scope.dispense.setSubject($scope.subjectsProjectArray[0]);
+                                
+                                for(var j=0;j<$scope.subjectsProjectArray.length;j++){
+                                    if($scope.subjectsProjectArray.indexOf($scope.subjectArray[j])==-1){
+                                        $scope.newSubjectDDBB=1;
+                                        $scope.subjectsAddProject.push($scope.subjectArray[j]);
+                                    }
+                                }
 
+                                
                                 for(var j=0;j<$scope.sessionArray.length;j++){
                                     if($scope.sessionArray[j].getId()==outPutData[1][i].sessionId){
                                         dispense.setSession($scope.sessionArray[j]);
-                                        console.log($scope.sessionArray[j].getEndDate());
-                                        if($scope.sessionProjectArray.indexOf($scope.sessionArray[j])==-1  && $scope.sessionArray[j].getEndDate()==null){
-                                            console.log($scope.sessionArray[j].getEndDate());
-                                        $scope.sessionProjectArray.push($scope.sessionArray[j]);
-                                        }
-
+                                        $scope.dispense.setSession($scope.sessionArray[j]);
                                     }   
                                 }
-                                $scope.dispense.setSession($scope.sessionProjectArray[0]);
+                                
                                 $scope.dispenseArray.push(dispense);
-                            }
+                            }                   
+                            console.log($scope.dispenseArray);         
                             $scope.filteredData = $scope.dispenseArray;
                         }else{ 
                             $('#newSession').modal('show');                           
                             $scope.dispense.setPhase($scope.phaseArray[0]);
                         }
-                    });
 
+                    });                    
                 $scope.$parent.action=6;
             }
 
             this.addDispense = function(){
-                console.log($scope.dispense);
                 $scope.msg=0;
-                $scope.dispense = angular.copy($scope.dispense);
-                var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:3,action:10010,jsonData:JSON.stringify($scope.dispense)}); 
+                if($scope.newSession.getName()!=undefined){
+                    $scope.newSession = angular.copy($scope.newSession);
+                    var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:5,action:10020,jsonData:JSON.stringify($scope.newSession)}); 
+                    promise.then(function (outPutData) {
+                        if(outPutData[0]=== true) {  
 
-                promise.then(function (outPutData) {
-                    if(outPutData[0]=== true) {
-                        $scope.msg=2;
-                        $scope.loadProject($scope.dispense.project);
-                    } else {
-                        if(angular.isArray(outPutData[1])) {
-                            alert(outPutData[1]);
-                        } else {
-                            if(confirm("This subject has a dispense for this session. Do you want to update this data?")){
-                                $scope.updateDispense();
-                            }
+                            var session = new Session();
+                            session.construct(outPutData[1].id, outPutData[1].name, outPutData[1].date, outPutData[1].endDate);
+                            $scope.dispense.setSession(session);                        
                             
+                            $scope.dispense = angular.copy($scope.dispense);
+                            var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:3,action:10010,jsonData:JSON.stringify($scope.dispense)}); 
+
+                            promise.then(function (outPutData) {
+                                if(outPutData[0]=== true) {
+                                    $scope.info=0;   
+                                    $scope.msg=2;
+                                    $scope.newSession = new Session();
+                                    $scope.loadProject($scope.dispense.project);
+                                }
+                            });
+                        } else {
+                            if(angular.isArray(outPutData[1])) {
+                                $scope.msg=8;
+                            } else {
+                                alert("There has been an error in the server, try again later");
+                            }
                         }
-                    }
-                });
+                    });
+                } else{
+                    $scope.dispense = angular.copy($scope.dispense);
+                    var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:3,action:10010,jsonData:JSON.stringify($scope.dispense)}); 
+
+                    promise.then(function (outPutData) {
+                        if(outPutData[0]=== true) {
+                            $scope.msg=2;
+                            $scope.loadProject($scope.dispense.project);
+                        } else {
+                            if(angular.isArray(outPutData[1])) {
+                                alert(outPutData[1]);
+                            } else {
+                                if(confirm("This subject has a dispense for this session. Do you want to update this data?")){
+                                    $scope.updateDispense();
+                                }
+                                
+                            }
+                        }
+                    });
+                }                             
             }
 
             $scope.updateDispense = function(){
@@ -318,14 +357,13 @@
             }
 
             this.addSubject = function(){
-                var insertPreinscription;
-                var insertEndure;
+                $scope.newSubject.setUser($scope.user);
                 $scope.newSubject = angular.copy($scope.newSubject);
                 var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:4,action:10010,jsonData:JSON.stringify($scope.newSubject)}); 
                 promise.then(function (outPutData) {
                     if(outPutData[0]=== true) {  
                         var subject = new Subject();
-                            subject.construct(outPutData[1].id, outPutData[1].bornDate, outPutData[1].gender, outPutData[1].breed, outPutData[1].nick, outPutData[1].bloodType, outPutData[1].status, outPutData[1].height, outPutData[1].weight, outPutData[1].countryId);
+                            subject.construct(outPutData[1].id, outPutData[1].bornDate, outPutData[1].gender, outPutData[1].breed, outPutData[1].nick, outPutData[1].bloodType, outPutData[1].status, outPutData[1].height, outPutData[1].weight, outPutData[1].countryId,outPutData[1].userId);
                         $scope.subjectsProjectArray.push(subject);
                         
                         for(var i=0; i<$scope.preinscriptionArray.length;i++){
@@ -343,7 +381,8 @@
 
                                 var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:10,action:10000,jsonData:JSON.stringify($scope.endureArray)}); 
                                 promise.then(function (outPutData) {
-                                    if(outPutData[0]=== true) {  
+                                    if(outPutData[0]=== true) {
+                                        $scope.dispense.setSubject(subject);  
                                         $('#newSubject').modal('hide');
                                         $scope.msg=4;
                                     }else {
@@ -368,6 +407,7 @@
                 });
             }
 
+
             this.closeSession = function(){
                 $scope.dispense = angular.copy($scope.dispense);
                 var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:5,action:10010,jsonData:JSON.stringify($scope.dispense)}); 
@@ -385,25 +425,25 @@
                 });
             }
 
-            this.addSession = function(){
-                $scope.newSession = angular.copy($scope.newSession);
-                var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:5,action:10020,jsonData:JSON.stringify($scope.newSession)}); 
-                promise.then(function (outPutData) {
-                    if(outPutData[0]=== true) {  
+            this.closePhase = function(){
+                this.closeSession();
+                for(var j=0;j<$scope.phaseArray.length;j++){
+                    if($scope.phaseArray[j].getId()==$scope.dispense.getPhase().getId()){
+                        $scope.dispense.setPhase($scope.phaseArray[j+1]);
+                        console.log($scope.dispense);
+                    }   
+                    break;
+                }
+            }
 
-                        var session = new Session();
-                        session.construct(outPutData[1].id, outPutData[1].name, outPutData[1].date, outPutData[1].endDate);
-                        $scope.dispense.setSession(session); 
-                        $('#newSession').modal('hide');
-                        $scope.msg=6;
-                    } else {
-                        if(angular.isArray(outPutData[1])) {
-                            $scope.msg=8;
-                        } else {
-                            alert("There has been an error in the server, try again later");
-                        }
-                    }
-                });
+            this.addSession = function(){
+                $('#newSession').modal('hide'); 
+                if($scope.subjectsProjectArray.length==0){
+                    $('#newSubject').modal('show');     
+                    $('#newSubject').css('overflow-y','scroll');               
+                }else{
+                    $scope.info=1;   
+                }             
             }
 
             this.newSubMedicaments = function(index){
@@ -417,6 +457,14 @@
                 var endure = new Endure();
                 endure.setDisease(index);
                 $scope.endureArray.push(endure);
+            }
+
+            this.selectSubject = function(){
+                if($scope.subjectsProjectArray.indexOf($scope.selectSubject)==-1){
+                    $scope.subjectsProjectArray.push($scope.selectSubject);
+                }
+                $('#newSubject').modal('hide');
+                $scope.info=1;
             }
         /*
         * @name         deleteProject

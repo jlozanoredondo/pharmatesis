@@ -6,12 +6,6 @@ $(document).ready(function () {
 (function () {
     var pharmatesisApp = angular.module('pharmatesisApp', ['ng-currency', 'ui.bootstrap', 'ngCookies', 'angularUtils.directives.dirPagination']);
     
-    pharmatesisApp.factory('userConnected', function(){
-      // I know this doesn't work, but what will?
-      var user = new User();
-      return user;
-  });
-
     pharmatesisApp.directive('validFile', function () {
         return {
             require: 'ngModel',

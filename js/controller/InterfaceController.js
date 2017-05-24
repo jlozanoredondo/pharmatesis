@@ -1,7 +1,6 @@
 //Angular code
 (function () {
-    angular.module('pharmatesisApp').controller("InterfaceController", ['$http', '$scope', '$window', '$cookies', 'accessService',
-        'userConnected', function ($http, $scope, $window, $cookies, accessService, userConnected) {
+    angular.module('pharmatesisApp').controller("InterfaceController", ['$http', '$scope', '$window', '$cookies', 'accessService', function ($http, $scope, $window, $cookies, accessService) {
         
         //$scope.action = $cookies.getObject("action");
         

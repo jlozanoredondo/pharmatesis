@@ -13,7 +13,8 @@
         * status: Subject's status
         * height: Subject's height
         * weight: Subject's weight
-        * countryId: Subject's profession ID (relation with Profession)
+        * countryId: Subject's countryId ID 
+        * user: Subject's user object
 */
 function Subject()
 {
@@ -28,9 +29,10 @@ function Subject()
     this.height;
     this.weight;
     this.countryId;
+    this.user;
     
     //Constructor
-    this.construct = function (id, bornDate, gender, breed, nick, bloodType, status, height, weight, countryId)
+    this.construct = function (id, bornDate, gender, breed, nick, bloodType, status, height, weight, countryId, user)
     {
         this.setId(id);
         this.setBornDate(bornDate);
@@ -42,6 +44,7 @@ function Subject()
         this.setHeight(height);
         this.setWeight(weight);
         this.setCountryId(countryId);
+        this.setUser(user);
     }
     
     //Getters & Setters
@@ -55,6 +58,7 @@ function Subject()
     this.setHeight = function (height) {this.height=height;}
     this.setWeight = function (weight) {this.weight=weight;}
     this.setCountryId = function (countryId) {this.countryId=countryId;}
+    this.setUser = function (user) {this.user=user;}
     //
     this.getId = function () {return this.id;}
     this.getBornDate = function () {return this.bornDate;}    
@@ -66,4 +70,5 @@ function Subject()
     this.getHeight = function () {return this.height;}   
     this.getWeight = function () {return this.weight;}   
     this.getCountryId = function () {return this.countryId;}
+    this.getUser = function () {return this.user;}
 }

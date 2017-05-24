@@ -28,19 +28,19 @@
                     <th>Dose (mg)</th>
                     <th>Reaction</th>
                     <th class="th-width">Session <a title="Add new sesion" class="btn btn-default btn-sm btn-subject" confirmed-click="projectCtrl.closeSession()" ng-confirm-click="Are you sure to close the opened session? This step can not be undone" ><span class="glyphicon glyphicon-plus"></span></a></th>
-                    <th class="th-width">Phase <a title="Add new phase" class="btn btn-default btn-sm btn-subject" confirmed-click="$parent.action=7" ng-confirm-click="Are you sure to close the opened session? This step can not be undone" ><span class="glyphicon glyphicon-plus"></span></a></th>
+                    <th class="th-width">Phase <a title="Add new phase" class="btn btn-default btn-sm btn-subject" confirmed-click="projectCtrl.closePhase()" ng-confirm-click="Are you sure to close the opened phase and the last session? This step can not be undone" ><span class="glyphicon glyphicon-plus"></span></a></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr dir-paginate="dispense in filteredData | orderBy:'dispense.session.id' | itemsPerPage: pageSize | filter:search:strict" current-page="currentPage">
+                <tr dir-paginate="dispense in filteredData | orderBy:'session' | itemsPerPage: pageSize | filter:search:strict" current-page="currentPage">
                     <td>{{dispense.subject.nick}}</td>
                     <td>{{dispense.viability}}</td>
                     <td>{{dispense.sideEffects}}</td>
                     <td>{{dispense.dose}}</td>
                     <td>{{dispense.reaction}}</td>                    
                     <td>{{dispense.session.name}}</td>                    
-                    <td>{{dispense.phase.id}}</td>                    
+                    <td>{{dispense.phase.name}}</td>                    
                     <td></td>                    
                 </tr> 
                 <tr>
@@ -60,10 +60,10 @@
                         <input required="required" type="text" ng-model="dispense.reaction" class="form-control" /> 
                     </td>  
                     <td>
-                        {{session.getId()}}   
+                        {{dispense.session.getName()}}   
                     </td>  
                     <td>
-                        {{phase.getId()}}
+                        {{dispense.phase.getName()}}
                     </td>   
                     <td>
                         <button ng-click="projectCtrl.addDispense()" ng-disabled="manageProject.$invalid" type="button" class="btn btn-success btn-sm">
@@ -88,11 +88,11 @@
     <div class="alert alert-success" ng-show="msg==4">
         <strong>Success!</strong> Subject inserted correctly.
     </div>
-    <div class="alert alert-success" ng-show="msg==6">
-        <strong>Success!</strong> Session added correctly.
-    </div>
     <div class="alert alert-danger" ng-show="msg==7">
         <strong>Danger!</strong> Session not inserted.
+    </div>
+    <div class="alert alert-info" ng-show="info==1">
+        <strong>Remember!</strong> These changes will not take effect until you enter a dispense.
     </div>
 </div>
 <div id="newSubject" class="modal fade" role="dialog">
@@ -102,8 +102,16 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Add a new subject</h4>
             </div>
-            <form name="addSubject" ng-submit="addSubject.$valid" novalidate >
-                <div class="modal-body">
+            <div class="modal-body">                
+                <div class="form-group">
+                    <div class="radio">
+                        <label><input name="showSubject" ng-click="showSubject=1" type="radio">New subject</label>
+                    </div>
+                    <div ng-show="newSubjectDDBB==1" class="radio">
+                        <label><input name="showSubject" ng-click="showSubject=2" type="radio">Select subject from app</label>
+                    </div>
+                </div>
+                <form ng-show="showSubject==1;" name="addSubject" ng-submit="addSubject.$valid" novalidate >
                     <div class="form-group">
                         <label for="bornDate">Born date:</label>
                         <input type="text" class="form-control"
@@ -162,19 +170,31 @@
                         <p>Disease:</p>
                         <label ng-repeat="disease in diseaseArray" class="checkbox-inline"><input class="checkbox-line" type="checkbox" id="dis{{$index}}" ng-click="projectCtrl.newSubDisease(disease)" />{{disease.getName()}}</label>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="alert alert-danger" ng-show="msg==5">
-                        <strong>Danger!</strong> Subject not inserted. Review the data introduced.
-                    </div>
                     <div class="btn-group">
                         <button ng-click="projectCtrl.addSubject()" ng-disabled="addSubject.$invalid" type="button" class="btn btn-success btn-sm">
                             <span class="glyphicon glyphicon-ok glyphicon-md"></span> 
                         </button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
+                </form>
+                <form name="selectSubject" ng-submit="selectSubject.$valid" novalidate ng-show="showSubject==2">
+                    <div class="form-group">
+                        <select required="required" ng-model="selectSubject" class="form-control" ng-options="subject.getNick() for subject in subjectsAddProject"></select>
+                    </div> 
+                    <div class="btn-group">
+                        <button ng-click="projectCtrl.selectSubject()" ng-disabled="selectSubject.$invalid" type="button" class="btn btn-success btn-sm">
+                            <span class="glyphicon glyphicon-ok glyphicon-md"></span> 
+                        </button>
+                    </div> 
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="alert alert-danger" ng-show="msg==5">
+                    <strong>Danger!</strong> Subject not inserted. Review the data introduced.
                 </div>
-            </form>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

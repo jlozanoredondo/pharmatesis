@@ -2,7 +2,7 @@
 
 /** 
  * Class to manage the Session objects
- * @bordgender Session.php
+ * @bordgender Subject.php
  * @author Joan Fernández
  * @gender 2017-02-23
  * @version 1.0
@@ -23,9 +23,10 @@ class Subject {
     private $height;
     private $weight;
     private $countryId;
+    private $userId;
     
     //Constructor
-    function __construct($id=null, $bornDate=null, $gender=null, $breed=null, $nick=null, $bloodType=null, $status=null, $height=null, $weight=null, $countryId=null)  {
+    function __construct($id=null, $bornDate=null, $gender=null, $breed=null, $nick=null, $bloodType=null, $status=null, $height=null, $weight=null, $countryId=null, $userId=null)  {
         $this->id = $id;
         $this->bornDate = $bornDate;
         $this->gender = $gender;
@@ -36,6 +37,7 @@ class Subject {
         $this->height = $height;
         $this->weight = $weight;
         $this->countryId = $countryId;
+        $this->userId = $userId;
     }
     
     //Getters & Setters
@@ -79,6 +81,10 @@ class Subject {
         return $this->countryId;
     }
 
+    function getUserId() {
+        return $this->userId;
+    }
+
     function setId($id) {
         $this->id = $id;
     }
@@ -118,6 +124,10 @@ class Subject {
     function setCountryId($countryId) {
         $this->countryId = $countryId;
     }
+
+    function setUserId($userId) {
+        $this->userId = $userId;
+    }
     
     public function getAll() {
         $data = array();
@@ -131,11 +141,12 @@ class Subject {
         $data["height"] = $this->height;
         $data["weight"] = $this->weight;
         $data["countryId"] = $this->countryId;
+        $data["userId"] = $this->userId;
 
         return $data;
     }
 
-    public function setAll($id, $bornDate, $gender, $breed, $nick, $bloodType, $status, $height, $weight, $countryId) {
+    public function setAll($id, $bornDate, $gender, $breed, $nick, $bloodType, $status, $height, $weight, $countryId, $userId) {
         $this->setId($id);
         $this->setBornDate($bornDate);
         $this->setGender($gender);
@@ -146,5 +157,6 @@ class Subject {
         $this->setHeight($height);
         $this->setWeight($weight);
         $this->setCountryId($countryId);
+        $this->setUserId($userId);
     }
 }

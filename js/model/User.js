@@ -13,7 +13,6 @@
         * bornDate: User's born date
         * specialism: User's specialism
         * professionId: User's profession ID (relation with Profession)
-        * image: User's image
 */
 function User()
 {

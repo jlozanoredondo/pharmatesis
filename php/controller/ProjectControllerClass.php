@@ -62,11 +62,15 @@
         }
 
         private function projectConnection() {
+            $projectObj = json_decode(stripslashes($this->getJsonData()));
+
             $outPutData = array();
             $errors = array();
             $outPutData[0] = true;
 
-            $projectList = ProjectDAO::findAll();
+            $project = new Project(0,$projectObj->userId,0,0,0,0);
+
+            $projectList = ProjectDAO::findAllUser($project);
 
             if (count($projectList) == 0) {
                 $outPutData[0] = false;

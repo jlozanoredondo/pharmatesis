@@ -1,6 +1,6 @@
 //Angular code
 (function () {
-    angular.module('pharmatesisApp').controller("UserController", ['$http', '$scope', '$window', '$cookies', 'accessService', 'userConnected', function ($http, $scope, $window, $cookies, accessService, userConnected) {
+    angular.module('pharmatesisApp').controller("UserController", ['$http', '$scope', '$window', '$cookies', 'accessService', function ($http, $scope, $window, $cookies, accessService) {
 
             //scope variables
             $scope.userOption = 0;
