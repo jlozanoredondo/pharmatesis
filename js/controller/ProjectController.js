@@ -277,6 +277,11 @@
                         }else{ 
                             $('#newSession').modal('show');                           
                             $scope.dispense.setPhase($scope.phaseArray[0]);
+                            for(var j=0;j<$scope.subjectArray.length;j++){
+                                if($scope.subjectsProjectArray.indexOf($scope.subjectArray[j])==-1){
+                                    $scope.subjectsProjectArray.push($scope.subjectArray[j]);
+                                }                                      
+                            }
                         }
 
                     });                    
@@ -430,9 +435,8 @@
                 for(var j=0;j<$scope.phaseArray.length;j++){
                     if($scope.phaseArray[j].getId()==$scope.dispense.getPhase().getId()){
                         $scope.dispense.setPhase($scope.phaseArray[j+1]);
-                        console.log($scope.dispense);
+                        break;
                     }   
-                    break;
                 }
             }
 
@@ -466,42 +470,50 @@
                 $('#newSubject').modal('hide');
                 $scope.info=1;
             }
-        /*
-        * @name         deleteProject
-        * @description  This method removes the project in the database.
-        * @date         2017-05-16
-        * @author       Jonathan Lozano Redondo
-        * @version      1.0
-        * @params       project: object project to remove.
-        * @return       none
-        */
-        this.deleteProject = function (project) {
 
-            var projectsArrayIndex = $scope.projectsArray.indexOf(project);
-            var filteredDataIndex = $scope.filteredData.indexOf(project);
+            /*
+            * @name         deleteProject
+            * @description  This method removes the project in the database.
+            * @date         2017-05-16
+            * @author       Jonathan Lozano Redondo
+            * @version      1.0
+            * @params       project: object project to remove.
+            * @return       none
+            */
+            this.deleteProject = function (project) {
 
-            var projectArray = [];
-            project = angular.copy(project);
-            projectArray.push(project);
-            var promise = accessService.getData("php/controller/MainController.php", true, "POST", {controllerType:1,action:10020,jsonData:JSON.stringify(projectArray)});
+                var projectsArrayIndex = $scope.projectsArray.indexOf(project);
+                var filteredDataIndex = $scope.filteredData.indexOf(project);
 
-            promise.then(function (outPutData) {
-                if(outPutData[0]=== true) {
-                    $scope.projectsArray.splice(projectsArrayIndex, 1);
-                    if ($scope.projectsArray != $scope.filteredData) {
-                        $scope.filteredData.splice(filteredDataIndex, 1);
+                var projectArray = [];
+                project = angular.copy(project);
+                projectArray.push(project);
+                var promise = accessService.getData("php/controller/MainController.php", true, "POST", {controllerType:1,action:10020,jsonData:JSON.stringify(projectArray)});
+
+                promise.then(function (outPutData) {
+                    if(outPutData[0]=== true) {
+                        $scope.projectsArray.splice(projectsArrayIndex, 1);
+                        if ($scope.projectsArray != $scope.filteredData) {
+                            $scope.filteredData.splice(filteredDataIndex, 1);
+                        }
+                        alert("Project deleted correctly");
+                    } else {
+                        if(angular.isArray(outPutData[1])) {
+                            alert(outPutData[1]);
+                        }
+                        else {alert("There has been an error in the server, try again later");}
                     }
-                    alert("Project deleted correctly");
-                } else {
-                    if(angular.isArray(outPutData[1])) {
-                        alert(outPutData[1]);
-                    }
-                    else {alert("There has been an error in the server, try again later");}
-                }
-            });
-        }
+                });
+            }
+
+            this.loadStatistics = function(index){
+                $scope.project.setId(index.getId());
+                $scope.$parent.action=9;
+            }
+
         }]);
 
+    
         /*
         * @name         directive ngConfirmClick
         * @description  This method opens a modal confirm window.

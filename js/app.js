@@ -6,7 +6,7 @@ $(document).ready(function () {
 (function () {
     var pharmatesisApp = angular.module('pharmatesisApp', ['ng-currency', 'ui.bootstrap', 'ngCookies', 'angularUtils.directives.dirPagination']);
     
-    pharmatesisApp.directive('validFile', function () {
+    /*pharmatesisApp.directive('validFile', function () {
         return {
             require: 'ngModel',
             link: function (scope, el, attrs, ctrl) {
@@ -21,7 +21,7 @@ $(document).ready(function () {
                 });
             }
         }
-    });
+    });*/
 
     pharmatesisApp.factory('accessService', function ($http, $log, $q) {
         return {

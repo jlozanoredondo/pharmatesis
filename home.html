@@ -36,6 +36,7 @@
         <script src="js/controller/ProjectController.js" type="text/javascript" xml:space="preserve"></script>
         <script src="js/controller/UserController.js" type="text/javascript" xml:space="preserve"></script>
         <script src="js/controller/SessionController.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="js/controller/StatisticsController.js" type="text/javascript" xml:space="preserve"></script>
         
         <!--Model-->
         <script src="js/model/User.js" type="text/javascript" xml:space="preserve"></script>
@@ -65,10 +66,13 @@
                 <div ng-show="action==6">
                     <manage-project></manage-project>
                 </div>
+                <div class="container" ng-controller="StatisticsController as statisticsCtrl" ng-show="$parent.action==9">
+                    <statistics-project></statistics-project>
+                </div>
             </div>
             <div ng-show="action==8"> 
                 <modify-form></modify-form>
-            </div>
+            </div>            
         </div>
     </body>
 </html>

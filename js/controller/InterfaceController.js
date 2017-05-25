@@ -87,4 +87,14 @@
             controllerAs: 'modifyForm'
         };
     });
+    angular.module('pharmatesisApp').directive("statisticsProject", function (){
+        return {
+                restrict: 'E',
+                templateUrl:"views/templates/statistics-project.html",
+                controller:function(){
+
+                },
+            controllerAs: 'statisticsProject'
+        };
+    });
 })();
