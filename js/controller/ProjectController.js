@@ -1,8 +1,13 @@
+//Angular code
+
 (function () {
+    //Application module
     angular.module('pharmatesisApp').controller("ProjectController", ['$http', '$scope', '$window', '$cookies', 'accessService', '$filter', function ($http, $scope, $window, $cookies, accessService, $filter) {
             
+            //variable for session storage
             var userConnected = JSON.parse(sessionStorage.getItem("userConnected"));
-
+            
+            //Scope variables
             $scope.projectsArray = new Array();
             $scope.diseaseArray = new Array();
             $scope.dispenseArray = new Array();
@@ -22,11 +27,16 @@
             $scope.bloodTypeArray = ["A","B","AB","0"];
             $scope.newSubject = new Subject();
             $scope.selectSubject = new Subject();
+            $scope.infoSubject = new Subject();
+            $scope.infoSession = new Session();
+            $scope.infoPhase = new Phase();
             $scope.newSession = new Session();
             $scope.project = new Project();
+            $scope.infoProject = new Project();
             $scope.dispense = new Dispense();
 
-            $scope.project.setUserId(userConnected.id);
+            $scope.project.setUserId(userConnected.id); //Set User Id from project scope
+
             $scope.msg=0;
             $scope.info=0;
             $scope.newSubjectDDBB=0;
@@ -41,7 +51,7 @@
             $scope.minDateBornDate.setFullYear($scope.minDateBornDate.getFullYear() - 100);             
             $scope.maxDateBornDate.setFullYear($scope.maxDateBornDate.getFullYear() - 18)
 
-            //Scope variable for date start calendar options
+            //Scope variable for date options
             $scope.bornDateOptions = {
                 formatYear: 'yyyy',
                 initDate:  $scope.maxDateBornDate,
@@ -62,10 +72,20 @@
             $scope.pageSize = 10;
             $scope.currentPage = 1;
 
+            //Scope watch for project name
             $scope.$watch("name",function () {
                 $scope.filteredData = $filter('filter')($scope.projectsArray,{name:$scope.name});
             });
 
+            /*
+            * @name         loadProjects
+            * @description  This method load the projects data for user logged in filteredData scope.
+            * @date         2017-05-16
+            * @author       Jonathan Lozano Redondo
+            * @version      2.0
+            * @params       none
+            * @return       none
+            */
             $scope.loadProjects = function(){
                 $scope.project = angular.copy($scope.project);
                 $scope.filteredData = [];
@@ -95,6 +115,15 @@
                 });
             }
 
+            /*
+            * @name         loadDisease
+            * @description  This method load the diseases data to create new projects.
+            * @date         2017-05-17
+            * @author       Jonathan Lozano Redondo
+            * @version      1.0
+            * @params       none
+            * @return       none
+            */
             this.loadDisease = function(){
                 $scope.diseaseArray = [];
                 var promise = accessService.getData("php/controller/MainController.php", true, "POST", {controllerType: 2, action: 10000, jsonData: JSON.stringify("")});
@@ -119,6 +148,15 @@
                 });
             }
 
+            /*
+            * @name         addProject
+            * @description  This method insert the project data to DDBB.
+            * @date         2017-05-17
+            * @author       Jonathan Lozano Redondo
+            * @version      1.5
+            * @params       none
+            * @return       none
+            */
             this.addProject = function(){
                 $scope.project = angular.copy($scope.project);
                 var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:1,action:10010,jsonData:JSON.stringify($scope.project)}); 
@@ -142,13 +180,14 @@
             /*
             * @name         loadProject
             * @description  This method load the project data selected and show it in template form.
-            * @date         2017-05-16
+            * @date         2017-05-18
             * @author       Jonathan Lozano Redondo
             * @version      1.0
-            * @params       project: object project to show.
+            * @params       project: object project to manage.
             * @return       none
             */
             $scope.loadProject = function(project){
+                //Clean scope variables
                 $scope.user = angular.copy($scope.user);
                 $scope.project = project;
                 $scope.filteredData = [];
@@ -165,6 +204,7 @@
 
                 var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:5,action:10000,jsonData:JSON.stringify("")});
 
+                //Load session array with DDBB session's
                 promise.then(function (outPutData) {
                     if(outPutData[0]=== true) {
                         for (var i = 0; i < outPutData[1].length; i++) {
@@ -175,6 +215,7 @@
                     }
                 });
 
+                //Load subject array with DDBB user's
                 var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:4,action:10000,jsonData:JSON.stringify($scope.user)});
 
                     promise.then(function (outPutData) {
@@ -187,6 +228,7 @@
                         }
                     });
 
+                    //Load country array with DDBB country's
                     var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:7,action:10000,jsonData:JSON.stringify("")});
 
                     promise.then(function (outPutData) {
@@ -199,6 +241,7 @@
                         }
                     });
 
+                    //Load medicament array with DDBB medicament's
                     var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:8,action:10000,jsonData:JSON.stringify("")});
 
                     promise.then(function (outPutData) {
@@ -211,6 +254,7 @@
                         }
                     });
 
+                    //Load phase array with DDBB phase's
                     var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:6,action:10000,jsonData:JSON.stringify("")});
 
                     promise.then(function (outPutData) {
@@ -223,6 +267,7 @@
                         }
                     });
 
+                    //Load dispense array with DDBB dispense's from project selected
                     $scope.dispense.setProject(project);
                     $scope.dispense = angular.copy($scope.dispense);
                     var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:3,action:10000,jsonData:JSON.stringify($scope.dispense)});
@@ -237,7 +282,6 @@
 
                                 for(j=0;j<$scope.phaseArray.length;j++){
                                     if($scope.phaseArray[j].getId()==outPutData[1][i].phaseId){
-                                        console.log(1);
                                         dispense.setPhase($scope.phaseArray[j]);
                                         $scope.dispense.setPhase($scope.phaseArray[j]);
                                         
@@ -253,14 +297,7 @@
                                         }
                                     }   
                                     $scope.dispense.setSubject($scope.subjectArray[j]);
-                                }
-                                
-                                for(var j=0;j<$scope.subjectsProjectArray.length;j++){
-                                    if($scope.subjectsProjectArray.indexOf($scope.subjectArray[j])==-1){
-                                        $scope.newSubjectDDBB=1;
-                                        $scope.subjectsAddProject.push($scope.subjectArray[j]);
-                                    }
-                                }
+                                }                                
 
                                 
                                 for(var j=0;j<$scope.sessionArray.length;j++){
@@ -271,25 +308,47 @@
                                 }
                                 
                                 $scope.dispenseArray.push(dispense);
-                            }                   
-                            console.log($scope.dispenseArray);         
+                            }  
+                            
+                            for(var j=0;j<$scope.subjectArray.length;j++){
+                                if($scope.subjectsProjectArray.indexOf($scope.subjectArray[j])==-1){
+                                    $scope.newSubjectDDBB=1;
+                                    $scope.subjectsAddProject.push($scope.subjectArray[j]);
+                                }
+                            }                 
                             $scope.filteredData = $scope.dispenseArray;
                         }else{ 
                             $('#newSession').modal('show');                           
                             $scope.dispense.setPhase($scope.phaseArray[0]);
+                            
                             for(var j=0;j<$scope.subjectArray.length;j++){
-                                if($scope.subjectsProjectArray.indexOf($scope.subjectArray[j])==-1){
-                                    $scope.subjectsProjectArray.push($scope.subjectArray[j]);
-                                }                                      
+                                if($scope.subjectsAddProject.indexOf($scope.subjectArray[j])==-1){
+                                    $scope.newSubjectDDBB=1;
+                                    $scope.subjectsAddProject.push($scope.subjectArray[j]);
+                                }
                             }
+
                         }
 
-                    });                    
+                    });
+                                    console.log($scope.$parent.action);
+                    
                 $scope.$parent.action=6;
             }
 
+            /*
+            * @name         addDispense
+            * @description  This method add a dispense to DDBB
+            * @date         2017-05-18
+            * @author       Jonathan Lozano Redondo
+            * @version      3.0
+            * @params       none
+            * @return       none
+            */
             this.addDispense = function(){
                 $scope.msg=0;
+
+                //Add dispense to a new project
                 if($scope.newSession.getName()!=undefined){
                     $scope.newSession = angular.copy($scope.newSession);
                     var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:5,action:10020,jsonData:JSON.stringify($scope.newSession)}); 
@@ -320,6 +379,7 @@
                         }
                     });
                 } else{
+                    //Add dispense to a existed project
                     $scope.dispense = angular.copy($scope.dispense);
                     var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:3,action:10010,jsonData:JSON.stringify($scope.dispense)}); 
 
@@ -331,6 +391,7 @@
                             if(angular.isArray(outPutData[1])) {
                                 alert(outPutData[1]);
                             } else {
+                                //Update dispense with data introduced
                                 if(confirm("This subject has a dispense for this session. Do you want to update this data?")){
                                     $scope.updateDispense();
                                 }
@@ -341,6 +402,15 @@
                 }                             
             }
 
+            /*
+            * @name         updateDispense
+            * @description  This method update a dispense from DDBB
+            * @date         2017-05-18
+            * @author       Jonathan Lozano Redondo
+            * @version      1.0
+            * @params       none
+            * @return       none
+            */
             $scope.updateDispense = function(){
 
                 $scope.dispense = angular.copy($scope.dispense);
@@ -361,6 +431,15 @@
                 });
             }
 
+            /*
+            * @name         addSubject
+            * @description  This method add a new subject from this user in DDBB
+            * @date         2017-05-15
+            * @author       Jonathan Lozano Redondo
+            * @version      2.0
+            * @params       none
+            * @return       none
+            */
             this.addSubject = function(){
                 $scope.newSubject.setUser($scope.user);
                 $scope.newSubject = angular.copy($scope.newSubject);
@@ -412,7 +491,15 @@
                 });
             }
 
-
+            /*
+            * @name         closeSession
+            * @description  This method close session opened and show modal window to insert a new one
+            * @date         2017-05-20
+            * @author       Joan Fernandez Abelló
+            * @version      1.0
+            * @params       none
+            * @return       none
+            */
             this.closeSession = function(){
                 $scope.dispense = angular.copy($scope.dispense);
                 var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:5,action:10010,jsonData:JSON.stringify($scope.dispense)}); 
@@ -430,16 +517,34 @@
                 });
             }
 
+            /*
+            * @name         closePhase
+            * @description  This method close session opened set phase dispense to next phase
+            * @date         2017-05-20
+            * @author       Joan Fernandez Abelló
+            * @version      1.0
+            * @params       none
+            * @return       none
+            */
             this.closePhase = function(){
                 this.closeSession();
                 for(var j=0;j<$scope.phaseArray.length;j++){
-                    if($scope.phaseArray[j].getId()==$scope.dispense.getPhase().getId()){
+                    if($scope.phaseArray[j].getId()==$scope.dispense.getPhase().getId() && $scope.dispense.getPhase().getId()!=3){
                         $scope.dispense.setPhase($scope.phaseArray[j+1]);
                         break;
                     }   
                 }
             }
 
+            /*
+            * @name         addSession
+            * @date         2017-05-20
+            * @description  This method save session info to save in DDBB when new dispense is inserted
+            * @author       Joan Fernandez Abelló
+            * @version      1.0
+            * @params       none
+            * @return       none
+            */
             this.addSession = function(){
                 $('#newSession').modal('hide'); 
                 if($scope.subjectsProjectArray.length==0){
@@ -507,8 +612,27 @@
             }
 
             this.loadStatistics = function(index){
-                $scope.project.setId(index.getId());
+                $scope.infoProject.setId(index.getId());
+                $scope.infoProject.setName(index.getName());
                 $scope.$parent.action=9;
+            }
+
+            this.userStatistics = function(index){
+                console.log(index.getSubject().getId());
+                $scope.infoSubject.setId(index.getSubject().getId());
+                $scope.$parent.action=10;                
+            }
+
+            this.sessionStatistics = function(index){
+                $scope.infoSession.setId(index.getSession().getId());
+                $scope.infoSession.setName(index.getSession().getName());
+                $scope.$parent.action=11;                
+            }
+
+            this.phaseStatistics = function(index){
+                $scope.infoPhase.setId(index.getPhase().getId());
+                $scope.infoPhase.setName(index.getPhase().getName());
+                $scope.$parent.action=12;                
             }
 
         }]);
@@ -518,7 +642,7 @@
         * @name         directive ngConfirmClick
         * @description  This method opens a modal confirm window.
         * @date         10/05/2017
-        * @author       Alba Gómez Segura
+        * @author       Jonathan Lozano Redondo
         * @version      1.0
         * @params       none
         * @return       none

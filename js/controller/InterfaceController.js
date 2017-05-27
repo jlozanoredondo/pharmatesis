@@ -97,4 +97,34 @@
             controllerAs: 'statisticsProject'
         };
     });
+    angular.module('pharmatesisApp').directive("userStatistics", function (){
+        return {
+                restrict: 'E',
+                templateUrl:"views/templates/user-statistics.html",
+                controller:function(){
+
+                },
+            controllerAs: 'userStatistics'
+        };
+    });
+    angular.module('pharmatesisApp').directive("sessionStatistics", function (){
+        return {
+                restrict: 'E',
+                templateUrl:"views/templates/session-statistics.html",
+                controller:function(){
+
+                },
+            controllerAs: 'sessionStatistics'
+        };
+    });
+    angular.module('pharmatesisApp').directive("phaseStatistics", function (){
+        return {
+                restrict: 'E',
+                templateUrl:"views/templates/phase-statistics.html",
+                controller:function(){
+
+                },
+            controllerAs: 'phaseStatistics'
+        };
+    });
 })();

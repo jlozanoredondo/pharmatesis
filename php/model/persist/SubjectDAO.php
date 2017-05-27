@@ -79,7 +79,7 @@
             $entity->setStatus($status);
             $entity->setHeight($height);
             $entity->setWeight($weight);
-            $entity->setCountryId($userId);
+            $entity->setCountryId($countryId);
             $entity->setUserId($userId);
 
             return $entity;

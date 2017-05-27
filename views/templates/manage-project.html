@@ -19,6 +19,22 @@
                 </tr>
             </table>
         </div>
+        
+        <div class="alert alert-success" ng-show="msg==2">
+            <strong>Success!</strong> Dispense added correctly.
+        </div>
+        <div class="alert alert-success" ng-show="msg==3">
+            <strong>Success!</strong> Dispense updated correctly.
+        </div>
+        <div class="alert alert-success" ng-show="msg==4">
+            <strong>Success!</strong> Subject inserted correctly.
+        </div>
+        <div class="alert alert-danger" ng-show="msg==7">
+            <strong>Danger!</strong> Session not inserted.
+        </div>
+        <div class="alert alert-info" ng-show="info==1">
+            <strong>Remember!</strong> These changes will not take effect until you enter a dispense.
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -34,13 +50,13 @@
             </thead>
             <tbody>
                 <tr dir-paginate="dispense in filteredData | orderBy:'session' | itemsPerPage: pageSize | filter:search:strict" current-page="currentPage">
-                    <td>{{dispense.subject.nick}}</td>
+                    <td>{{dispense.subject.nick}} <span ng-click="projectCtrl.userStatistics(dispense)" class="glyphicon glyphicon-stats cursor-pointer" data-toggle="tooltip" title="Subject's stats"></span></td>
                     <td>{{dispense.viability}}</td>
                     <td>{{dispense.sideEffects}}</td>
                     <td>{{dispense.dose}}</td>
                     <td>{{dispense.reaction}}</td>                    
-                    <td>{{dispense.session.name}}</td>                    
-                    <td>{{dispense.phase.name}}</td>                    
+                    <td>{{dispense.session.name}} <span ng-click="projectCtrl.sessionStatistics(dispense)" class="glyphicon glyphicon-stats cursor-pointer" data-toggle="tooltip" title="Session's stats"></span></td>                    
+                    <td>{{dispense.phase.name}} <span ng-click="projectCtrl.phaseStatistics(dispense)" class="glyphicon glyphicon-stats cursor-pointer" data-toggle="tooltip" title="Phase's stats"></span></td>                    
                     <td></td>                    
                 </tr> 
                 <tr>
@@ -76,22 +92,9 @@
                 <dir-pagination-controls boundary-links="true" template-url="views/templates/dir-pagination-controls.html"></dir-pagination-controls>
             </div>
         </div>
+        <button data-toggle="tooltip" title="Back" ng-click="projectCtrl.loadDisease();loadProjects();$parent.action=2" class="btn btn-info"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
     </form>
-    <div class="alert alert-success" ng-show="msg==2">
-        <strong>Success!</strong> Dispense added correctly.
-    </div>
-    <div class="alert alert-success" ng-show="msg==3">
-        <strong>Success!</strong> Dispense updated correctly.
-    </div>
-    <div class="alert alert-success" ng-show="msg==4">
-        <strong>Success!</strong> Subject inserted correctly.
-    </div>
-    <div class="alert alert-danger" ng-show="msg==7">
-        <strong>Danger!</strong> Session not inserted.
-    </div>
-    <div class="alert alert-info" ng-show="info==1">
-        <strong>Remember!</strong> These changes will not take effect until you enter a dispense.
-    </div>
 </div>
 <div id="newSubject" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -106,7 +109,7 @@
                         <label><input name="showSubject" ng-click="showSubject=1" type="radio">New subject</label>
                     </div>
                     <div ng-show="newSubjectDDBB==1" class="radio">
-                        <label><input name="showSubject" ng-click="showSubject=2" type="radio">Select subject from app</label>
+                        <label><input name="showSubject" ng-click="showSubject=2" type="radio">Select subject from DDBB</label>
                     </div>
                 </div>
                 <form ng-show="showSubject==1;" name="addSubject" ng-submit="addSubject.$valid" novalidate >

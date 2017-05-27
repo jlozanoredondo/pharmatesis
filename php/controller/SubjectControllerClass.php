@@ -45,6 +45,9 @@
                     break;     
                 case 10010:
                     $outPutData = $this->addSubject();
+                    break;    
+                case 10020:
+                    $outPutData = $this->loadSubject();
                     break;                               
                 default:
                     $errors = array();
@@ -113,5 +116,37 @@
             return $outPutData;           
         }
 
+        private function loadSubject(){
+            $subjectObj = json_decode(stripslashes($this->getJsonData()));
+
+            $subject = new Subject();
+            
+            $subjectId = $subjectObj->id;
+
+
+            $subject->setAll($subjectId, 0, 0, 0, 0, 0, 0, 0, 0, 0,0);
+
+            $outPutData = array();
+            $errors = array();
+            $outPutData[0] = true;
+
+            $subjectList = SubjectDAO::findById($subject);
+
+            if (count($subjectList) == 0) {
+                $outPutData[0] = false;
+                $errors[] = "No subject was found with these data.";
+                $outPutData[1] = $errors;
+            } else {
+                $subjectsArray = array();
+
+                foreach ($subjectList as $subject) {
+                    $subjectsArray[] = $subject->getAll();
+                }
+
+                $outPutData[1] = $subjectsArray;
+            }
+            
+            return $outPutData;
+        }
     }
 ?>

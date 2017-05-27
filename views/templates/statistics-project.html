@@ -1,4 +1,24 @@
-<div>
-    TODO modify user!
+<div class="row">	
+	<div class="container">
+    	<div class="header">{{project.name}}</div>
+    	<div class="col-xs-12 list-statistics">
+		    <div data-toggle="tooltip" title="Subject's project" ><span class="glyphicon glyphicon-user userico"></span>:: {{subjectsCountProject}}</div>
+		    <div >
+				<img src="{{boxPlotYear}}"/>
+				<img src="{{barplotSubjectsGenderProject}}"/>
+				<img src="{{boxPlotSubjectHeight}}"/>
+				<img src="{{boxPlotSubjectWeight}}"/>
+				<img src="{{barplotSubjectsBreedProject}}"/>
+				<img src="{{barplotSubjectsBloodTypeProject}}"/>
+				<img src="{{boxPlotProjectDose}}"/>
+				<img src="{{barplotSubjectsSideEffectsProject}}"/>
+				<img src="{{barplotSubjectsReactionProject}}"/>
+				<img src="{{boxPlotCorrelationWeightDose}}"/>
+				<img src="{{boxPlotCorrelationHeightDose}}"/>
+		    </div>
+    	</div>
+        <button back-button data-toggle="tooltip" title="Back" ng-click="$parent.action=2" class="btn btn-info"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
+    </div>
 </div>
 
