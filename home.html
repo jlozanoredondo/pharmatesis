@@ -67,20 +67,6 @@
                 <div ng-show="action==6">
                     <manage-project></manage-project>
                 </div>
-                <div class="container" ng-controller="StatisticsController as statisticsCtrl">
-                    <div ng-show="$parent.action==9">
-                        <statistics-project></statistics-project>
-                    </div>
-                    <div ng-show="$parent.action==10">
-                        <user-statistics></user-statistics>
-                    </div>
-                    <div ng-show="$parent.action==11">
-                        <session-statistics></session-statistics>
-                    </div>
-                    <div ng-show="$parent.action==12">
-                        <phase-statistics></phase-statistics>
-                    </div>
-                </div>
             </div>
             <div ng-show="action==8"> 
                 <modify-form></modify-form>

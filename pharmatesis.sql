@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.6.6
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 24-05-2017 a las 15:13:55
--- Versión del servidor: 10.1.21-MariaDB
--- Versión de PHP: 5.6.30
+-- Servidor: localhost
+-- Tiempo de generación: 28-05-2017 a las 12:28:15
+-- Versión del servidor: 5.7.18-0ubuntu0.16.04.1
+-- Versión de PHP: 7.0.15-0ubuntu0.16.04.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,9 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `pharmatesis`
 --
-
-CREATE DATABASE `pharmatesis`;
-USE `pharmatesis`;
 
 -- --------------------------------------------------------
 
@@ -449,7 +446,8 @@ INSERT INTO `session` (`id`, `name`, `sessionDate`, `sessionEndDate`) VALUES
 (19, 'fourth session control(1)', '2017-04-13 00:00:00', '2017-04-14 00:00:00'),
 (20, 'fifth session control(1)', '2017-04-28 00:00:00', '2017-04-29 00:00:00'),
 (21, 'sixth session control(1)', '2017-05-13 00:00:00', '2017-05-14 00:00:00'),
-(22, 'fourth session control(3)', '2017-05-23 00:00:00', '2017-05-24 00:00:00');
+(22, 'fourth session control(3)', '2017-05-23 00:00:00', '2017-05-24 00:00:00'),
+(23, '1', '2017-05-28 12:25:51', NULL);
 
 -- --------------------------------------------------------
 
@@ -468,14 +466,14 @@ CREATE TABLE `subject` (
   `height` float(3,2) NOT NULL,
   `weight` int(3) NOT NULL,
   `countryId` int(5) NOT NULL,
-  `userid` int(5) NOT NULL
+  `userId` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `subject`
 --
 
-INSERT INTO `subject` (`id`, `bornDate`, `gender`, `breed`, `nick`, `bloodType`, `status`, `height`, `weight`, `countryId`, `userid`) VALUES
+INSERT INTO `subject` (`id`, `bornDate`, `gender`, `breed`, `nick`, `bloodType`, `status`, `height`, `weight`, `countryId`, `userId`) VALUES
 (1, '1985-01-16', 'M', 'Caucasian', 'bDcu3', 'A', 'Single', 1.70, 70, 1, 1),
 (2, '1990-04-17', 'F', 'Caucasian', '1cRXn', 'A', 'Single', 1.75, 70, 1, 2),
 (3, '1995-02-05', 'M', 'American', 'J6TwP', '0', 'Single', 1.50, 60, 1, 3),
@@ -614,7 +612,7 @@ ALTER TABLE `session`
 ALTER TABLE `subject`
   ADD PRIMARY KEY (`id`),
   ADD KEY `countryId` (`countryId`),
-  ADD KEY `subject_ibfk_2` (`userid`);
+  ADD KEY `subject_ibfk_2` (`userId`);
 
 --
 -- Indices de la tabla `user`
@@ -641,7 +639,7 @@ ALTER TABLE `disease`
 -- AUTO_INCREMENT de la tabla `dispense`
 --
 ALTER TABLE `dispense`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 --
 -- AUTO_INCREMENT de la tabla `endure`
 --
@@ -671,12 +669,12 @@ ALTER TABLE `profession`
 -- AUTO_INCREMENT de la tabla `project`
 --
 ALTER TABLE `project`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `session`
 --
 ALTER TABLE `session`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT de la tabla `subject`
 --
@@ -695,7 +693,7 @@ ALTER TABLE `user`
 -- Filtros para la tabla `dispense`
 --
 ALTER TABLE `dispense`
-  ADD CONSTRAINT `dispense_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`),
+  ADD CONSTRAINT `dispense_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `dispense_ibfk_2` FOREIGN KEY (`subjectId`) REFERENCES `subject` (`id`),
   ADD CONSTRAINT `dispense_ibfk_3` FOREIGN KEY (`phaseId`) REFERENCES `phase` (`id`),
   ADD CONSTRAINT `dispense_ibfk_4` FOREIGN KEY (`sessionId`) REFERENCES `session` (`id`);
@@ -726,7 +724,7 @@ ALTER TABLE `project`
 --
 ALTER TABLE `subject`
   ADD CONSTRAINT `subject_ibfk_1` FOREIGN KEY (`countryId`) REFERENCES `country` (`id`),
-  ADD CONSTRAINT `subject_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `subject_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`id`);
 
 --
 -- Filtros para la tabla `user`

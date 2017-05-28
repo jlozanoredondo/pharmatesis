@@ -7,6 +7,30 @@
             //variable for session storage
             var userConnected = JSON.parse(sessionStorage.getItem("userConnected"));
             
+            //Statistics variables
+            $scope.subjectsCountProject = 0;
+            $scope.barplotSubjectsSideEffectsProject = "";
+            $scope.barplotSubjectsGenderProject = "";
+            $scope.barplotSubjectsBreedProject = "";
+            $scope.barplotSubjectsBloodTypeProject = "";
+            $scope.boxPlotSubjectHeight = "";
+            $scope.boxPlotSubjectWeight = "";
+            $scope.barplotSubjectsReactionProject = "";
+            $scope.boxPlotProjectDose = "";
+            $scope.boxPlotYear = "";
+            $scope.boxPlotCorrelationWeightDose = "";
+            $scope.boxPlotCorrelationHeightDose = "";
+            $scope.subjectboxPlotSubjectDose = "";
+            $scope.barplotSessionSideEffectsSession = "";
+            $scope.boxPlotSessionHeight = "";
+            $scope.barplotPhaseSideEffects = "";
+            $scope.boxPlotPhaseHeight = "";
+            $scope.boxPlotPhaseWeight = "";
+            $scope.barplotSubjectsViabilityPhase = "";
+            $scope.barplotSubjectsReactionPhase = "";
+            $scope.boxPlotPhaseDose = "";
+
+
             //Scope variables
             $scope.projectsArray = new Array();
             $scope.diseaseArray = new Array();
@@ -39,6 +63,7 @@
 
             $scope.msg=0;
             $scope.info=0;
+            $scope.infoShow=0;
             $scope.newSubjectDDBB=0;
             $scope.showSubject=0;
 
@@ -614,25 +639,31 @@
             this.loadStatistics = function(index){
                 $scope.infoProject.setId(index.getId());
                 $scope.infoProject.setName(index.getName());
-                $scope.$parent.action=9;
+                $scope.infoShow=9;
+                $("#statisticsProject").modal("show");
             }
 
             this.userStatistics = function(index){
-                console.log(index.getSubject().getId());
+                $scope.infoProject.setId($scope.project.getId());
                 $scope.infoSubject.setId(index.getSubject().getId());
-                $scope.$parent.action=10;                
+                $scope.infoShow=10;  
+                $("#statisticsUser").modal("show");              
             }
 
             this.sessionStatistics = function(index){
+                $scope.infoProject.setId($scope.project.getId());
                 $scope.infoSession.setId(index.getSession().getId());
                 $scope.infoSession.setName(index.getSession().getName());
-                $scope.$parent.action=11;                
+                $scope.infoShow=11;    
+                $("#statisticsSession").modal("show");            
             }
 
             this.phaseStatistics = function(index){
+                $scope.infoProject.setId($scope.project.getId());
                 $scope.infoPhase.setId(index.getPhase().getId());
                 $scope.infoPhase.setName(index.getPhase().getName());
-                $scope.$parent.action=12;                
+                $scope.infoShow=12; 
+                $("#statisticsPhase").modal("show");               
             }
 
         }]);

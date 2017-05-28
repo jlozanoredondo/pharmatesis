@@ -1,4 +1,8 @@
-<div class="container">     
+<div class="container">  
+    <div class="header">
+    {{project.name}} <span ng-click="projectCtrl.loadStatistics(project)" class="glyphicon glyphicon-stats cursor-pointer" data-toggle="tooltip" title="Project's stats"></span>
+    </div>
+
     <form name="manageProject" id="manageProject" ng-submit="manageProject.$valid" novalidate >
         <div>
             <table class="table table-bordered" ng-disabled="manageProject.$invalid">
@@ -225,6 +229,80 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+<div ng-controller="StatisticsController as statisticsCtrl">
+    <div id="statisticsProject" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                    <div class="modal-body">                    
+                        <statistics-project></statistics-project>                  
+                    </div>
+                    <div class="modal-footer">                    
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="statisticsUser" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                    <div class="modal-body">                    
+                        <user-statistics></user-statistics>                  
+                    </div>
+                    <div class="modal-footer">                    
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="statisticsSession" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                    <div class="modal-body">                    
+                        <session-statistics></session-statistics>                  
+                    </div>
+                    <div class="modal-footer">                    
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="statisticsPhase" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                    <div class="modal-body">                    
+                        <phase-statistics></phase-statistics>                  
+                    </div>
+                    <div class="modal-footer">                    
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
