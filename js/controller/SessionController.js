@@ -1,12 +1,28 @@
-//Angular code
+
+/**
+    * Controller to manage the session
+    * @name SessionController.js
+    * @author Joan Fernández
+    * @date 2017-03-16
+    * @version 1.0
+*/
 (function () {
 
     angular.module('pharmatesisApp').controller("SessionController", ['$http', '$scope', '$window', '$cookies', 'accessService', function ($http, $scope, $window, $cookies, accessService) {
-            //scope variables
+            //Scope variables
             $scope.user = new User();
             $scope.userAction = 0;
             $scope.sessionOpened;
 
+            /*
+                * @name sessionControl
+                * @description Redirects and manage the sessions depending the page that the user executes
+                * @date 2017-04-06
+                * @author Joan Fernández
+                * @version 1.2
+                * @params none
+                * @return none
+            */
             this.sessionControl = function ()
             {
                 switch ($scope.userAction)
@@ -53,14 +69,21 @@
                         break;
                     default:
                         alert("There has been an error, try again later.");
-                        console.log("User action not correct: " + $scope.userAction);
                         break;
                 }
             }
-
-            this.logOut = function ()
+            
+            /*
+                * @name logOut
+                * @description Kills the session.
+                * @date 2017-04-06
+                * @author Joan Fernández
+                * @version 1.0
+                * @params none
+                * @return none
+            */
+            $scope.logOut = function ()
             {
-                //Local session destroy
                 var promise = accessService.getData("php/controller/MainController.php", true, "POST", {controllerType: 0, action: 10040, jsonData: JSON.stringify("")});
 
                 promise.then(function (outPutData) {
@@ -78,6 +101,6 @@
                         }
                     }
                 });
-            }
+            }            
         }]);
 })();

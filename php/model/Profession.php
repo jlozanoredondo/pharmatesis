@@ -17,7 +17,7 @@ class Profession {
     private $name;
     
     //Constructor
-    function __construct($id, $name) {
+    function __construct($id=null, $name=null) {
         $this->id = $id;
         $this->name = $name;
     }
@@ -37,6 +37,19 @@ class Profession {
 
     function setName($name) {
         $this->name = $name;
+    }
+    
+    public function getAll() {
+        $data = array();
+        $data["id"] = $this->id;
+        $data["name"] = $this->name;
+
+        return $data;
+    }
+
+    public function setAll($id, $name) {
+        $this->setId($id);
+        $this->setName($name);
     }
     
     //Own methods

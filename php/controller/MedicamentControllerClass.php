@@ -1,10 +1,12 @@
 <?php    
     /**
-    * Controller to connect the phase client data with the server
-    * @name phaseControllerClass.php
+    * @name MedicamentControllerClass
+    * Controller to connect the medicament client data with the server
+    * @date 2017-05-11
     * @author Jonathan Lozano
-    * @date 2017-05-15
     * @version 1.0
+    * @params none
+    * @return $outPutData. Array with method return found
     */
     require_once "ControllerInterface.php";
     require_once "../model/Medicament.php";
@@ -55,6 +57,15 @@
             return $outPutData;
         }
 
+        /**
+        * @name medicamentConnection
+        * Method to load medicaments found in DDBB
+        * @date 2017-05-15
+        * @author Jonathan Lozano
+        * @version 1.0
+        * @params none
+        * @return $outPutData. Array with medicaments found
+        */
         private function medicamentConnection() {
             $outPutData = array();
             $errors = array();

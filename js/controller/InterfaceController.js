@@ -1,16 +1,33 @@
-//Angular code
+/**
+    * Controller to manage the application UI
+    * @name InterfaceController.js
+    * @author Joan Fernández
+    * @date 2017-03-16
+    * @version 1.0
+*/
 (function () {
     angular.module('pharmatesisApp').controller("InterfaceController", ['$http', '$scope', '$window', '$cookies', 'accessService', function ($http, $scope, $window, $cookies, accessService) {
         
-        //$scope.action = $cookies.getObject("action");
+        //Attributes
+        $scope.action = 0;
         
+        /*
+            * @name loadInterface
+            * @description Loads the projects directive when the page is load.
+            * @date 2017-03-16
+            * @author Joan Fernández
+            * @version 1.0
+            * @params none
+            * @return none
+        */
         $scope.loadInterface = function() {
             $scope.action = 2;
         }
         
-        
+            
     }]);
     
+    //Directives 
     angular.module('pharmatesisApp').directive("createProjectForm", function (){
         return {
                 restrict: 'E',
@@ -125,6 +142,37 @@
 
                 },
             controllerAs: 'phaseStatistics'
+        };
+    });
+
+    angular.module('pharmatesisApp').directive("contactUs", function (){
+        return {
+                restrict: 'E',
+                templateUrl:"views/templates/contact-us.html",
+                controller:function(){
+
+                },
+            controllerAs: 'contactUs'
+        };
+    });
+    angular.module('pharmatesisApp').directive("aboutUs", function (){
+        return {
+                restrict: 'E',
+                templateUrl:"views/templates/about-us.html",
+                controller:function(){
+
+                },
+            controllerAs: 'aboutUs'
+        };
+    });
+    angular.module('pharmatesisApp').directive("passwordRecovery", function (){
+        return {
+                restrict: 'E',
+                templateUrl:"views/templates/password-recovery.html",
+                controller:function(){
+
+                },
+            controllerAs: 'passwordRecovery'
         };
     });
 })();

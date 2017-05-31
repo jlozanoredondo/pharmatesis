@@ -1,10 +1,12 @@
 <?php    
     /**
-    * Controller to connect the project client data with the server
-    * @name DiseaseControllerClass.php
+    * @name DiseaseControllerClass
+    * Controller to connect the disease client data with the server
+    * @date 2017-05-11
     * @author Jonathan Lozano
-    * @date 2017-05-15
     * @version 1.0
+    * @params none
+    * @return $outPutData. Array with method return found
     */
     require_once "ControllerInterface.php";
     require_once "../model/Disease.php";
@@ -55,6 +57,15 @@
             return $outPutData;
         }
 
+        /**
+        * @name diseaseConnection
+        * Method to load diseases found in DDBB
+        * @date 2017-05-11
+        * @author Jonathan Lozano
+        * @version 1.0
+        * @params none
+        * @return $outPutData. Array with diseases found
+        */
         private function diseaseConnection() {
             $outPutData = array();
             $errors = array();

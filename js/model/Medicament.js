@@ -4,8 +4,9 @@
  * @author Jonathan Lozano
  * @date 2017-05-15
  * @version 1.0
- * @param id: ID of the phase
-        * name: Medicament's name object
+ * @param 
+    id: ID of the phase
+    name: Medicament's name object
 */
 function Medicament()
 {

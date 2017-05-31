@@ -24,13 +24,15 @@
         private static $colNameDose = "dose";
         private static $colNameReaction = "reaction";
 
-        //---Databese management section-----------------------
         /**
-         * fromResultSetList()
-         * this function runs a query and returns an array with all the result transformed into an object
-         * @param res query to execute
-         * @return objects collection
-         */
+            * @name fromResultSetList
+            * @description Transforms the resultset to a list
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $res DB result
+            * @return Object list
+        */
         public static function fromResultSetList($res) {
             $entityList = array();
             $i = 0;
@@ -46,11 +48,14 @@
         }
 
         /**
-         * fromResultSet()
-         * the query result is transformed into an object
-         * @param res ResultSet del qual obtenir dades
-         * @return object
-         */
+            * @name fromResultSet
+            * @description Transforms the resultset to a object
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $res DB result
+            * @return Object converted
+        */
         public static function fromResultSet($res) {
             //We get all the values form the query
             $id = $res[DispenseDAO::$colNameId];
@@ -79,11 +84,15 @@
         }
 
         /**
-         * findByQuery()
-         * It runs a particular query and returns the result
-         * @param cons query to run
-         * @return objects collection
-         */
+            * @name findByQuery
+            * @description Finds a query into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $cons Query to find                     
+            * @params $vector Data to find
+            * @return Call to fromResultSetList function
+        */
         public static function findByQuery($cons, $vector) {
             //Connection with the database
             try {
@@ -100,23 +109,30 @@
         }
 
         /**
-         * findByProjectId()
-         * It runs a query and returns an object array
-         * @param dispense
-         * @return object with the query results
-         */
+            * @name findByProjectId
+            * @description Finds a dispende by the project id
+            * @date 2017-04-06
+            * @author Jonathan Lozano
+            * @version 1.0
+            * @params $dispense Dispense to find
+            * @return Call to findByQuery function
+        */
         public static function findByProjectId($dispense) {
             $cons = "select * from `" . DispenseDAO::$tableName . "` where " . DispenseDAO::$colNameProjectId . " = ?";
             $arrayValues = [$dispense->getProjectId()];
 
             return DispenseDAO::findByQuery($cons, $arrayValues);
         }
+        
         /**
-         * findUpdate()
-         * It runs a query and returns an object array
-         * @param dispense
-         * @return object with the query results
-         */
+            * @name findUpdate
+            * @description Finds an updated dispense
+            * @date 2017-04-06
+            * @author Jonathan Lozano
+            * @version 1.0
+            * @params $dispense Dispense to find
+            * @return Call to findByQuery function
+        */
         public static function findUpdate($dispense) {
             $cons = "select * from `" . DispenseDAO::$tableName . "` where " . DispenseDAO::$colNameProjectId . " = ? and ". DispenseDAO::$colNameSubjectId . " = ? and ". DispenseDAO::$colNamePhaseId . " = ? and ". DispenseDAO::$colNameSessionId . " = ?";
             $arrayValues = [$dispense->getProjectId(), $dispense->getSubjectId(), $dispense->getPhaseId(), $dispense->getSessionId()];
@@ -126,11 +142,14 @@
 
       
         /**
-         * findAll()
-         * It runs a query and returns an object array
-         * @param none
-         * @return object with the query results
-         */
+            * @name findAll
+            * @description Finds all objects into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params none
+            * @return Call to findByQuery function
+        */
         public static function findAll() {
             $cons = "select * from `" . DispenseDAO::$tableName . "`";
             $arrayValues = [];
@@ -139,9 +158,14 @@
         }
 
         /**
-         * create()
-         * insert a new row into the database
-         */
+            * @name create
+            * @description Inserts a object into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $dispense Object to find
+            * @return Inserted id
+        */
         public function create($dispense) {
              //Connection with the database
               try {
@@ -159,33 +183,17 @@
               $dispense->setId($id);
 
               return $dispense->getId(); 
-        }
+        }        
 
         /**
-         * delete()
-         * it deletes a row from the database
-         */
-        public function delete($dispense) {
-            /* Connection with the database
-              try {
-              $conn = DBConnect::getInstance();
-              } catch (PDOException $e) {
-              print "Error connecting database: " . $e->getMessage() . " ";
-              die();
-              }
-
-
-              $cons = "delete from `" . DispenseDAO::$tableName . "` where " . DispenseDAO::$colNameId . " = ?";
-              $arrayValues = [$dispense->getId()];
-
-              $conn->execution($cons, $arrayValues);
-             */
-        }
-
-        /**
-         * update()
-         * it updates a row of the database
-         */
+            * @name update
+            * @description Updates a object into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $dispense Object to update
+            * @return none
+        */
         public function update($dispense) {
             // Connection with the database
               try {

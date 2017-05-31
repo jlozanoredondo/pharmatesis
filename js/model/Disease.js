@@ -1,11 +1,12 @@
 /** 
- * Class to manage the Project objects
+ * Class to manage the Disease objects
  * @name Disease.js
  * @author Jonathan Lozano
  * @date 2017-05-15
  * @version 1.0
- * @param id: ID of the disease
-        * name: Disease's name
+ * @param 
+    id: ID of the disease
+    name: Disease's name
 */
 function Disease()
 {

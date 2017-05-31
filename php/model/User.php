@@ -33,7 +33,7 @@ class User {
     function __construct($id = null, $name = null, $password = null, $surnames = null, $email = null, $phone = null, $bornDate = null, $specialism = null, $professionId = null) {
         $this->id = $id;
         $this->name = $name;
-        $this->password = $password;
+        $this->password = md5($password);
         $this->surnames = $surnames;
         $this->email = $email;
         $this->phone = $phone;
@@ -89,7 +89,7 @@ class User {
     }
     
     function setPassword($password) {
-        $this->password = $password;
+        $this->password = md5($password);
     }
     
     function setSurnames($surnames) {
@@ -121,7 +121,7 @@ class User {
         $data = array();
         $data["id"] = $this->id;
         $data["name"] = $this->name;
-        $data["surname"] = $this->surname;
+        $data["surnames"] = $this->surnames;
         $data["email"] = $this->email;
         $data["password"] = $this->password;        
         $data["phone"] = $this->phone;      
@@ -130,5 +130,17 @@ class User {
         $data["professionId"] = $this->professionId;
 
         return $data;
+    }
+    
+    public function setAll($id, $name, $surnames, $email, $password, $phone, $bornDate, $specialism, $professionId) {
+        $this->setId($id);
+        $this->setName($name);
+        $this->setSurnames($surnames);
+        $this->setEmail($email);
+        $this->setPassword($password);
+        $this->setPhone($phone);
+        $this->setBornDate($bornDate);
+        $this->setSpecialism($specialism);
+        $this->setProfessionId($professionId);
     }
 }

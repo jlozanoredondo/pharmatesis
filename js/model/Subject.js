@@ -4,17 +4,18 @@
  * @author Joan Fernández
  * @date 2017-02-23
  * @version 1.0
- * @param id: ID of the user
-        * bornDate: Subject's bornDate
-        * gender: Subject's gender
-        * breed: Subject's breed
-        * nick: Subject's nick
-        * bloodType: Subject's bloodType number
-        * status: Subject's status
-        * height: Subject's height
-        * weight: Subject's weight
-        * countryId: Subject's countryId ID 
-        * user: Subject's user object
+ * @param 
+    id: ID of the user
+    bornDate: Subject's bornDate
+    gender: Subject's gender
+    breed: Subject's breed
+    nick: Subject's nick
+    bloodType: Subject's bloodType number
+    status: Subject's status
+    height: Subject's height
+    weight: Subject's weight
+    countryId: Subject's country 
+    user: Subject's user object
 */
 function Subject()
 {
@@ -28,11 +29,11 @@ function Subject()
     this.status;
     this.height;
     this.weight;
-    this.countryId;
+    this.country;
     this.user;
     
     //Constructor
-    this.construct = function (id, bornDate, gender, breed, nick, bloodType, status, height, weight, countryId, user)
+    this.construct = function (id, bornDate, gender, breed, nick, bloodType, status, height, weight, country, user)
     {
         this.setId(id);
         this.setBornDate(bornDate);
@@ -43,7 +44,7 @@ function Subject()
         this.setStatus(status);
         this.setHeight(height);
         this.setWeight(weight);
-        this.setCountryId(countryId);
+        this.setCountry(country);
         this.setUser(user);
     }
     
@@ -57,7 +58,7 @@ function Subject()
     this.setStatus = function (status) {this.status=status;}
     this.setHeight = function (height) {this.height=height;}
     this.setWeight = function (weight) {this.weight=weight;}
-    this.setCountryId = function (countryId) {this.countryId=countryId;}
+    this.setCountry = function (country) {this.country=country;}
     this.setUser = function (user) {this.user=user;}
     //
     this.getId = function () {return this.id;}
@@ -69,6 +70,6 @@ function Subject()
     this.getStatus = function () {return this.status;}   
     this.getHeight = function () {return this.height;}   
     this.getWeight = function () {return this.weight;}   
-    this.getCountryId = function () {return this.countryId;}
+    this.getCountry = function () {return this.country;}
     this.getUser = function () {return this.user;}
 }

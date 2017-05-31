@@ -1,10 +1,12 @@
 <?php    
     /**
-    * Controller to connect the project client data with the server
-    * @name EndureControllerClass.php
+    * @name EndureControllerClass
+    * Controller to connect the endure client data with the server
+    * @date 2017-05-11
     * @author Jonathan Lozano
-    * @date 2017-05-15
     * @version 1.0
+    * @params none
+    * @return $outPutData. Array with method return found
     */
     require_once "ControllerInterface.php";
     require_once "../model/Endure.php";
@@ -55,6 +57,15 @@
             return $outPutData;
         }
 
+        /**
+        * @name addEndure
+        * Method to add endure to DDBB
+        * @date 2017-05-15
+        * @author Jonathan Lozano
+        * @version 1.0
+        * @params none
+        * @return $outPutData. Array with endure inserted
+        */
         private function addEndure() {
             $endureObj = json_decode(stripslashes($this->getJsonData()));
             $outPutData = array();

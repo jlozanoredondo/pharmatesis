@@ -1,10 +1,12 @@
 <?php    
     /**
-    * Controller to connect the phase client data with the server
-    * @name phaseControllerClass.php
+    * @name CountryControllerClass
+    * Controller to connect the country client data with the server
+    * @date 2017-05-11
     * @author Jonathan Lozano
-    * @date 2017-05-15
     * @version 1.0
+    * @params none
+    * @return $outPutData. Array with method return found
     */
     require_once "ControllerInterface.php";
     require_once "../model/Country.php";
@@ -55,6 +57,15 @@
             return $outPutData;
         }
 
+        /**
+        * @name countryConnection
+        * Method to load countries found in DDBB
+        * @date 2017-05-11
+        * @author Jonathan Lozano
+        * @version 1.0
+        * @params none
+        * @return $outPutData. Array with countries found
+        */
         private function countryConnection() {
             $outPutData = array();
             $errors = array();

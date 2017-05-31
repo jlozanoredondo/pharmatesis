@@ -4,15 +4,16 @@
  * @author Jonathan Lozano
  * @date 2017-05-15
  * @version 1.0
- * @param id: ID of the project
-        * project: Dispense's project object
-        * subject: Subject object
-        * phase: Dispense's phase object
-        * session: Dispense's session object
-        * viability: Dispense's viability
-        * sideEffects: Dispense's sideEffects object (relation with SideEffects)
-        * dose: Dispense's dose 
-        * reaction: Dispense's reaction 
+ * @param 
+    id: ID of the project
+    project: Dispense's project object
+    subject: Subject object
+    phase: Dispense's phase object
+    session: Dispense's session object
+    viability: Dispense's viability
+    sideEffects: Dispense's sideEffects object
+    dose: Dispense's dose 
+    reaction: Dispense's reaction 
 */
 function Dispense()
 {

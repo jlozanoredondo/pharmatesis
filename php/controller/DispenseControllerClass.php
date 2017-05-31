@@ -1,10 +1,12 @@
 <?php    
     /**
-    * Controller to connect the user client data with the server
-    * @name DispenseControllerClass.php
+    * @name DispenseControllerClass
+    * Controller to connect the dispense client data with the server
+    * @date 2017-05-11
     * @author Jonathan Lozano
-    * @date 2017-04-27
     * @version 1.0
+    * @params none
+    * @return $outPutData. Array with method return found
     */
     require_once "ControllerInterface.php";
     require_once "../model/Dispense.php";
@@ -61,6 +63,15 @@
             return $outPutData;
         }
 
+        /**
+        * @name dispenseConnection
+        * Method to load dispenses found in DDBB
+        * @date 2017-05-15
+        * @author Jonathan Lozano
+        * @version 1.0
+        * @params none
+        * @return $outPutData. Array with dispenses found
+        */
         private function dispenseConnection() {
 
             $dispenseObj = json_decode(stripslashes($this->getJsonData()));
@@ -96,6 +107,15 @@
             return $outPutData;
         } 
 
+        /**
+        * @name addDispense
+        * Method to add dispenses to DDBB
+        * @date 2017-05-16
+        * @author Jonathan Lozano
+        * @version 2.0
+        * @params none
+        * @return $outPutData. Array with dispenses object inserted
+        */
         private function addDispense() {
             $dispenseObj = json_decode(stripslashes($this->getJsonData()));
 
@@ -128,6 +148,15 @@
             return $outPutData;
         } 
 
+        /**
+        * @name updateDispense
+        * Method to update dispenses in DDBB
+        * @date 2017-05-17
+        * @author Jonathan Lozano
+        * @version 2.0
+        * @params none
+        * @return $outPutData. Array with dispenses object updated
+        */
         private function updateDispense() {
             $dispenseObj = json_decode(stripslashes($this->getJsonData()));
 

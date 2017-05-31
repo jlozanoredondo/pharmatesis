@@ -26,13 +26,15 @@
         private static $colNameCountryId = "countryId";
         private static $colNameUserId = "userId";
 
-        //---Databese management section-----------------------
         /**
-         * fromResultSetList()
-         * this function runs a query and returns an array with all the result transformed into an object
-         * @param res query to execute
-         * @return objects collection
-         */
+            * @name fromResultSetList
+            * @description Transforms the resultset to a list
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $res DB result
+            * @return Object list
+        */
         public static function fromResultSetList($res) {
             $entityList = array();
             $i = 0;
@@ -48,11 +50,14 @@
         }
 
         /**
-         * fromResultSet()
-         * the query result is transformed into an object
-         * @param res ResultSet del qual obtenir dades
-         * @return object
-         */
+            * @name fromResultSet
+            * @description Transforms the resultset to a object
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $res DB result
+            * @return Object converted
+        */
         public static function fromResultSet($res) {
 
             //We get all the values form the query
@@ -86,11 +91,15 @@
         }
 
         /**
-         * findByQuery()
-         * It runs a particular query and returns the result
-         * @param cons query to run
-         * @return objects collection
-         */
+            * @name findByQuery
+            * @description Finds a query into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $cons Query to find                     
+            * @params $vector Data to find
+            * @return Call to fromResultSetList function
+        */
         public static function findByQuery($cons, $vector) {
             //Connection with the database
             try {
@@ -107,11 +116,14 @@
         }
 
         /**
-         * findById()
-         * It runs a query and returns an object array
-         * @param id
-         * @return object with the query results
-         */
+            * @name findById
+            * @description Finds a object by the id
+            * @date 2017-04-06
+            * @author Joan Ferńandez
+            * @version 1.0
+            * @params $analysisType Analysis to find
+            * @return Call to findByQuery function
+        */
         public static function findById($subject) {
             $cons = "select * from `" . SubjectDAO::$tableName . "` where " . SubjectDAO::$colNameId . " = ?";
             $arrayValues = [$subject->getId()];
@@ -120,11 +132,14 @@
         }
 
         /**
-         * findlikeName()
-         * It runs a query and returns an object array
-         * @param name
-         * @return object with the query results
-         */
+            * @name findlikeName
+            * @description Finds a object like name
+            * @date 2017-04-06
+            * @author Joan Ferńandez
+            * @version 1.0
+            * @params $analysisType Analysis to find
+            * @return Call to findByQuery function
+        */
         public static function findlikeName($subject) {
             $cons = "select * from `" . SubjectDAO::$tableName . "` where " . SubjectDAO::$colNameName . " like ?";
             $arrayValues = ["%" . $subject->getName() . "%"];
@@ -133,11 +148,14 @@
         }
 
         /**
-         * findByName()
-         * It runs a query and returns an object array
-         * @param name
-         * @return object with the query results
-         */
+            * @name findByName
+            * @description Finds a object by name
+            * @date 2017-04-06
+            * @author Joan Ferńandez
+            * @version 1.0
+            * @params $analysisType Analysis to find
+            * @return Call to findByQuery function
+        */
         public static function findByName($subject) {
             $cons = "select * from `" . SubjectDAO::$tableName . "` where " . SubjectDAO::$colNameName . " = ?";
             $arrayValues = [$subject->getName()];
@@ -146,11 +164,14 @@
         }
 
         /**
-         * findByNick()
-         * It runs a query and returns an object array
-         * @param name
-         * @return object with the query results
-         */
+            * @name findByNick
+            * @description Finds a object by nick
+            * @date 2017-04-06
+            * @author Joan Ferńandez
+            * @version 1.0
+            * @params $analysisType Analysis to find
+            * @return Call to findByQuery function
+        */
         public static function findByNick($subject) {
             $cons = "select * from `" . SubjectDAO::$tableName . "` where " . SubjectDAO::$colNameNick . " = ?";
             $arrayValues = [$subject->getNick()];
@@ -159,11 +180,14 @@
         }
 
         /**
-         * findAll()
-         * It runs a query and returns an object array
-         * @param none
-         * @return object with the query results
-         */
+            * @name findAll
+            * @description Finds all objects into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params none
+            * @return Call to findByQuery function
+        */
         public static function findAllUser($subject) {
             $cons = "select * from `" . SubjectDAO::$tableName . "` where " . SubjectDAO::$colNameUserId . " = ?";
             $arrayValues = [$subject->getUserId()];
@@ -172,9 +196,14 @@
         }
 
         /**
-         * create()
-         * insert a new row into the database
-         */
+            * @name create
+            * @description Inserts a object into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $analysisType Object to find
+            * @return Inserted id
+        */
         public function create($subject) {
             // Connection with the database
               try {
@@ -193,47 +222,6 @@
 
               return $subject->getId(); 
         }
-
-        /**
-         * delete()
-         * it deletes a row from the database
-         */
-        public function delete($subject) {
-            /* Connection with the database
-              try {
-              $conn = DBConnect::getInstance();
-              } catch (PDOException $e) {
-              print "Error connecting database: " . $e->getMessage() . " ";
-              die();
-              }
-
-
-              $cons = "delete from `" . SubjectDAO::$tableName . "` where " . SubjectDAO::$colNameId . " = ?";
-              $arrayValues = [$subject->getId()];
-
-              $conn->execution($cons, $arrayValues);
-             */
-        }
-
-        /**
-         * update()
-         * it updates a row of the database
-         */
-        public function update($subject) {
-            /* Connection with the database
-              try {
-              $conn = DBConnect::getInstance();
-              } catch (PDOException $e) {
-              print "Error connecting database: " . $e->getMessage() . " ";
-              die();
-              }
-
-              $cons = "update `" . SubjectDAO::$tableName . "` set " . SubjectDAO::$colNameName . " = ?, " . SubjectDAO::$colNameBornDate1 . " = ?, " . SubjectDAO::$colNameNick . " = ?, " . SubjectDAO::$colNamePassword . " = ?, " . SubjectDAO::$colNameAddress . " = ?, " . SubjectDAO::$colNameTelephone . " = ?, " . SubjectDAO::$colNameMail . " = ?, " . SubjectDAO::$colNameBirthDate . " = ?, " . SubjectDAO::$colNameEntryDate . " = ?, " . SubjectDAO::$colNameDropOutDate . " = ?, " . SubjectDAO::$colNameActive . " = ?, " . SubjectDAO::$colNameImage . " = ? where " . SubjectDAO::$colNameId . " = ?";
-              $arrayValues = [$subject->getName(), $subject->getBornDate1(), $subject->getNick(), $subject->getPassword(), $subject->getAddress(), $subject->getTelephone(), $subject->getMail(), $subject->getBirthDate(), $subject->getEntryDate(), $subject->getDropOutDate(), $subject->getActive(), $subject->getImage(), $subject->getId()];
-
-              $conn->execution($cons, $arrayValues); */
-        }
-
     }
 
 ?>

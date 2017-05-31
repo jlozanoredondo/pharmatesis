@@ -1,28 +1,14 @@
-// jQuery code
-$(document).ready(function () {
-
-});
-
+/**
+    * Main JS App
+    * @name app.js
+    * @author Joan Fernández
+    * @date 2017-03-09
+    * @version 1.5
+*/
 (function () {
     var pharmatesisApp = angular.module('pharmatesisApp', ['ng-currency', 'ui.bootstrap', 'ngCookies', 'angularUtils.directives.dirPagination']);
     
-    /*pharmatesisApp.directive('validFile', function () {
-        return {
-            require: 'ngModel',
-            link: function (scope, el, attrs, ctrl) {
-                ctrl.$setValidity('validFile', el.val() != '');
-                //change event is fired when file is selected
-                el.bind('change', function () {
-                    ctrl.$setValidity('validFile', el.val() != '');
-                    scope.$apply(function () {
-                        ctrl.$setViewValue(el.val());
-                        ctrl.$render();
-                    });
-                });
-            }
-        }
-    });*/
-
+    //AJAX call
     pharmatesisApp.factory('accessService', function ($http, $log, $q) {
         return {
             getData: function (url, async, method, params, data) {
@@ -48,6 +34,7 @@ $(document).ready(function () {
         }
     });
     
+    //Directive to run the menu navbar
     pharmatesisApp.directive("topMenu", function (){
         return {
                 restrict: 'E',

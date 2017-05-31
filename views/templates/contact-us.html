@@ -1,0 +1,14 @@
+<div class="login-page">
+    <div class="form" ng-controller="UserController as userCtrl">
+        <form class="login-form" name="contactForm" ng-submit="userCtrl.sendReview()" novalidate>
+            <label for="name">Name: *</label>
+            <input type="text" id="name" name="name" ng-model="review.name" placeholder="Peter" required/>
+            <label for="email">Email: *</label>
+            <input type="email" id="email" name="email" ng-model="review.email" placeholder="peter@mail.com" required/>
+            <label for="comments">Comments: *</label>
+            <textarea name="comments" id="comments" rows="4" cols="50" ng-model="review.comments" placeholder="I love this app!" required></textarea>
+            <button type="submit" class="formbutton" name="send" id="send" ng-disabled="contactForm.$invalid">Send</button>
+            <button type="button" class="buttonBack" name="back" id="back" ng-click="$parent.action = 0">Back</button>
+        </form>
+    </div>
+</div>

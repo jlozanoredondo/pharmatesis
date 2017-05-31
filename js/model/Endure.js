@@ -4,9 +4,10 @@
  * @author Jonathan Lozano
  * @date 2017-05-16
  * @version 1.0
- * @param id: ID of the phase
-        * subject: Endure's subject object
-        * disease: Endure's disease object
+ * @param 
+    id: ID of the phase
+    subject: Endure's subject object
+    disease: Endure's disease object
 */
 function Endure()
 {

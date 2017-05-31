@@ -4,8 +4,12 @@
  * @author Jonathan Lozano
  * @date 2017-05-15
  * @version 1.0
- * @param project: ID of the phase
-        * subject: Statistics's subject object
+ * @param 
+    project: ID of the phase
+    subject: Statistics's subject object
+    subject: Statistics's subject object
+    session: Statistics's session object
+    phase: Statistics's phase object
 */
 function Statistics()
 {

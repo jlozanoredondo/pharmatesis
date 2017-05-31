@@ -1,10 +1,12 @@
 <?php    
     /**
+    * @name PhaseControllerClass
     * Controller to connect the phase client data with the server
-    * @name phaseControllerClass.php
+    * @date 2017-05-11
     * @author Jonathan Lozano
-    * @date 2017-05-15
     * @version 1.0
+    * @params none
+    * @return $outPutData. Array with method return found
     */
     require_once "ControllerInterface.php";
     require_once "../model/Phase.php";
@@ -55,6 +57,15 @@
             return $outPutData;
         }
 
+        /**
+        * @name phaseConnection
+        * Method to load phases found in DDBB
+        * @date 2017-05-15
+        * @author Jonathan Lozano
+        * @version 1.0
+        * @params none
+        * @return $outPutData. Array with phases found
+        */
         private function phaseConnection() {
             $outPutData = array();
             $errors = array();

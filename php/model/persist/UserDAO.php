@@ -24,13 +24,15 @@
         private static $colNameSpecialism = "specialism";
         private static $colNameProfessionId = "professionId";
 
-        //---Databese management section-----------------------
         /**
-         * fromResultSetList()
-         * this function runs a query and returns an array with all the result transformed into an object
-         * @param res query to execute
-         * @return objects collection
-         */
+            * @name fromResultSetList
+            * @description Transforms the resultset to a list
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $res DB result
+            * @return Object list
+        */
         public static function fromResultSetList($res) {
             $entityList = array();
             $i = 0;
@@ -46,11 +48,14 @@
         }
 
         /**
-         * fromResultSet()
-         * the query result is transformed into an object
-         * @param res ResultSet del qual obtenir dades
-         * @return object
-         */
+            * @name fromResultSet
+            * @description Transforms the resultset to a object
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $res DB result
+            * @return Object converted
+        */
         public static function fromResultSet($res) {
             //We get all the values form the query
             $id = $res[UserDAO::$colNameId];
@@ -79,11 +84,15 @@
         }
 
         /**
-         * findByQuery()
-         * It runs a particular query and returns the result
-         * @param cons query to run
-         * @return objects collection
-         */
+            * @name findByQuery
+            * @description Finds a query into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $cons Query to find                     
+            * @params $vector Data to find
+            * @return Call to fromResultSetList function
+        */
         public static function findByQuery($cons, $vector) {
             //Connection with the database
             try {
@@ -100,24 +109,47 @@
         }
 
         /**
-         * findById()
-         * It runs a query and returns an object array
-         * @param id
-         * @return object with the query results
-         */
+            * @name findById
+            * @description Finds a object by the id
+            * @date 2017-04-06
+            * @author Joan Ferńandez
+            * @version 1.0
+            * @params $user Analysis to find
+            * @return Call to findByQuery function
+        */
         public static function findById($user) {
             $cons = "select * from `" . UserDAO::$tableName . "` where " . UserDAO::$colNameId . " = ?";
             $arrayValues = [$user->getId()];
+            
+            return UserDAO::findByQuery($cons, $arrayValues);
+        }
+        
+        /**
+            * @name findByEmail
+            * @description Finds a object by the email
+            * @date 2017-04-06
+            * @author Joan Ferńandez
+            * @version 1.0
+            * @params $user Analysis to find
+            * @return Call to findByQuery function
+        */
+        public static function findByEmail($user) {
+            $cons = "select * from `" . UserDAO::$tableName . "` where " . UserDAO::$colNameEmail . " = ?";
+            $arrayValues = [$user->getEmail()];
+            
 
             return UserDAO::findByQuery($cons, $arrayValues);
         }
 
         /**
-         * findlikeName()
-         * It runs a query and returns an object array
-         * @param name
-         * @return object with the query results
-         */
+            * @name findlikeName
+            * @description Finds a object like name
+            * @date 2017-04-06
+            * @author Joan Ferńandez
+            * @version 1.0
+            * @params $user Object to find
+            * @return Call to findByQuery function
+        */
         public static function findlikeName($user) {
             $cons = "select * from `" . UserDAO::$tableName . "` where " . UserDAO::$colNameName . " like ?";
             $arrayValues = ["%" . $user->getName() . "%"];
@@ -126,11 +158,14 @@
         }
 
         /**
-         * findByName()
-         * It runs a query and returns an object array
-         * @param name
-         * @return object with the query results
-         */
+            * @name findByName
+            * @description Finds a object by name
+            * @date 2017-04-06
+            * @author Joan Ferńandez
+            * @version 1.0
+            * @params $user Object to find
+            * @return Call to findByQuery function
+        */
         public static function findByName($user) {
             $cons = "select * from `" . UserDAO::$tableName . "` where " . UserDAO::$colNameName . " = ?";
             $arrayValues = [$user->getName()];
@@ -139,11 +174,14 @@
         }
 
         /**
-         * findByNick()
-         * It runs a query and returns an object array
-         * @param name
-         * @return object with the query results
-         */
+            * @name findByNick
+            * @description Finds a object by nick
+            * @date 2017-04-06
+            * @author Joan Ferńandez
+            * @version 1.0
+            * @params $user Object to find
+            * @return Call to findByQuery function
+        */
         public static function findByNick($user) {
             $cons = "select * from `" . UserDAO::$tableName . "` where " . UserDAO::$colNameNick . " = ?";
             $arrayValues = [$user->getNick()];
@@ -152,11 +190,14 @@
         }
 
         /**
-         * findByNickAndPass()
-         * It runs a query and returns an object array
-         * @param name
-         * @return object with the query results
-         */
+            * @name findByEmailAndPass
+            * @description Finds a object by email and password
+            * @date 2017-04-06
+            * @author Joan Ferńandez
+            * @version 1.0
+            * @params $user Object to find
+            * @return Call to findByQuery function
+        */
         public static function findByEmailAndPass($user) {
             //$cons = "select * from `".UserDAO::$tableName."` where ".UserDAO::$colNameNick." = \"".$user->getNick()."\" and ".UserDAO::$colNamePassword." = \"".$user->getPassword()."\"";
             $cons = "select * from `" . UserDAO::$tableName . "` where " . UserDAO::$colNameEmail . " = ? and " . UserDAO::$colNamePassword . " = ?";
@@ -166,11 +207,14 @@
         }
 
         /**
-         * findAll()
-         * It runs a query and returns an object array
-         * @param none
-         * @return object with the query results
-         */
+            * @name findAll
+            * @description Finds all objects into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params none
+            * @return Call to findByQuery function
+        */
         public static function findAll() {
             $cons = "select * from `" . UserDAO::$tableName . "`";
             $arrayValues = [];
@@ -179,34 +223,42 @@
         }
 
         /**
-         * create()
-         * insert a new row into the database
-         */
+            * @name create
+            * @description Inserts a object into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $user Object to create
+            * @return Inserted id
+        */
         public function create($user) {
-            /* Connection with the database
-              try {
-              $conn = DBConnect::getInstance();
-              } catch (PDOException $e) {
-              print "Error connecting database: " . $e->getMessage() . " ";
-              die();
-              }
+            //Connection with the database
+            try {
+            $conn = DBConnect::getInstance();
+            } catch (PDOException $e) {
+            print "Error connecting database: " . $e->getMessage() . " ";
+            die();
+            }
 
-              $cons = "insert into " . UserDAO::$tableName . " (`name`,`surname1`,`nick`,`password`,`address`,`telephone`,`mail`,`birthDate`,`entryDate`,`dropOutDate`,`active`,`image`) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-              $arrayValues = [$user->getName(), $user->getSurname1(), $user->getNick(), $user->getPassword(), $user->getAddress(), $user->getTelephone(), $user->getMail(), $user->getBirthDate(), $user->getEntryDate(), $user->getDropOutDate(), $user->getActive(), $user->getImage()];
+            $cons = "insert into " . UserDAO::$tableName . " (`name`,`surname`,`email`,`password`,`phone`,`bornDate`,`specialism`,`professionId`) values (?, ?, ?, ?, ?, ?, ?, ?)";
+            $arrayValues = [$user->getName(), $user->getSurnames(), $user->getEmail(), $user->getPassword(), $user->getPhone(), $user->getBornDate(), $user->getSpecialism(), $user->getProfessionId()];
 
-              $id = $conn->executionInsert($cons, $arrayValues);
+            $id = $conn->executionInsert($cons, $arrayValues);              
+            $user->setId($id);
 
-              $user->setId($id);
-
-              return $user->getId(); */
+	    return $user->getId();
         }
 
         /**
-         * delete()
-         * it deletes a row from the database
-         */
+            * @name delete
+            * @description Deletes a object in the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $user Object to delete
+            * @return none
+        */
         public function delete($user) {
-            /* Connection with the database
               try {
               $conn = DBConnect::getInstance();
               } catch (PDOException $e) {
@@ -218,29 +270,52 @@
               $cons = "delete from `" . UserDAO::$tableName . "` where " . UserDAO::$colNameId . " = ?";
               $arrayValues = [$user->getId()];
 
-              $conn->execution($cons, $arrayValues);
-             */
+              $conn->execution($cons, $arrayValues);             
         }
 
         /**
-         * update()
-         * it updates a row of the database
-         */
+            * @name update
+            * @description Updates a object into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $user Object to update
+            * @return none
+        */
         public function update($user) {
-            /* Connection with the database
-              try {
-              $conn = DBConnect::getInstance();
-              } catch (PDOException $e) {
-              print "Error connecting database: " . $e->getMessage() . " ";
-              die();
-              }
+            try {
+                $conn = DBConnect::getInstance();
 
-              $cons = "update `" . UserDAO::$tableName . "` set " . UserDAO::$colNameName . " = ?, " . UserDAO::$colNameSurname1 . " = ?, " . UserDAO::$colNameNick . " = ?, " . UserDAO::$colNamePassword . " = ?, " . UserDAO::$colNameAddress . " = ?, " . UserDAO::$colNameTelephone . " = ?, " . UserDAO::$colNameMail . " = ?, " . UserDAO::$colNameBirthDate . " = ?, " . UserDAO::$colNameEntryDate . " = ?, " . UserDAO::$colNameDropOutDate . " = ?, " . UserDAO::$colNameActive . " = ?, " . UserDAO::$colNameImage . " = ? where " . UserDAO::$colNameId . " = ?";
-              $arrayValues = [$user->getName(), $user->getSurname1(), $user->getNick(), $user->getPassword(), $user->getAddress(), $user->getTelephone(), $user->getMail(), $user->getBirthDate(), $user->getEntryDate(), $user->getDropOutDate(), $user->getActive(), $user->getImage(), $user->getId()];
+                $cons = "update `" . UserDAO::$tableName . "` set " . UserDAO::$colNameName . " = ?, " . UserDAO::$colNameSurname . " = ?, " . UserDAO::$colNameEmail . " = ?, " . UserDAO::$colNamePassword . " = ?, " . UserDAO::$colNamePhone . " = ?, " . UserDAO::$colNameBornDate . " = ?, " . UserDAO::$colNameSpecialism . " = ?, " . UserDAO::$colNameProfessionId . " = ? where " . UserDAO::$colNameId . " = ?";
+                $arrayValues = [$user->getName(), $user->getSurnames(), $user->getEmail(), $user->getPassword(), $user->getPhone(), $user->getBornDate(), $user->getSpecialism(), $user->getProfessionId(), $user->getId()];
 
-              $conn->execution($cons, $arrayValues); */
+                $conn->execution($cons, $arrayValues);
+            } catch (PDOException $e) {
+                print "Error connecting database: " . $e->getMessage() . " ";                
+            }
         }
+        
+        /**
+            * @name updupdatePasswordate
+            * @description Updates password from a user into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params updatePassword Object to update the password
+            * @return none
+        */
+        public function updatePassword($user) {
+            try {
+                $conn = DBConnect::getInstance();
 
+                $cons = "update `" . UserDAO::$tableName . "` set " . UserDAO::$colNamePassword . " = ? where " . UserDAO::$colNameId . " = ?";
+                $arrayValues = [$user->getPassword(),$user->getId()];
+
+                $conn->execution($cons, $arrayValues);
+            } catch (PDOException $e) {
+                print "Error connecting database: " . $e->getMessage() . " ";                
+            }
+        }
     }
 
 ?>

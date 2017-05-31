@@ -4,13 +4,14 @@
  * @author Jonathan Lozano
  * @date 2017-05-15
  * @version 1.0
- * @param id: ID of the project
-        * userId: Project's userId
-        * name: Project's name
-        * initialDate: Project's initial date
-        * endDate: Project's end date
-        * testedDrug: Project's tested drug
-        * disease: Project's disease object (relation with Disease)
+ * @param 
+    id: ID of the project
+    userId: Project's userId
+    name: Project's name
+    initialDate: Project's initial date
+    endDate: Project's end date
+    testedDrug: Project's tested drug
+    disease: Project's disease object
 */
 function Project()
 {

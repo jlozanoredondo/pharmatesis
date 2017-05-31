@@ -1,12 +1,10 @@
 /*
 	@name: StatisticsController.js
-	@Author: Jonathan Lozano & Joan Fernández
+	@Author: Jonathan Lozano
 	@Version: 1.0
 	@Description: Controller for statistics (R)
 	@Date: 2017-05-15
 */
-//JQuery code
-
 
 //Angular code
 (function (){
@@ -23,8 +21,10 @@
 		{
 
 	        if ($scope.$parent.infoShow == 9) {
+
+				$scope.$parent.loading=1;
 	        	$scope.$parent.infoProject = angular.copy($scope.$parent.infoProject);
-				var promise = accessService.getData("r/controller/StatisticsController.R", true, "POST", "", {controllerType:0,action:10000, jsonData:JSON.stringify($scope.$parent.infoProject)});
+				var promise = accessService.getData("http://provenapps.cat/~dawbio1703/R/controller/StatisticsController.R", true, "POST", "", {controllerType:0,action:10000, jsonData:JSON.stringify($scope.$parent.infoProject)});
 
 				promise.then(function (outPutData) {
 					if(outPutData[0]== 1)
@@ -42,29 +42,24 @@
 						$scope.$parent.boxPlotCorrelationWeightDose = outPutData[1][9];
 						$scope.$parent.boxPlotCorrelationHeightDose = outPutData[1][10];
 						$scope.$parent.boxPlotYear = outPutData[1][11];
-					}
-					else
-					{
-						if(angular.isArray(outPutData[1]))
-						{
-							alert(outPutData[1]);
-						}
-						else {alert("There has been an error in the server, try later");}
-					}
+					}					
+					$scope.$parent.loading=0;
 				});
+				$scope.$parent.infoShow=0;
 			}else if($scope.$parent.infoShow==10){
+				$scope.$parent.loading=1;
 	        	$scope.$parent.infoProject = angular.copy($scope.$parent.infoProject);
+	        	$scope.$parent.infoSubject = angular.copy($scope.$parent.infoSubject);
 	            var promise = accessService.getData( "php/controller/MainController.php", true, "POST", {controllerType:4,action:10020,jsonData:JSON.stringify($scope.$parent.infoSubject)}); 
 	            promise.then(function (outPutData) {
-	            	console.log(outPutData);
 	                if(outPutData[0]=== true) { 
 	                    $scope.infoSubject.construct(outPutData[1][0].id, outPutData[1][0].bornDate, outPutData[1][0].gender, outPutData[1][0].breed, outPutData[1][0].nick, outPutData[1][0].bloodType, outPutData[1][0].status, outPutData[1][0].height, outPutData[1][0].weight, outPutData[1][0].countryId,outPutData[1][0].userId);	                      
 
 	                    $scope.statistics = new Statistics();
-	                    $scope.statistics.setProject($scope.$parent.project);
+	                    $scope.statistics.setProject($scope.$parent.infoProject);
 	                    $scope.statistics.setSubject($scope.infoSubject);
 
-	                    var promise = accessService.getData("r/controller/StatisticsController.R", true, "POST", "", {controllerType:0,action:10010, jsonData:JSON.stringify($scope.statistics)});
+	                    var promise = accessService.getData("http://provenapps.cat/~dawbio1703/R/controller/StatisticsController.R", true, "POST", "", {controllerType:0,action:10010, jsonData:JSON.stringify($scope.statistics)});
 	                    promise.then(function (outPutData) {
 							if(outPutData[0]== 1)
 							{
@@ -72,14 +67,18 @@
 							}
 						});
 	                }
+					$scope.$parent.loading=0;
             	});	
+            	$scope.$parent.infoShow=0;
 			}else if($scope.$parent.infoShow==11){
+				$scope.$parent.loading=1;
 				$scope.$parent.infoProject = angular.copy($scope.$parent.infoProject);
+				$scope.$parent.infoSession = angular.copy($scope.$parent.infoSession);
 				$scope.statistics = new Statistics();
                 $scope.statistics.setProject($scope.$parent.infoProject);
                 $scope.statistics.setSession($scope.$parent.infoSession);	
 
-                var promise = accessService.getData("r/controller/StatisticsController.R", true, "POST", "", {controllerType:0,action:10020, jsonData:JSON.stringify($scope.statistics)});
+                var promise = accessService.getData("http://provenapps.cat/~dawbio1703/R/controller/StatisticsController.R", true, "POST", "", {controllerType:0,action:10020, jsonData:JSON.stringify($scope.statistics)});
                 promise.then(function (outPutData) {
 					if(outPutData[0]== 1)
 					{
@@ -92,17 +91,18 @@
 						$scope.$parent.boxPlotCorrelationWeightDose = outPutData[1][6];
 						$scope.$parent.boxPlotCorrelationHeightDose = outPutData[1][7];
 					}
+					$scope.$parent.loading=0;
 				});
-	                
+	            $scope.$parent.infoShow=0;    
 			}else if($scope.$parent.infoShow==12){
+				$scope.$parent.loading=1;
 				$scope.$parent.infoProject = angular.copy($scope.$parent.infoProject);
+				$scope.$parent.infoPhase = angular.copy($scope.$parent.infoPhase);
 				$scope.statistics = new Statistics();
                 $scope.statistics.setProject($scope.$parent.infoProject);
                 $scope.statistics.setPhase($scope.$parent.infoPhase);	
-                console.log($scope.statistics);
-                var promise = accessService.getData("r/controller/StatisticsController.R", true, "POST", "", {controllerType:0,action:10030, jsonData:JSON.stringify($scope.statistics)});
+                var promise = accessService.getData("http://provenapps.cat/~dawbio1703/R/controller/StatisticsController.R", true, "POST", "", {controllerType:0,action:10030, jsonData:JSON.stringify($scope.statistics)});
                 promise.then(function (outPutData) {
-                	console.log(outPutData);
 					if(outPutData[0]== 1)
 					{
 						$scope.$parent.barplotPhaseSideEffects = outPutData[1][0];
@@ -114,14 +114,14 @@
 						$scope.$parent.boxPlotCorrelationWeightDose = outPutData[1][6];
 						$scope.$parent.boxPlotCorrelationHeightDose = outPutData[1][7];
 					}
+					$scope.$parent.loading=0;
 				});
-	                
+	        $scope.$parent.infoShow=0;        
 			}
 		
 		});
 
 	}]);
 })();
-
 
 //Own code

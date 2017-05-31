@@ -3,8 +3,26 @@
 
 <html ng-app="pharmatesisApp" xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
     <head>
+        <link rel="apple-touch-icon" sizes="57x57" href="files/img/favicon/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="files/img/favicon/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="files/img/favicon/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="files/img/favicon/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="files/img/favicon/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="files/img/favicon/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="files/img/favicon/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="files/img/favicon/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="files/img/favicon/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="files/img/favicon/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="files/img/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="files/img/favicon/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="files/img/favicon/favicon-16x16.png">
+        <link rel="manifest" href="files/img/favicon/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="files/img/favicon/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
         <title>PharmatesisApp</title>
 
         <!-- css-->
@@ -47,17 +65,46 @@
         <script src="js/model/Preinscription.js" type="text/javascript" xml:space="preserve"></script>
         <script src="js/model/Endure.js" type="text/javascript" xml:space="preserve"></script>
         <script src="js/model/Statistics.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="js/model/Review.js" type="text/javascript" xml:space="preserve"></script>
+        <script src="js/model/Profession.js" type="text/javascript" xml:space="preserve"></script>
     </head>
-    <body ng-controller="SessionController as SessionCtrl" ng-init="SessionCtrl.sessionControl()">
-        <div class="login-page">
-            <div class="form" ng-controller="UserController as userCtrl">
-                <form class="login-form" name="loginForm" ng-submit="userCtrl.connection()" novalidate>
-                    <input type="email" id="email" placeholder="Email" ng-model="user.email" required/>
-                    <input type="password" id="password" placeholder="Password" ng-model="user.password" required/>
-                    <button type="submit" name="login" id="login">Log in</button>
-                    <p class="message">Not registered? <a href="register.html">Create an account</a></p>
-                </form>
+    <body ng-controller="SessionController as SessionCtrl" ng-init="SessionCtrl.sessionControl()">        
+        <div class="main" ng-controller="InterfaceController as IntCtrl">
+            <div class="login-page" ng-show="action == 0">                
+                <div class="form" ng-controller="UserController as userCtrl">
+                    <div class="logo">
+                        <img src="files/img/logo.png" />
+                    </div>
+                    <form class="login-form" name="loginForm" ng-submit="userCtrl.connection()" novalidate>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" placeholder="sullivan.john@mail.com" ng-model="user.email" required/>
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" placeholder="******" ng-model="user.password" required/>
+                        <button type="submit" class="formbutton" name="login" id="login" ng-disabled="loginForm.$invalid">Log in</button>
+                        <p class="message">Not registered? <a href="register.html">Create an account</a></p>
+                    </form>
+                </div>
             </div>
-        </div>
+            <div class="contact-us" ng-show="action==10">
+                <contact-us></contact-us>
+            </div>
+            <div class="about-us" ng-show="action==11">
+                <about-us></about-us>
+            </div>
+            <div class="password-recovery" ng-show="action==12">
+                <password-recovery></password-recovery>
+            </div>
+            <footer>
+                <div class="col-xs-4">
+                    <p><a href="" ng-click="action=10">Contact us</a></p>
+                </div>
+                <div class="col-xs-4">
+                    <p><a href="" ng-click="action=11">About us</a></p>
+                </div>
+                <div class="col-xs-4">
+                    <p><a href="" ng-click="action=12">Password recovery</a></p>
+                </div>
+            </footer>
+        </div>        
     </body>
 </html>

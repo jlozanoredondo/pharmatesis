@@ -1,10 +1,12 @@
 <?php    
     /**
-    * Controller to connect the subject client data with the server
-    * @name SubjectControllerClass.php
+    * @name SubjectControllerClass
+    * Controller to connect the subjcet client data with the server
+    * @date 2017-05-11
     * @author Jonathan Lozano
-    * @date 2017-04-27
     * @version 1.0
+    * @params none
+    * @return $outPutData. Array with method return found
     */
     require_once "ControllerInterface.php";
     require_once "../model/Subject.php";
@@ -61,15 +63,24 @@
             return $outPutData;
         }
 
+        /**
+        * @name subjectConnection
+        * Method to load subjects from DDBB
+        * @date 2017-05-15
+        * @author Jonathan Lozano
+        * @version 1.0
+        * @params none
+        * @return $outPutData. Array with subjects found
+        */
         private function subjectConnection() {
             $subjectObj = json_decode(stripslashes($this->getJsonData()));
 
             $subject = new Subject();
             
-            $userId = $subjectObj->id;
+            $subjectId = $subjectObj->userId;
 
 
-            $subject->setAll(0, 0, 0, 0, 0, 0, 0, 0, 0, 0,$userId);
+            $subject->setAll(0, 0, 0, 0, 0, 0, 0, 0, 0, 0,$subjectId);
 
             $outPutData = array();
             $errors = array();
@@ -94,6 +105,15 @@
             return $outPutData;
         }
 
+        /**
+        * @name addSubject
+        * Method to add subject in DDBB
+        * @date 2017-05-15
+        * @author Jonathan Lozano
+        * @version 1.0
+        * @params none
+        * @return $outPutData. Array with new subject added
+        */
         private function addSubject(){
             $subjectObj = json_decode(stripslashes($this->getJsonData()));
 
@@ -105,7 +125,7 @@
 
             $date = date( 'Y-m-d H:i:s', strtotime($subjectObj->bornDate) );
 
-            $subject->setAll(0, $date, $subjectObj->gender, $subjectObj->breed, $subjectObj->nick, $subjectObj->bloodType, $subjectObj->status, $subjectObj->height, $subjectObj->weight, $countryId,1);
+            $subject->setAll(0, $date, $subjectObj->gender, $subjectObj->breed, $subjectObj->nick, $subjectObj->bloodType, $subjectObj->status, $subjectObj->height, $subjectObj->weight, $countryId,$userId);
 
             $subject->setId(SubjectDAO::create($subject));
             
@@ -116,6 +136,15 @@
             return $outPutData;           
         }
 
+        /**
+        * @name loadSubject
+        * Method to load a selected subject from DDBB
+        * @date 2017-05-15
+        * @author Jonathan Lozano
+        * @version 1.0
+        * @params none
+        * @return $outPutData. Array with subject found
+        */
         private function loadSubject(){
             $subjectObj = json_decode(stripslashes($this->getJsonData()));
 

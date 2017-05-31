@@ -1,11 +1,6 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
 /* 
     Created on : 16-mar-2017, 20:07:04
-    Author     : dev
+    Author     : Jonathan Lozano
 */
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
@@ -14,11 +9,32 @@ html{
     font-size: 0.9em;
 }
 
+h1{
+    font-size: 1.3em;
+    color: #41627d;
+    padding-bottom: 20px;
+}
+
+.width-table{
+    width: 100px;
+}
+
+
+.ng-invalid.ng-dirty
+{
+  border-color:red
+}
+
+.ng-valid.ng-dirty
+{
+  border-color:green
+}
+
 .navbar-brand , .navbar-default .navbar-nav>li>a{
     color: white!important;
 }
 .container-fluid{
-    background-color: #4ea1d3;
+    background-color: #41627d;
 }
 
 
@@ -60,7 +76,8 @@ html{
 }
 
 .th-width{
-    width: 100px;
+    min-width: 100px;
+    width: auto;
 }
 
 .checkbox-line{
@@ -68,7 +85,7 @@ html{
 }
 
 .header{
-    border-bottom: 0.1em solid #4ea1d3;
+    border-bottom: 0.1em solid #41627d;
     margin-top: 20px;
     margin-bottom: 20px;
     font-size: 2em;
@@ -85,7 +102,7 @@ html{
 }
 
 .userico{
-    color: #4ea1d3;
+    color: #41627d;
 }
 
 .meter{
@@ -97,5 +114,99 @@ html{
 }
 
 .cursor-pointer:hover{
-    color: #4ea1d3;
+    color: #41627d;
+}
+
+input[type=radio]{
+    margin-top:0px;
+}
+
+.checkbox label:after, 
+.radio label:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.checkbox .cr,
+.radio .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    border-radius: .25em;
+    width: 1.3em;
+    height: 1.3em;
+    float: left;
+    margin-right: .5em;
+}
+
+.radio .cr {
+    border-radius: 50%;
+}
+
+.checkbox .cr .cr-icon,
+.radio .cr .cr-icon {
+    position: absolute;
+    font-size: .8em;
+    line-height: 0;
+    top: 50%;
+    left: 20%;
+}
+
+.radio .cr .cr-icon {
+    margin-left: 0.04em;
+}
+
+.checkbox label input[type="checkbox"]{
+    display: none;
+}
+
+.checkbox label input[type="checkbox"] + .cr > .cr-icon{
+    transform: scale(3) rotateZ(-20deg);
+    opacity: 0;
+    transition: all .3s ease-in;
+}
+
+.checkbox label input[type="checkbox"]:checked + .cr > .cr-icon{
+    transform: scale(1) rotateZ(0deg);
+    opacity: 1;
+}
+
+.checkbox label input[type="checkbox"]:disabled + .cr{
+    opacity: .5;
+}
+
+.line-height-md{
+    line-height: 1.4;
+}
+
+label {
+    text-align: left;
+}
+.modifyProfile label {
+    margin-top: 20px;
+}
+.buttons-div{
+    margin-top: 20px;
+}
+
+.loading{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    display: block;
+    opacity: 0.5;
+    background-color: #fff;
+    z-index: 1100;
+    text-align: center;
+}
+
+#loading-image {
+    position: absolute;
+    top: 50%;
+    left: -32px;
+    z-index: 1200;
+    margin-left: 50%;
 }

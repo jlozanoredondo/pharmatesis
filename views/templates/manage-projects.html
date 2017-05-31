@@ -29,8 +29,10 @@
                     <td>{{project.endDate}}</td>
                     <td>{{project.testedDrug}}</td>
                     <td class="btn-group">
-                        <button ng-click="loadProject(project)" class='btn btn-primary btn-sm glyphicon glyphicon-cog'></button>
-                        <button class="btn btn-danger btn-sm glyphicon glyphicon-trash" ng-confirm-click="Are you sure to delete this project?" confirmed-click="projectCtrl.deleteProject(project)"></button>
+                        <button ng-click="loadProject(project)" ng-if="project.endDate!=null" class='btn btn-primary btn-sm glyphicon glyphicon-eye-open'></button>
+                        <button ng-click="loadProject(project)" ng-if="project.endDate==null" class='btn btn-primary btn-sm glyphicon glyphicon-cog'></button>
+                        <button id=lock{{project.id}} ng-if="project.endDate==null" class="btn btn-warning btn-sm glyphicon glyphicon-lock" ng-confirm-click="Are you sure to close this project?" confirmed-click="projectCtrl.closeProject(project)"></button>
+                        <button class="btn btn-danger btn-sm glyphicon glyphicon-trash" ng-confirm-click="Are you sure to delete this project?" confirmed-click="deleteProject(project)"></button>
                     </td>
                 </tr>                
             </tbody>

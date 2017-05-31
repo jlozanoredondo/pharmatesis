@@ -1,10 +1,12 @@
 <?php    
     /**
-    * Controller to connect the session client data with the server
-    * @name sessionControllerClass.php
+    * @name SessionControllerClass
+    * Controller to connect the sessions client data with the server
+    * @date 2017-05-11
     * @author Jonathan Lozano
-    * @date 2017-05-15
     * @version 1.0
+    * @params none
+    * @return $outPutData. Array with method return found
     */
     require_once "ControllerInterface.php";
     require_once "../model/Session.php";
@@ -61,6 +63,15 @@
             return $outPutData;
         }
 
+        /**
+        * @name sessionConnection
+        * Method to load sessions from DDBB
+        * @date 2017-05-15
+        * @author Jonathan Lozano
+        * @version 1.0
+        * @params none
+        * @return $outPutData. Array with sessions found
+        */
         private function sessionConnection() {
             $outPutData = array();
             $errors = array();
@@ -85,6 +96,15 @@
             return $outPutData;
         }
 
+        /**
+        * @name closeSession
+        * Method to close session in DDBB
+        * @date 2017-05-15
+        * @author Jonathan Lozano
+        * @version 1.0
+        * @params none
+        * @return $outPutData. Array with info from session closed
+        */
         private function closeSession(){
             $dispenseObject = json_decode(stripslashes($this->getJsonData()));
             
@@ -104,6 +124,15 @@
             return $outPutData;
         } 
 
+        /**
+        * @name addSession
+        * Method to add a new session in DDBB
+        * @date 2017-05-15
+        * @author Jonathan Lozano
+        * @version 1.0
+        * @params none
+        * @return $outPutData. Array with new session inserted
+        */
         private function addSession(){
             $sessionObject = json_decode(stripslashes($this->getJsonData()));
             

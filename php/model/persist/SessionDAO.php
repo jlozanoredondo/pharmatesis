@@ -19,13 +19,15 @@
         private static $colNameSessionDate = "sessionDate";
         private static $colNameSessionEndDate = "sessionEndDate";
 
-        //---Databese management section-----------------------
         /**
-         * fromResultSetList()
-         * this function runs a query and returns an array with all the result transformed into an object
-         * @param res query to execute
-         * @return objects collection
-         */
+            * @name fromResultSetList
+            * @description Transforms the resultset to a list
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $res DB result
+            * @return Object list
+        */
         public static function fromResultSetList($res) {
             $entityList = array();
             $i = 0;
@@ -41,11 +43,14 @@
         }
 
         /**
-         * fromResultSet()
-         * the query result is transformed into an object
-         * @param res ResultSet del qual obtenir dades
-         * @return object
-         */
+            * @name fromResultSet
+            * @description Transforms the resultset to a object
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $res DB result
+            * @return Object converted
+        */
         public static function fromResultSet($res) {
             //We get all the values form the query
             $id = $res[SessionDAO::$colNameId];
@@ -64,11 +69,15 @@
         }
 
         /**
-         * findByQuery()
-         * It runs a particular query and returns the result
-         * @param cons query to run
-         * @return objects collection
-         */
+            * @name findByQuery
+            * @description Finds a query into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $cons Query to find                     
+            * @params $vector Data to find
+            * @return Call to fromResultSetList function
+        */
         public static function findByQuery($cons, $vector) {
             //Connection with the database
             try {
@@ -85,50 +94,14 @@
         }
 
         /**
-         * findById()
-         * It runs a query and returns an object array
-         * @param id
-         * @return object with the query results
-         */
-        /*public static function findById($session) {
-            $cons = "select * from `" . SessionDAO::$tableName . "` where " . SessionDAO::$colNameId . " = ?";
-            $arrayValues = [$session->getId()];
-
-            return SessionDAO::findByQuery($cons, $arrayValues);
-        }*/
-
-        /**
-         * findlikeName()
-         * It runs a query and returns an object array
-         * @param name
-         * @return object with the query results
-         */
-        /*public static function findlikeName($session) {
-            $cons = "select * from `" . SessionDAO::$tableName . "` where " . SessionDAO::$colNameName . " like ?";
-            $arrayValues = ["%" . $session->getName() . "%"];
-
-            return SessionDAO::findByQuery($cons, $arrayValues);
-        }*/
-
-        /**
-         * findByName()
-         * It runs a query and returns an object array
-         * @param name
-         * @return object with the query results
-         */
-        /*public static function findByName($session) {
-            $cons = "select * from `" . SessionDAO::$tableName . "` where " . SessionDAO::$colNameName . " = ?";
-            $arrayValues = [$session->getName()];
-
-            return SessionDAO::findByQuery($cons, $arrayValues);
-        }*/
-
-        /**
-         * findAll()
-         * It runs a query and returns an object array
-         * @param none
-         * @return object with the query results
-         */
+            * @name findAll
+            * @description Finds all objects into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params none
+            * @return Call to findByQuery function
+        */
         public static function findAll() {
             $cons = "select * from `" . SessionDAO::$tableName . "`";
             $arrayValues = [];
@@ -137,9 +110,14 @@
         }
 
         /**
-         * create()
-         * insert a new row into the database
-         */
+            * @name create
+            * @description Inserts a object into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $session Object to find
+            * @return Inserted id
+        */
         public function create($session) {
             // Connection with the database
               try {
@@ -158,7 +136,16 @@
 
               return $session->getId(); 
         }
-
+        
+        /**
+            * @name closeSession
+            * @description Closses a session in the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $session Object to close
+            * @return none
+        */
         public function closeSession($session){
             // Connection with the database
               try {
@@ -175,9 +162,14 @@
         }
 
         /**
-         * delete()
-         * it deletes a row from the database
-         */
+            * @name delete
+            * @description Deletes a object in the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $session Object to delete
+            * @return none
+        */
         public function delete($session) {
              //Connection with the database
               try {
@@ -194,26 +186,5 @@
               $conn->execution($cons, $arrayValues);
              
         }
-
-        /**
-         * update()
-         * it updates a row of the database
-         */
-        public function update($session) {
-            /* Connection with the database
-              try {
-              $conn = DBConnect::getInstance();
-              } catch (PDOException $e) {
-              print "Error connecting database: " . $e->getMessage() . " ";
-              die();
-              }
-
-              $cons = "update `" . SessionDAO::$tableName . "` set " . SessionDAO::$colNameName . " = ?, " . SessionDAO::$colNameSurname1 . " = ?, " . SessionDAO::$colNameNick . " = ?, " . SessionDAO::$colNamePassword . " = ?, " . SessionDAO::$colNameAddress . " = ?, " . SessionDAO::$colNameTelephone . " = ?, " . SessionDAO::$colNameMail . " = ?, " . SessionDAO::$colNameBirthDate . " = ?, " . SessionDAO::$colNameEntryDate . " = ?, " . SessionDAO::$colNameDropOutDate . " = ?, " . SessionDAO::$colNameActive . " = ?, " . SessionDAO::$colNameImage . " = ? where " . SessionDAO::$colNameId . " = ?";
-              $arrayValues = [$session->getName(), $session->getSurname1(), $session->getNick(), $session->getPassword(), $session->getAddress(), $session->getTelephone(), $session->getMail(), $session->getBirthDate(), $session->getEntryDate(), $session->getDropOutDate(), $session->getActive(), $session->getImage(), $session->getId()];
-
-              $conn->execution($cons, $arrayValues); */
-        }
-
     }
-
 ?>

@@ -4,9 +4,11 @@
  * @author Jonathan Lozano
  * @date 2017-05-15
  * @version 1.0
- * @param id: ID of the session
-        * name: Session's name object
-        * name: Session's name object
+ * @param 
+    id: ID of the session
+    name: Session's name
+    date: Session's date
+    endDate: Session's end date
 */
 function Session()
 {

@@ -22,13 +22,15 @@
         private static $colNameTestedDrug = "testedDrug";
         private static $colNameDiseaseId= "diseaseId";
 
-        //---Databese management section-----------------------
         /**
-         * fromResultSetList()
-         * this function runs a query and returns an array with all the result transformed into an object
-         * @param res query to execute
-         * @return objects collection
-         */
+            * @name fromResultSetList
+            * @description Transforms the resultset to a list
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $res DB result
+            * @return Object list
+        */
         public static function fromResultSetList($res) {
             $entityList = array();
             $i = 0;
@@ -44,11 +46,14 @@
         }
 
         /**
-         * fromResultSet()
-         * the query result is transformed into an object
-         * @param res ResultSet del qual obtenir dades
-         * @return object
-         */
+            * @name fromResultSet
+            * @description Transforms the resultset to a object
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $res DB result
+            * @return Object converted
+        */
         public static function fromResultSet($res) {
             //We get all the values form the query
             $id = $res[ProjectDAO::$colNameId];
@@ -73,11 +78,15 @@
         }
 
         /**
-         * findByQuery()
-         * It runs a particular query and returns the result
-         * @param cons query to run
-         * @return objects collection
-         */
+            * @name findByQuery
+            * @description Finds a query into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $cons Query to find                     
+            * @params $vector Data to find
+            * @return Call to fromResultSetList function
+        */
         public static function findByQuery($cons, $vector) {
             //Connection with the database
             try {
@@ -92,52 +101,30 @@
 
             return ProjectDAO::fromResultSetList($res);
         }
-
         /**
-         * findById()
-         * It runs a query and returns an object array
-         * @param id
-         * @return object with the query results
-         */
-        /*public static function findById($project) {
+            * @name findProjectId
+            * @description Finds a object by the id
+            * @date 2017-04-06
+            * @author Jonathan Lozano
+            * @version 1.0
+            * @params $project Object to find
+            * @return Call to findByQuery function
+        */
+        public static function findProjectId($project) {
             $cons = "select * from `" . ProjectDAO::$tableName . "` where " . ProjectDAO::$colNameId . " = ?";
             $arrayValues = [$project->getId()];
 
             return ProjectDAO::findByQuery($cons, $arrayValues);
-        }*/
-
+        }
         /**
-         * findlikeName()
-         * It runs a query and returns an object array
-         * @param name
-         * @return object with the query results
-         */
-        /*public static function findlikeName($project) {
-            $cons = "select * from `" . ProjectDAO::$tableName . "` where " . ProjectDAO::$colNameName . " like ?";
-            $arrayValues = ["%" . $project->getName() . "%"];
-
-            return ProjectDAO::findByQuery($cons, $arrayValues);
-        }*/
-
-        /**
-         * findByName()
-         * It runs a query and returns an object array
-         * @param name
-         * @return object with the query results
-         */
-        /*public static function findByName($project) {
-            $cons = "select * from `" . ProjectDAO::$tableName . "` where " . ProjectDAO::$colNameName . " = ?";
-            $arrayValues = [$project->getName()];
-
-            return ProjectDAO::findByQuery($cons, $arrayValues);
-        }*/
-
-        /**
-         * findAllUser()
-         * It runs a query and returns an object array
-         * @param none
-         * @return object with the query results
-         */
+            * @name findAllUser
+            * @description Finds a object by the id
+            * @date 2017-04-06
+            * @author Jonathan Lozano
+            * @version 1.0
+            * @params $project Object to find
+            * @return Call to findByQuery function
+        */
         public static function findAllUser($project) {
             $cons = "select * from `" . ProjectDAO::$tableName . "` where " . ProjectDAO::$colNameUserId . " = ?";
             $arrayValues = [$project->getUserId()];
@@ -146,9 +133,14 @@
         }
 
         /**
-         * create()
-         * insert a new row into the database
-         */
+            * @name create
+            * @description Inserts a object into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $project Object to create
+            * @return Inserted id
+        */
         public function create($project) {
             // Connection with the database
               try {
@@ -169,9 +161,14 @@
         }
 
         /**
-         * delete()
-         * it deletes a row from the database
-         */
+            * @name delete
+            * @description Deletes a object in the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $project Object to delete
+            * @return none
+        */
         public function delete($project) {
              //Connection with the database
               try {
@@ -190,11 +187,16 @@
         }
 
         /**
-         * update()
-         * it updates a row of the database
-         */
-        public function update($project) {
-            /* Connection with the database
+            * @name close
+            * @description Close a object in the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $project Object to close
+            * @return none
+        */
+        public function close($project) {
+             //Connection with the database
               try {
               $conn = DBConnect::getInstance();
               } catch (PDOException $e) {
@@ -202,12 +204,13 @@
               die();
               }
 
-              $cons = "update `" . ProjectDAO::$tableName . "` set " . ProjectDAO::$colNameName . " = ?, " . ProjectDAO::$colNameSurname1 . " = ?, " . ProjectDAO::$colNameNick . " = ?, " . ProjectDAO::$colNamePassword . " = ?, " . ProjectDAO::$colNameAddress . " = ?, " . ProjectDAO::$colNameTelephone . " = ?, " . ProjectDAO::$colNameMail . " = ?, " . ProjectDAO::$colNameBirthDate . " = ?, " . ProjectDAO::$colNameEntryDate . " = ?, " . ProjectDAO::$colNameDropOutDate . " = ?, " . ProjectDAO::$colNameActive . " = ?, " . ProjectDAO::$colNameImage . " = ? where " . ProjectDAO::$colNameId . " = ?";
-              $arrayValues = [$project->getName(), $project->getSurname1(), $project->getNick(), $project->getPassword(), $project->getAddress(), $project->getTelephone(), $project->getMail(), $project->getBirthDate(), $project->getEntryDate(), $project->getDropOutDate(), $project->getActive(), $project->getImage(), $project->getId()];
 
-              $conn->execution($cons, $arrayValues); */
+              $cons = "update `" . ProjectDAO::$tableName . "` set " . ProjectDAO::$colNameEndDate . " = ? where " . ProjectDAO::$colNameId . " = ?";
+              $arrayValues = [$project->getEndDate(), $project->getId()];
+
+              $conn->execution($cons, $arrayValues);
+             
         }
-
     }
 
 ?>

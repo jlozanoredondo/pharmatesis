@@ -4,9 +4,10 @@
  * @author Jonathan Lozano
  * @date 2017-05-15
  * @version 1.0
- * @param id: ID of the phase
-        * subject: Preinscription's subject object
-        * medicament: Preinscription's medicament object
+ * @param 
+    id: ID of the phase
+    subject: Preinscription's subject object
+    medicament: Preinscription's medicament object
 */
 function Preinscription()
 {

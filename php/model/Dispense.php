@@ -1,7 +1,7 @@
 <?php
 
 /** 
- * Class to manage the Profession objects
+ * Class to manage the Dispense objects
  * @name Dispense.php
  * @author Joan Fernández
  * @date 2017-02-23

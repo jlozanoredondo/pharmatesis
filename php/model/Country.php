@@ -1,7 +1,7 @@
 <?php
 
 /** 
- * Class to manage the Subject objects
+ * Class to manage the Country objects
  * @name Country.php
  * @author Joan Fernández
  * @date 2017-02-23

@@ -18,13 +18,15 @@
         private static $colNameSubjectId = "subjectId";
         private static $colNameDiseaseId = "diseaseId";
 
-        //---Databese management section-----------------------
         /**
-         * fromResultSetList()
-         * this function runs a query and returns an array with all the result transformed into an object
-         * @param res query to execute
-         * @return objects collection
-         */
+            * @name fromResultSetList
+            * @description Transforms the resultset to a list
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $res DB result
+            * @return Object list
+        */
         public static function fromResultSetList($res) {
             $entityList = array();
             $i = 0;
@@ -40,11 +42,14 @@
         }
 
         /**
-         * fromResultSet()
-         * the query result is transformed into an object
-         * @param res ResultSet del qual obtenir dades
-         * @return object
-         */
+            * @name fromResultSet
+            * @description Transforms the resultset to a object
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $res DB result
+            * @return Object converted
+        */
         public static function fromResultSet($res) {
             //We get all the values form the query
             $id = $res[EndureDAO::$colNameId];
@@ -61,11 +66,15 @@
         }
 
         /**
-         * findByQuery()
-         * It runs a particular query and returns the result
-         * @param cons query to run
-         * @return objects collection
-         */
+            * @name findByQuery
+            * @description Finds a query into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $cons Query to find                     
+            * @params $vector Data to find
+            * @return Call to fromResultSetList function
+        */
         public static function findByQuery($cons, $vector) {
             //Connection with the database
             try {
@@ -79,53 +88,17 @@
             $res = $conn->execution($cons, $vector);
 
             return EndureDAO::fromResultSetList($res);
-        }
+        }        
 
         /**
-         * findById()
-         * It runs a query and returns an object array
-         * @param id
-         * @return object with the query results
-         */
-        /*public static function findById($endure) {
-            $cons = "select * from `" . EndureDAO::$tableName . "` where " . EndureDAO::$colNameId . " = ?";
-            $arrayValues = [$endure->getId()];
-
-            return EndureDAO::findByQuery($cons, $arrayValues);
-        }*/
-
-        /**
-         * findlikeName()
-         * It runs a query and returns an object array
-         * @param name
-         * @return object with the query results
-         */
-        /*public static function findlikeName($endure) {
-            $cons = "select * from `" . EndureDAO::$tableName . "` where " . EndureDAO::$colNameName . " like ?";
-            $arrayValues = ["%" . $endure->getName() . "%"];
-
-            return EndureDAO::findByQuery($cons, $arrayValues);
-        }*/
-
-        /**
-         * findByName()
-         * It runs a query and returns an object array
-         * @param name
-         * @return object with the query results
-         */
-        /*public static function findByName($endure) {
-            $cons = "select * from `" . EndureDAO::$tableName . "` where " . EndureDAO::$colNameName . " = ?";
-            $arrayValues = [$endure->getName()];
-
-            return EndureDAO::findByQuery($cons, $arrayValues);
-        }*/
-
-        /**
-         * findAll()
-         * It runs a query and returns an object array
-         * @param none
-         * @return object with the query results
-         */
+            * @name findAll
+            * @description Finds all objects into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params none
+            * @return Call to findByQuery function
+        */
         public static function findAll() {
             $cons = "select * from `" . EndureDAO::$tableName . "`";
             $arrayValues = [];
@@ -134,9 +107,14 @@
         }
 
         /**
-         * create()
-         * insert a new row into the database
-         */
+            * @name create
+            * @description Inserts a object into the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $endure Object to find
+            * @return Inserted id
+        */
         public function create($endure) {
             // Connection with the database
               try {
@@ -157,9 +135,14 @@
         }
 
         /**
-         * delete()
-         * it deletes a row from the database
-         */
+            * @name delete
+            * @description Deletes a object in the DB
+            * @date 2017-04-06
+            * @author Joan Fernández
+            * @version 1.0
+            * @params $endure Object to find
+            * @return none
+        */
         public function delete($endure) {
              //Connection with the database
               try {
@@ -169,33 +152,12 @@
               die();
               }
 
-
               $cons = "delete from `" . EndureDAO::$tableName . "` where " . EndureDAO::$colNameId . " = ?";
               $arrayValues = [$endure->getId()];
 
               $conn->execution($cons, $arrayValues);
              
         }
-
-        /**
-         * update()
-         * it updates a row of the database
-         */
-        public function update($endure) {
-            /* Connection with the database
-              try {
-              $conn = DBConnect::getInstance();
-              } catch (PDOException $e) {
-              print "Error connecting database: " . $e->getMessage() . " ";
-              die();
-              }
-
-              $cons = "update `" . EndureDAO::$tableName . "` set " . EndureDAO::$colNameName . " = ?, " . EndureDAO::$colNameSurname1 . " = ?, " . EndureDAO::$colNameNick . " = ?, " . EndureDAO::$colNamePassword . " = ?, " . EndureDAO::$colNameAddress . " = ?, " . EndureDAO::$colNameTelephone . " = ?, " . EndureDAO::$colNameMail . " = ?, " . EndureDAO::$colNameBirthDate . " = ?, " . EndureDAO::$colNameEntryDate . " = ?, " . EndureDAO::$colNameDropOutDate . " = ?, " . EndureDAO::$colNameActive . " = ?, " . EndureDAO::$colNameImage . " = ? where " . EndureDAO::$colNameId . " = ?";
-              $arrayValues = [$endure->getName(), $endure->getSurname1(), $endure->getNick(), $endure->getPassword(), $endure->getAddress(), $endure->getTelephone(), $endure->getMail(), $endure->getBirthDate(), $endure->getEntryDate(), $endure->getDropOutDate(), $endure->getActive(), $endure->getImage(), $endure->getId()];
-
-              $conn->execution($cons, $arrayValues); */
-        }
-
     }
 
 ?>

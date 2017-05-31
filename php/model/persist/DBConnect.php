@@ -7,9 +7,9 @@
      * @date 2017-03-02
      * @version 1.0
      * @param host: Hosts name
-     * user: User's name
-     * pass: User's password
-     * db: Database to connect with
+            * user: User's name
+            * pass: User's password
+            * db: Database to connect with
      */
     class DBConnect {
 
@@ -22,30 +22,22 @@
         private $array = array();
         static $_instance;
 
-        /* La función construct és privada per  evitar que l'objecte pugui ser creat mitjançant new */
-
         private function __construct() {
             $this->setConnection();
             $this->connection();
         }
 
-        /* Mètode per establir els paràmetres de la connexió */
-
         private function setConnection() {
 
             $this->server = 'localhost';
-            $this->dataBase = 'pharmatesis';
-            $this->user = 'root';
-            $this->password = 'root';
+            $this->dataBase = 'dawbio1703';
+            $this->user = 'dawbio1703';
+            $this->password = 'z54Qf2$v';
         }
-
-        /* Evitem el clonatge de l'obejcte: Patró Singleton */
 
         private function __clone() {
 
         }
-
-        /* Funció encarregada de crear, si s'escau, l'objete. Aquesta és la funció que hem de cridar des de fora de la classe per a instanciar l'objecte i així poder fer servir els seus mètodes */
 
         public static function getInstance() {
             if (!(self::$_instance instanceof self)) {
@@ -54,8 +46,6 @@
 
             return self::$_instance;
         }
-
-        /* Realitza la connexió a la base de dades. */
 
         private function connection() {
             try {
@@ -82,11 +72,11 @@
                 $this->stmt = null;
             }
 
-            return $this->stmt; //retorna la consulta select o el número de files afectades
+            return $this->stmt;
         }
 
-        //si necessitem altres coses, com per exemple, saber el darrer id insertat, l'hem de codificar a banda
         public function executionInsert($sql, $vector) {
+            $id = null;
             if ($this->link != null) {
                 $this->stmt = $this->link->prepare($sql);
                 try {
@@ -100,9 +90,7 @@
             } else {
                 $id = null;
             }
-
             return $id;
         }
-
     }
 ?>

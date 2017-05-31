@@ -1,7 +1,21 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+/* 
+    Created on : 16-mar-2017, 20:07:04
+    Author     : Joan Fernández
+*/
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+
+html{
+    font-family: 'Roboto', sans-serif;
+}
 
 .login-page {
   width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+.about-page {
+  width: 700px;
   padding: 8% 0 0;
   margin: auto;
 }
@@ -11,8 +25,16 @@
   background-color: #FFFFFF;
   max-width: 360px;
   margin: 0 auto 100px;
+  padding: 20px 45px 45px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form-about {
+  position: relative;
+  z-index: 1;
+  background-color: #FFFFFF;
+  max-width: 700px;
+  margin: 0 auto 100px;
   padding: 45px;
-  text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 .form input {
@@ -25,12 +47,22 @@
   padding: 15px;
   box-sizing: border-box;
   font-size: 14px;
-  
+}
+.form textarea {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background-color: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
 }
 input[placeholder], [placeholder], *[placeholder] {
     color: black !important;
 }
-.form button {
+.formbutton {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
@@ -44,7 +76,22 @@ input[placeholder], [placeholder], *[placeholder] {
   transition: all 0.3 ease;
   cursor: pointer;
 }
-.form button:hover,.form button:active,.form button:focus {
+.buttonBack {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background-color: #BDBDBD;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  margin-top: 5px;
+}
+.formbutton:hover,.form button:active,.form button:focus {
   background-color: #183C5A;
 }
 .form .message {
@@ -88,4 +135,53 @@ input[placeholder], [placeholder], *[placeholder] {
 }
 body {
   background-color: #CBEBFF;
+}
+#bornDate{
+    margin-bottom: 10px;
+}
+button:disabled {
+    background: #41627d;
+}
+.form-control {
+   background-color: #f2f2f2; 
+}
+footer{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #41627d;
+    text-align: center;
+    color: #FFFFFF;
+}
+footer a {    
+    color: #FFFFFF;
+}
+footer a:hover {    
+    color: #f2f2f2;
+}
+p {
+    margin: 15px;
+}
+.founders-img{
+    text-align: center;
+}
+.circle-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 150px;
+    
+}
+.second-element {
+    margin-left: 100px;    
+}
+
+.logo{
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.logo img{
+  width: 50px
 }

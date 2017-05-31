@@ -1,10 +1,12 @@
 <?php    
     /**
-    * Controller to connect the project client data with the server
-    * @name PreinscriptionControllerClass.php
+    * @name PreinscriptionControllerClass
+    * Controller to connect the preinscription client data with the server
+    * @date 2017-05-11
     * @author Jonathan Lozano
-    * @date 2017-05-15
     * @version 1.0
+    * @params none
+    * @return $outPutData. Array with method return found
     */
     require_once "ControllerInterface.php";
     require_once "../model/Preinscription.php";
@@ -55,6 +57,15 @@
             return $outPutData;
         }
 
+        /**
+        * @name addPreinscription
+        * Method to add preinscription to DDBB
+        * @date 2017-05-15
+        * @author Jonathan Lozano
+        * @version 1.0
+        * @params none
+        * @return $outPutData. Array with preinscription inserted
+        */
         private function addPreinscription() {
             $preinscriptionObj = json_decode(stripslashes($this->getJsonData()));
             $outPutData = array();

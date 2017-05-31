@@ -4,15 +4,16 @@
  * @author Joan Fernández
  * @date 2017-02-23
  * @version 1.0
- * @param id: ID of the user
-        * name: User's name
-        * password: User's password
-        * surnames: User's surnames
-        * email: User's email
-        * phone: User's phone number
-        * bornDate: User's born date
-        * specialism: User's specialism
-        * professionId: User's profession ID (relation with Profession)
+ * @param 
+    id: ID of the user
+    name: User's name
+    password: User's password
+    surnames: User's surnames
+    email: User's email
+    phone: User's phone number
+    bornDate: User's born date
+    specialism: User's specialism
+    professionId: User's profession ID (relation with Profession)
 */
 function User()
 {

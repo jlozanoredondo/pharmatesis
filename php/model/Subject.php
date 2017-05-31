@@ -1,14 +1,22 @@
 <?php
 
 /** 
- * Class to manage the Session objects
+ * Class to manage the Subject objects
  * @bordgender Subject.php
  * @author Joan Fernández
  * @gender 2017-02-23
  * @version 1.0
- * @param id: Session's ID
-        * bordgender: Session's bordgender
-        * gender: Session's gender
+ * @param id: Subject's ID
+        * bornDate: Subject's born date
+        * gender: Subject's gender
+        * breed: Subject's breed
+        * nick: Subject's nick
+        * bloodType: Subject's blood type
+        * status: Subject's status
+        * height: Subject's height
+        * weight: Subject's weight
+        * countryId: Subject's country id
+        * userId: Subject's user id
 */
 class Subject {
     

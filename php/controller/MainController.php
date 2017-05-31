@@ -1,4 +1,14 @@
 <?php
+	/**
+    * @name MainController
+    * Controller to manage controllers in server.
+    * @date 2017-05-10
+    * @author Jonathan Lozano
+    * @version 1.0
+    * @params none
+    * @return $outPutData. Array with method return found
+    */
+    
 	require_once "UserControllerClass.php";
 	require_once "ProjectControllerClass.php";
 	require_once "DiseaseControllerClass.php";
@@ -10,7 +20,17 @@
 	require_once "MedicamentControllerClass.php";
 	require_once "PreinscriptionControllerClass.php";
 	require_once "EndureControllerClass.php";
+	require_once "ProfessionControllerClass.php";
 	
+	/**
+    * @name is_session_started
+    * Method to check the session status and start's it.
+    * @date 2017-05-10
+    * @author Jonathan Lozano
+    * @version 1.0
+    * @params none
+    * @return session info or false
+    */
 	function is_session_started() {
 	    if (php_sapi_name() !== 'cli') {
 	        if (version_compare(phpversion(), '5.4.0', '>=')) {
@@ -75,6 +95,10 @@
 	            $endureController = new EndureControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
 	            $outPutData = $endureController->doAction();
 	            break;
+            case 11:
+	            $professionController = new ProfessionControllerClass($_REQUEST['action'], $_REQUEST['jsonData']);
+	            $outPutData = $professionController->doAction();
+            	break;
 	        default:
 	            $errors = array();
 	            $outPutData[0] = false;
